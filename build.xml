@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+
+<!-- This is the main build file for the XML schemas module.
+
+     Authors: Mike Douglass   douglm  rpi.edu
+-->
+
+<project name="xmlschema" default="build">
+  <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+	
+  <property environment="env"/>
+  <dirname property="project.home" file="${ant.file}"/>
+  
+  <property file="${project.home}/build.properties" />
+
+  <property name="bedework.home"
+            location="${project.home}/../bedework" />
+
+  <property name="build.dir" location="${bedework.home}/build"/>
+
+  <import file="${build.dir}/buildTools/deftasks.xml"/>
+
+  <deftasks/>
+
+  <projectDefs name="${org.bedework.package.name}"
+               version="${org.bedework.xmlschema.version}" 
+               deployment-name="xmlschema"
+  />
+
+  <import file="${build.dir}/loadDeployConfig.xml"/>
+  <import file="${build.dir}/buildTools/wsimport.xml"/>
+  <import file="${build.dir}/buildTools/xjc.xml"/>
+
+  <!-- =================================================================
+       init:
+       ================================================================= -->
+
+  <target name="init">
+    <projectInit/>
+    
+    <property name="org.bedework.project.bedework"
+              location="${project.home}/../bedework" />
+
+    <loadDeployConfig/>
+
+  	<property name="org.bedework.options.file"
+  	          value="${org.bedework.config.options}" />
+
+    <property name="org.bedework.schemas.base"
+              location="${project.home}/schemas" />
+
+    <property name="org.bedework.exsynchws.base"
+              location="${project.home}/exsynchws" />
+
+    <property name="org.bedework.tzsvc.base"
+              location="${project.home}/timezones" />
+
+    <property name="exsynchws.jar"
+              location="${dist.home}/${org.bedework.module.exsynchwsschema.jar}-${project.version}.jar" />
+
+    <property name="tzsvc.jar"
+              location="${dist.home}/${org.bedework.module.tzschema.jar}-${project.version}.jar" />
+  </target>
+  
+  <target name="deploy-init" depends="init">
+    <!-- No deployment -->
+  </target>
+
+  <!-- ===================== build-source Target ===============================
+     This target builds jar files ready for the deploy target.
+     =================================================================== -->
+
+  <target name="build-source" >
+    <!-- Exsynch - web service -->
+    <wsimport wsdl="${org.bedework.exsynchws.base}/wssvc.wsdl"
+              module-base="${org.bedework.exsynchws.base}/gensrc"
+              jar-file="${exsynchws.jar}"
+              bindingsdir="${org.bedework.exsynchws.base}/wsdlbindings"
+    />
+
+    <!-- Timezones - XML data -->
+    <xjc schema="${org.bedework.schemas.base}/tzsvr/tzservice.xsd"
+         module-base="${org.bedework.tzsvc.base}/gensrc"
+         jar-file="${tzsvc.jar}"
+         bindingsdir="${project.home}/xjcbindings"
+    />
+    
+    <build-jar-stats />
+  </target>
+
+  <!-- ===================== deploy Target ===============================
+     Deploy if an application server is defined.
+     =================================================================== -->
+
+  <target name="deploy" depends="deploy-init,build"
+               description="Deploy generated files">
+    <!-- No deployment -->
+  </target>
+
+<!-- ==================== Javadoc Target ===============================
+     The "javadoc" target creates Javadoc API documentation for the Java
+     classes included in your application.  Normally, this is only required
+     when preparing a distribution release, but is available as a separate
+     target in case the developer wants to create Javadocs independently.
+     =================================================================== -->
+
+  <target name="javadoc" depends="init"
+          description="Create Javadoc API documentation">
+    <property name="destdir" location="${dist.home}/docs/api"/>
+    <mkdir dir="${destdir}"/>
+
+    <javadoc sourcepath="${org.bedework.module.common.base}/src:${org.bedework.module.service.base}/src:${org.bedework.module.server.base}/src:"
+           classpathref="compile.classpath"
+                destdir="${destdir}"
+           packagenames="org.bedework.*,
+                         edu.rpi.*"
+                 access="public"
+                 author="true"
+                version="true"
+          breakiterator="yes"
+            windowtitle="${project.name} ${project.version} API Documentation">
+      <doctitle><![CDATA[${project.name} ${project.version}<br/>API Documentation]]></doctitle>
+      <header><![CDATA[${project.name} ${project.version}<br/>API Documentation]]></header>
+      <link href="../../access/api" />
+      <link href="../../calendarapi/api" />
+      <link href="../../davutil/api" />
+      <link href="../../rpiutil/api" />
+      <link href="../../webdav/api" />
+      <link href="${env.JAVA_HOME}/docs/api" />
+    </javadoc>
+  </target>
+</project>
