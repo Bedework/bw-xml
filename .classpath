@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="exsynchws/gensrc/src"/>
+	<classpathentry excluding="ietf/params/xml/ns/icalendar_2/" kind="src" path="timezones/gensrc/src"/>
+	<classpathentry kind="lib" path="dist/bw-exsynchwsschema-3.7.jar"/>
+	<classpathentry kind="lib" path="dist/bw-tzschema-3.7.jar"/>
+	<classpathentry kind="lib" path="dist/temp/wsimportlib/jaxb-impl-2.1.8.jar"/>
+	<classpathentry kind="lib" path="dist/temp/wsimportlib/jaxb-xjc-2.1.7.jar"/>
+	<classpathentry kind="lib" path="dist/temp/wsimportlib/jaxws-rt-2.1.4.jar"/>
+	<classpathentry kind="lib" path="dist/temp/wsimportlib/jaxws-tools-2.1.4.jar"/>
+	<classpathentry kind="lib" path="dist/temp/wsimportlib/stax-ex-2.2.1.jar"/>
+	<classpathentry kind="lib" path="dist/temp/wsimportlib/streambuffer-1.0.jar"/>
+	<classpathentry kind="lib" path="dist/temp/xjclib/jaxb-impl-2.1.8.jar"/>
+	<classpathentry kind="lib" path="dist/temp/xjclib/jaxb-xjc-2.1.7.jar"/>
+	<classpathentry kind="lib" path="dist/temp/xjclib/jaxws-rt-2.1.4.jar"/>
+	<classpathentry kind="lib" path="dist/temp/xjclib/jaxws-tools-2.1.4.jar"/>
+	<classpathentry kind="lib" path="dist/temp/xjclib/stax-ex-2.2.1.jar"/>
+	<classpathentry kind="lib" path="dist/temp/xjclib/streambuffer-1.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="dist/temp/wsclasses/bwxml"/>
+</classpath>
