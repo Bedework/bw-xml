@@ -5,7 +5,7 @@
      Authors: Mike Douglass   douglm  rpi.edu
 -->
 
-<project name="xmlschema" default="build">
+<project name="xmlschema" default="deploy">
   <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 	
   <property environment="env"/>
@@ -49,30 +49,54 @@
     <property name="org.bedework.schemas.base"
               location="${project.home}/schemas" />
 
+    <property name="org.bedework.exchangews.base"
+              location="${project.home}/exchangews" />
+
     <property name="org.bedework.exsynchws.base"
               location="${project.home}/exsynchws" />
 
     <property name="org.bedework.tzsvc.base"
               location="${project.home}/timezones" />
 
+    <property name="exchangews.jar"
+              location="${dist.home}/${org.bedework.module.exchangewsschema.jar}-${project.version}.jar" />
+
     <property name="exsynchws.jar"
               location="${dist.home}/${org.bedework.module.exsynchwsschema.jar}-${project.version}.jar" />
 
     <property name="tzsvc.jar"
               location="${dist.home}/${org.bedework.module.tzschema.jar}-${project.version}.jar" />
+    
+    <property name="exchange.wsdllocation"
+              value="${bedework-options.org.bedework.app.Exsynch.exchangeWSDLURI}" />
+    
+    <property name="exsynch.wsdllocation"
+              value="${bedework-options.org.bedework.app.Exsynch.remoteWSDLURI}" />
+    
+    <property name="wsdl.deploy.dir"
+              location="${org.bedework.appserver.dir}/${org.bedework.server.resource.root.dir}${org.bedework.app.exsynchwcb.wsdl,deploy.dir}" />
+    <echo message="*****deploy to ${wsdl.deploy.dir}"/>
   </target>
   
   <target name="deploy-init" depends="init">
-    <!-- No deployment -->
   </target>
 
   <!-- ===================== build-source Target ===============================
      This target builds jar files ready for the deploy target.
      =================================================================== -->
 
-  <target name="build-source" >
+  <target name="build-source" >    
+    <!-- Exchange - web service -->
+    <wsimport wsdl="${org.bedework.exchangews.base}/Services.wsdl"
+              wsdllocation="${exchange.wsdllocation}"
+              module-base="${org.bedework.exchangews.base}/gensrc"
+              jar-file="${exchangews.jar}"
+              bindingsdir="${org.bedework.exchangews.base}/wsdlbindings"
+    />
+
     <!-- Exsynch - web service -->
     <wsimport wsdl="${org.bedework.exsynchws.base}/wssvc.wsdl"
+              wsdllocation="${exsynch.wsdllocation}"
               module-base="${org.bedework.exsynchws.base}/gensrc"
               jar-file="${exsynchws.jar}"
               bindingsdir="${org.bedework.exsynchws.base}/wsdlbindings"
@@ -94,7 +118,24 @@
 
   <target name="deploy" depends="deploy-init,build"
                description="Deploy generated files">
-    <!-- No deployment -->
+    <!-- Exchange wsdl -->
+    <echo message="Copy the wsdl to ${exchange.wsdllocation}"/>
+    <echo message="deploy to ${wsdl.deploy.dir}"/>
+    <echo message="appserver deploy dir ${org.bedework.server.resource.root.dir}"/>
+    <debugMsg message="Copy the wsdl to ${exchange.wsdllocation}"/>
+
+    <copy todir="${wsdl.deploy.dir}" overwrite="yes">
+      <fileset dir="${org.bedework.exchangews.base}"
+               includes="*.xsd,*.wsdl" />
+    </copy>
+
+    <!-- Exchange synch wsdl -->
+    <debugMsg message="Copy the wsdl to ${exsynch.wsdllocation}"/>
+
+    <copy todir="${wsdl.deploy.dir}" overwrite="yes">
+      <fileset dir="${org.bedework.exsynchws.base}"
+               includes="*.xsd,*.wsdl" />
+    </copy>
   </target>
 
 <!-- ==================== Javadoc Target ===============================
