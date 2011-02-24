@@ -272,7 +272,7 @@
     <complexContent mixed="false">
       <extension base="tns:BaseSynchEntityRequestType">
         <sequence>
-          <element name="icalendar" type="xcal:IcalendarType" />
+          <element ref="xcal:icalendar" />
         </sequence>
       </extension>
     </complexContent>
@@ -316,7 +316,7 @@
       </documentation>
     </annotation>
     <sequence>
-      <element name="icalendar" type="xcal:IcalendarType" />
+      <element ref="xcal:icalendar" />
       <element name="status" type="tns:StatusType" />
       <element name="message" type="string" />
     </sequence>
@@ -342,6 +342,18 @@
 
   <element name="remove" type="p:RemoveType"
            substitutionGroup="tns:baseUpdate"/>
+  
+  <complexType name="NamespaceType">
+    <attribute name="prefix" type="string"/>
+    <attribute name="uri" type="string"
+               use="required"/>
+  </complexType>
+  
+  <complexType name="ArrayOfNamespaces">
+    <sequence>
+      <element name="namespace" type="tns:NamespaceType" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
 
   <complexType name="UpdateItemType">
     <annotation>
@@ -352,6 +364,7 @@
     <complexContent mixed="false">
       <extension base="tns:BaseSynchEntityRequestType">
         <sequence>
+          <element name="namespaces" type="tns:ArrayOfNamespaces" />
           <element name="updates" type="tns:ArrayOfUpdates" />
         </sequence>
       </extension>

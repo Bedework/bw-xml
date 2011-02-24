@@ -86,10 +86,10 @@
     <xs:complexContent mixed="false">
       <xs:extension base="BaseUpdateType">
         <xs:choice> 
-          <xs:element name="component" type="xcal:BaseComponentType"/>
-          <xs:element name="property" type="xcal:BasePropertyType"/>
-          <xs:element name="parameter" type="xcal:BaseParameterType"/>
-        </xs:choice>
+          <xs:element ref="xcal:baseComponent"/>
+          <xs:element ref="xcal:baseProperty"/>
+          <xs:element ref="xcal:baseParameter"/>
+         </xs:choice>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

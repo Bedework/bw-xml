@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>dist/temp/wsclasses/bwxml</name>
-			<type>2</type>
-			<location>/home/douglm/eclipse-build/bwxml</location>
-		</link>
-	</linkedResources>
 </projectDescription>
