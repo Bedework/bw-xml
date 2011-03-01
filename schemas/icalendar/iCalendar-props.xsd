@@ -32,7 +32,7 @@
 
   <xs:complexType name="ArrayOfProperties">
     <xs:sequence>
-      <xs:element ref="xcal:baseProperty" maxOccurs="unbounded"/>
+      <xs:element ref="xcal:baseProperty" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   
@@ -627,6 +627,26 @@
   </xs:complexType>
     
   <!-- 3.8.4.5 Related-To -->
+  <!-- Before extensions to allow different value types
+  <xs:complexType name="RelatedToPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+   -->
+   
+  <xs:complexType name="RelatedToPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:BasePropertyType">
+        <xs:choice> 
+          <xs:element ref="xcal:uri"/>
+          <xs:element name="uid" type="xs:string"/>
+          <xs:element name="reference" type="xs:string"/>
+        </xs:choice>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+    
   <!-- 3.8.4.6 Uniform Resource Locator -->
   <xs:complexType name="UrlPropType">
     <xs:complexContent mixed="false">
@@ -653,12 +673,6 @@
   <xs:complexType name="RdatePropType">
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:DateDatetimePropertyType"/>
-    </xs:complexContent>
-  </xs:complexType>
-    
-  <xs:complexType name="RelatedToPropType">
-    <xs:complexContent mixed="false">
-      <xs:extension base="xcal:TextPropertyType"/>
     </xs:complexContent>
   </xs:complexType>
     

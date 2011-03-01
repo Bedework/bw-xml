@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE schema [
+  <!ENTITY ncname "\i\c*">
+  <!ENTITY qname  "(&ncname;:)?&ncname;">
+  <!ENTITY aname  "@&qname;">
+  <!ENTITY pos    "\[\d+\]">
+  <!ENTITY attr   "\[&aname;='(.)*'\]|\[&aname;=&quot;(.)*&quot;\]">
+  <!ENTITY valueq "\[(&qname;|\.)=&quot;(.)*&quot;\]">
+  <!ENTITY value  "\[(&qname;|\.)='(.)*'\]|&valueq;">
+  <!ENTITY cond   "&attr;|&value;|&pos;">
+  <!ENTITY step   "(&qname;|\*)(&cond;)*">
+  <!ENTITY piq    "processing-instruction\((&quot;&ncname;&quot;)\)">
+  <!ENTITY pi     "processing-instruction\(('&ncname;')?\)|&piq;">
+  <!ENTITY id     "id\(('&ncname;')?\)|id\((&quot;&ncname;&quot;)?\)">
+  <!ENTITY com    "comment\(\)">
+  <!ENTITY text   "text\(\)">
+  <!ENTITY nspa   "namespace::&ncname;">
+  <!ENTITY cnodes "(&text;(&pos;)?)|(&com;(&pos;)?)|((&pi;)(&pos;)?)">
+  <!ENTITY child  "&cnodes;|&step;">
+  <!ENTITY last   "(&child;|&aname;|&nspa;)">
+ ]>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" 
         xmlns:tns="http://www.bedework.org/exsynch/wsmessages" 
         xmlns:xcal="urn:ietf:params:xml:ns:icalendar-2.0"
-        xmlns:p="urn:ietf:params:xml:ns:pidf-diff" 
-        xmlns:perr="urn:ietf:params:xml:ns:patch-ops-error" 
+        xmlns:xrd="http://docs.oasis-open.org/ns/xri/xrd-1.0"
         targetNamespace="http://www.bedework.org/exsynch/wsmessages" 
         elementFormDefault="qualified">
         
   <import schemaLocation="../schemas/icalendar/iCalendar.xsd" 
           namespace="urn:ietf:params:xml:ns:icalendar-2.0" />
+        
+  <import schemaLocation="../schemas/xrd/xrd-1.0-os.xsd" 
+          namespace="http://docs.oasis-open.org/ns/xri/xrd-1.0" />
 
-  <!-- The schemas for RFC 5261 patch operations and errors. -->        
-  <import schemaLocation="patch.xsd"  
-          namespace="urn:ietf:params:xml:ns:pidf-diff" />
-  <import schemaLocation="patch-errors.xsd" 
-          namespace="urn:ietf:params:xml:ns:patch-ops-error" />
-          
   <!-- Schema for messages passed from exsynch processor to the remote service. -->
   
   <simpleType name="SynchType">
@@ -219,6 +235,46 @@
   </complexType>
 
   <element name="start-service-response" type="tns:StartServiceResponseType" />
+
+  <!-- ========================== get-properties =========================== -->
+  
+  <complexType name="GetPropertiesType">
+    <annotation>
+      <documentation xml:lang="en">
+           Fetch the XRD object for the targeted resource. The target may be
+           the system itself, a principal, a collection resource or an entity.
+      </documentation>
+    </annotation>
+    <sequence>
+      <choice>
+        <element name="system"> <!-- Empty element -->
+          <complexType/>
+        </element>
+        
+        <element name="principal" type="string" />        
+      </choice>
+    </sequence>
+  </complexType>
+  
+  <element name="get-properties" 
+           type="tns:GetPropertiesType" />
+  
+  <complexType name="GetPropertiesResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Respond to the ping
+           token: sent in initial request
+           status: OK
+      </documentation>
+    </annotation>
+    <sequence>
+      <element ref="xrd:XRD" />
+    </sequence>
+  </complexType>
+
+  <element name="get-properties-response" type="tns:GetPropertiesResponseType" />
+
+  <!-- ============================ synch-info ============================= -->
   
   <complexType name="GetSynchInfoType">
     <annotation>
@@ -325,8 +381,87 @@
   <element name="fetch-item-response" type="tns:FetchItemResponseType" />
 
   <!-- ========================== update-item ============================== -->
+  <!-- This is a simplified form of the XML patch operations defined in RFC 5261 
+    modified for xcalendar updates.
+    
+    As this is intended for use in a SOAP environment the xs:any for the new or
+    replacement value is going to be a problem. However, for icalendar patching we 
+    can restrict the value to be an icalendar element.
+    
+    We select the outer vcalendar if we wish to add a component
   
-  <element name="baseUpdate" type="p:BaseUpdateType" />
+    We select a component if we wish to add a property or a component to that 
+    component or if we wish to delete that component 
+  
+    We select a property to change it's parameters or it's value or delete it. The 
+    value can be a parameter to add, a new value for the property or nothing to delete
+    
+    We select a parameter to delete it or change its value. The value is a value-type
+    element
+    
+    RFC5261 allows the specification of an insertion point for new items.
+    All new items here are appended to the children of the targeted parent.
+  -->
+
+  <simpleType name="XpathType">
+    <restriction base="string">
+      <pattern
+             value="(/)?((&id;)((/&step;)*(/&last;))?|(&step;/)*(&last;))"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="XpathAddType">
+    <restriction base="string">
+      <pattern
+             value="(/)?((&id;)((/&step;)*(/&child;))?|(&step;/)*(&child;))"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="AddValueType">
+    <restriction base="string">
+      <pattern value="&aname;|&nspa;"/>
+    </restriction>
+  </simpleType>
+  
+  <complexType name="BaseUpdateType" abstract="true">
+    <attribute name="sel" type="tns:XpathAddType"
+                  use="required"/>
+  </complexType>
+  
+  <complexType name="NewValueType" abstract="true">
+    <complexContent mixed="false">
+      <extension base="tns:BaseUpdateType">
+        <choice> 
+          <element ref="xcal:baseComponent"/>
+          <element ref="xcal:baseProperty"/>
+          <element ref="xcal:baseParameter"/>
+         </choice>
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <complexType name="AddType">
+    <complexContent mixed="false">
+      <extension base="tns:NewValueType">
+        <attribute name="type" type="tns:AddValueType"/>
+     </extension>
+    </complexContent>
+  </complexType>
+  
+  <complexType name="ReplaceType">
+    <complexContent mixed="false">
+      <extension base="tns:NewValueType">
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <complexType name="RemoveType">
+    <complexContent mixed="false">
+      <extension base="tns:BaseUpdateType" />
+    </complexContent>
+  </complexType>
+  
+  <element name="baseUpdate" type="tns:BaseUpdateType" />
   
   <complexType name="ArrayOfUpdates">
     <sequence>
@@ -334,13 +469,13 @@
     </sequence>
   </complexType>
 
-  <element name="add" type="p:AddType"
+  <element name="add" type="tns:AddType"
            substitutionGroup="tns:baseUpdate"/>
 
-  <element name="replace" type="p:ReplaceType"
+  <element name="replace" type="tns:ReplaceType"
            substitutionGroup="tns:baseUpdate"/>
 
-  <element name="remove" type="p:RemoveType"
+  <element name="remove" type="tns:RemoveType"
            substitutionGroup="tns:baseUpdate"/>
   
   <complexType name="NamespaceType">
@@ -381,7 +516,6 @@
     </annotation>
     <sequence>
       <element name="status" type="tns:StatusType" />
-      <element ref="perr:patch-ops-error" />
       <element name="message" type="string" />
     </sequence>
   </complexType>

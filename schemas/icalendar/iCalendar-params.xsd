@@ -19,7 +19,7 @@
 
   <xs:complexType name="ArrayOfParameters">
     <xs:sequence>
-      <xs:element ref="xcal:baseParameter" maxOccurs="unbounded"/>
+      <xs:element ref="xcal:baseParameter" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
          
@@ -299,6 +299,7 @@
   </xs:complexType>
   
   <!-- 3.2.15 Relationship Type -->
+  <!-- Enumerated values are not extensible
   <xs:simpleType name="ReltypeValueType">
     <xs:restriction base="xs:token">
       <xs:enumeration value="PARENT"/>
@@ -306,7 +307,7 @@
       <xs:enumeration value="SIBLING"/>
     </xs:restriction>
   </xs:simpleType>
-  
+ -->  
   <xs:complexType name="ReltypeParamType">
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextParameterType"/>

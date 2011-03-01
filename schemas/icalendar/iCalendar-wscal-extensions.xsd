@@ -28,7 +28,7 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <!-- Gap is used in the LINK property -->
+  <!-- Gap is used in the RELATED-TO property -->
   <xs:element name="gap" type="xcal:DurationParameterType" 
               substitutionGroup="xcal:baseParameter" />
 

@@ -11,6 +11,16 @@
     </s:schema>
   </wsdl:types> 
 
+  <!-- =========================== getProperties =========================== -->  
+
+  <wsdl:message name="GetPropertiesIn">
+    <wsdl:part name="request" element="tns:get-properties" />
+  </wsdl:message>
+  
+  <wsdl:message name="GetPropertiesOut">
+    <wsdl:part name="response" element="tns:get-properties-response" />
+  </wsdl:message>
+
   <!-- ====================== startServiceNotification ===================== -->  
 
   <wsdl:message name="StartServiceIn">
@@ -64,6 +74,11 @@
   <!-- ============================== port ================================= -->  
   
   <wsdl:portType name="ExsynchRemoteServicePortType">
+    <wsdl:operation name="GetProperties">
+      <wsdl:input message="tns:GetPropertiesIn" />
+      <wsdl:output message="tns:GetPropertiesOut" />
+    </wsdl:operation>
+    
     <wsdl:operation name="NotifyRemoteService">
       <wsdl:input message="tns:StartServiceIn" />
       <wsdl:output message="tns:StartServiceOut" />
@@ -102,6 +117,16 @@
     
     <wsdl:operation name="NotifyRemoteService">
       <soap:operation soapAction="http://www.bedework.org/exsynch/wsmessages/notify-remote-service" />
+      <wsdl:input>
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="GetProperties">
+      <soap:operation soapAction="http://www.bedework.org/exsynch/wsmessages/get-properties" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
