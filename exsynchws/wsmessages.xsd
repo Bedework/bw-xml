@@ -71,9 +71,9 @@
       </documentation>
     </annotation>
     <sequence>
-      <element name="calendar-href" type="string" minOccurs="1" />
-      <element name="principal-href" type="string" minOccurs="1" />
-      <element name="synch-token" type="string" minOccurs="1" />
+      <element name="calendar-href" type="string" />
+      <element name="principal-href" type="string" />
+      <element name="synch-token" type="string" />
     </sequence>
   </complexType>
   
@@ -87,8 +87,8 @@
     <complexContent mixed="false">
       <extension base="tns:BaseSynchRequestType">
         <sequence >
-          <element name="uid" type="string" minOccurs="1" />
-          <element name="recurrence-id" type="string" />
+          <element name="uid" type="string" />
+          <element name="recurrence-id" type="string" minOccurs="0" />
         </sequence>
       </extension>
     </complexContent>
@@ -250,8 +250,9 @@
         <element name="system"> <!-- Empty element -->
           <complexType/>
         </element>
-        
-        <element name="principal" type="string" />        
+
+        <element name="calendar-href" type="string" />
+        <element name="principal-href" type="string" />
       </choice>
     </sequence>
   </complexType>
