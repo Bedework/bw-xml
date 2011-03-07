@@ -76,6 +76,10 @@
     <property name="wsdl.deploy.dir"
               location="${org.bedework.appserver.dir}/${org.bedework.server.resource.root.dir}${org.bedework.app.exsynchwcb.wsdl,deploy.dir}" />
     <echo message="*****deploy to ${wsdl.deploy.dir}"/>
+    
+    <!-- Filesets used for dependencies -->
+    <fileset id="org.bedework.schemas.files"
+             dir="${org.bedework.schemas.base}" />
   </target>
   
   <target name="deploy-init" depends="init">
@@ -100,6 +104,7 @@
               module-base="${org.bedework.exsynchws.base}/gensrc"
               jar-file="${exsynchws.jar}"
               bindingsdir="${org.bedework.exsynchws.base}/wsdlbindings"
+              dependencies="org.bedework.schemas.files"
     />
 
     <!-- Timezones - XML data -->
@@ -107,6 +112,7 @@
          module-base="${org.bedework.tzsvc.base}/gensrc"
          jar-file="${tzsvc.jar}"
          bindingsdir="${project.home}/xjcbindings"
+         dependencies="org.bedework.schemas.files"
     />
     
     <build-jar-stats />
