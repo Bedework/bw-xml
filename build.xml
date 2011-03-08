@@ -58,6 +58,9 @@
     <property name="org.bedework.tzsvc.base"
               location="${project.home}/timezones" />
 
+    <property name="org.bedework.vcard.base"
+              location="${project.home}/vcard" />
+
     <property name="exchangews.jar"
               location="${dist.home}/${org.bedework.module.exchangewsschema.jar}-${project.version}.jar" />
 
@@ -66,6 +69,9 @@
 
     <property name="tzsvc.jar"
               location="${dist.home}/${org.bedework.module.tzschema.jar}-${project.version}.jar" />
+
+    <property name="vcard.jar"
+              location="${dist.home}/${org.bedework.module.vcardschema.jar}-${project.version}.jar" />
     
     <property name="exchange.wsdllocation"
               value="${bedework-options.org.bedework.app.Exsynch.exchangeWSDLURI}" />
@@ -113,6 +119,13 @@
          jar-file="${tzsvc.jar}"
          bindingsdir="${project.home}/xjcbindings"
          dependencies="org.bedework.schemas.files"
+    />
+
+    <!-- vcard -->
+    <xjc schema="${org.bedework.schemas.base}/vcard/vcard.xsd"
+         module-base="${org.bedework.vcard.base}/gensrc"
+         jar-file="${vcard.jar}"
+         bindingsdir="${project.home}/xjcbindings"
     />
     
     <build-jar-stats />
