@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE schema [
+  <!ENTITY ncname "\i\c*">
+  <!ENTITY qname  "(&ncname;:)?&ncname;">
+  <!ENTITY aname  "@&qname;">
+  <!ENTITY pos    "\[\d+\]">
+  <!ENTITY attr   "\[&aname;='(.)*'\]|\[&aname;=&quot;(.)*&quot;\]">
+  <!ENTITY valueq "\[(&qname;|\.)=&quot;(.)*&quot;\]">
+  <!ENTITY value  "\[(&qname;|\.)='(.)*'\]|&valueq;">
+  <!ENTITY cond   "&attr;|&value;|&pos;">
+  <!ENTITY step   "(&qname;|\*)(&cond;)*">
+  <!ENTITY piq    "processing-instruction\((&quot;&ncname;&quot;)\)">
+  <!ENTITY pi     "processing-instruction\(('&ncname;')?\)|&piq;">
+  <!ENTITY id     "id\(('&ncname;')?\)|id\((&quot;&ncname;&quot;)?\)">
+  <!ENTITY com    "comment\(\)">
+  <!ENTITY text   "text\(\)">
+  <!ENTITY nspa   "namespace::&ncname;">
+  <!ENTITY cnodes "(&text;(&pos;)?)|(&com;(&pos;)?)|((&pi;)(&pos;)?)">
+  <!ENTITY child  "&cnodes;|&step;">
+  <!ENTITY last   "(&child;|&aname;|&nspa;)">
+ ]>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:tns="http://docs.oasis-open.org/ns/wscal/calws-soap" 
+        xmlns:xcal="urn:ietf:params:xml:ns:icalendar-2.0"
+        xmlns:xrd="http://docs.oasis-open.org/ns/xri/xrd-1.0"
+        targetNamespace="http://docs.oasis-open.org/ns/wscal/calws-soap" 
+        elementFormDefault="qualified">
+        
+  <import schemaLocation="../schemas/icalendar/iCalendar.xsd" 
+          namespace="urn:ietf:params:xml:ns:icalendar-2.0" />
+        
+  <import schemaLocation="../schemas/xrd/xrd-1.0-os.xsd" 
+          namespace="http://docs.oasis-open.org/ns/xri/xrd-1.0" />
+
+  <!-- Schema for CalWS SOAP messages. -->
+  
+  <simpleType name="StatusType">
+    <restriction base="string">
+      <enumeration value="OK" />
+      <enumeration value="No Access" />
+      <enumeration value="Service Stopped" />
+      <enumeration value="Error" />
+    </restriction>
+  </simpleType>
+
+  <complexType name="ErrorCodeType" >
+  </complexType>
+
+  <element name="error" type="tns:ErrorCodeType" />
+  
+  <complexType name="ErrorResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Message from service indicating an error.
+      </documentation>
+    </annotation>
+    <sequence >
+      <element ref="tns:error" />
+      <element name="description" type="string" minOccurs="0" />
+    </sequence>
+  </complexType>
+  
+  <!-- Error codes -->
+  <element name="target-exists" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" />
+  <element name="not-calendar-data" type="tns:ErrorCodeType" 
+              substitutionGroup="tns:error" />
+  <element name="invalid-calendar-data" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" />
+  <element name="invalid-calendar-object-resource" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" />
+  <element name="unsupported-calendar-component" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" />
+  <element name="invalid-calendar-collection-location" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" />
+  <element name="exceeds-max-resource-size" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" />
+  <element name="before-min-date-time" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" />
+  <element name="after-max-date-time" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" />
+  <element name="too-many-instances" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" />
+  <element name="too-many-attendees-per-instance" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" />
+
+  <element name="uid-conflict" type="tns:UidConflictType"
+              substitutionGroup="tns:error" />
+
+  <complexType name="UidConflictType" >
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+        <sequence> 
+          <element name="href" type="string" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+
+  <complexType name="BaseRequestType">
+    <annotation>
+      <documentation xml:lang="en">
+           Requests have this as the base type.
+      </documentation>
+    </annotation>
+    <sequence>
+      <element name="href" type="string" />
+    </sequence>
+  </complexType>
+  
+  <complexType name="BaseEntityRequestType">
+    <annotation>
+      <documentation xml:lang="en">
+           Message from remote service identifying an entity by it's UID and
+           optionally its recurrenceid.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseRequestType">
+        <sequence >
+          <element name="uid" type="string" />
+          <element name="recurrence-id" type="string" minOccurs="0" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <complexType name="BaseResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Responses have this as the base type.
+      </documentation>
+    </annotation>
+    <sequence>
+      <element name="status" type="tns:StatusType" />
+      <element name="message" type="string" minOccurs="0" />
+    </sequence>
+  </complexType>
+  
+  <!-- *********************************************************************
+       Syncher to Remote system 
+       fetch: fetch one or more calendar items
+       create: add a new calendar item
+       update: update a calendar item
+       delete: delete a calendar item
+       ********************************************************************* -->
+
+  <!-- ========================== get-properties =========================== -->
+  
+  <complexType name="GetPropertiesType">
+    <annotation>
+      <documentation xml:lang="en">
+           Fetch the XRD object for the targeted resource. The target may be
+           the system itself ("/"), a principal, a collection resource or an entity.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseRequestType">
+        <sequence>
+          <choice>
+            <element name="calendar-href" type="string" />
+            <element name="principal-href" type="string" />
+          </choice>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="get-properties" 
+           type="tns:GetPropertiesType" />
+  
+  <complexType name="GetPropertiesResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Respond to the ping
+           token: sent in initial request
+           status: OK
+      </documentation>
+    </annotation>
+    <sequence>
+      <element ref="xrd:XRD" />
+    </sequence>
+  </complexType>
+
+  <element name="get-properties-response" type="tns:GetPropertiesResponseType" />
+
+  <!-- ============================ create-item =============================== -->
+  
+  <complexType name="CreateItemType">
+    <annotation>
+      <documentation xml:lang="en">
+           Message to create a calendar item.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseEntityRequestType">
+        <sequence>
+          <element ref="xcal:icalendar" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="create-item" type="tns:CreateItemType" />
+  
+  <complexType name="CreateItemResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Response to message to add an item.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseResponseType">
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="create-response" type="tns:CreateItemResponseType" />
+
+  <!-- ============================ fetch =============================== -->
+  
+  <complexType name="FetchItemType">
+    <annotation>
+      <documentation xml:lang="en">
+           Message to fetch a calendar item.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseEntityRequestType"/>
+    </complexContent>
+  </complexType>
+  
+  <element name="fetch-item" type="tns:FetchItemType" />
+  
+  <complexType name="FetchItemResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Response to message to fetch an item.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseResponseType">
+        <sequence>
+          <element ref="xcal:icalendar" minOccurs="0" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="fetch-item-response" type="tns:FetchItemResponseType" />
+
+  <!-- ========================== update-item ============================== -->
+  <!-- This is a simplified form of the XML patch operations defined in RFC 5261 
+    modified for xcalendar updates.
+    
+    As this is intended for use in a SOAP environment the any for the new or
+    replacement value is going to be a problem. However, for icalendar patching we 
+    can restrict the value to be an icalendar element.
+    
+    We select the outer vcalendar if we wish to add a component
+  
+    We select a component if we wish to add a property or a component to that 
+    component or if we wish to delete that component 
+  
+    We select a property to change it's parameters or it's value or delete it. The 
+    value can be a parameter to add, a new value for the property or nothing to delete
+    
+    We select a parameter to delete it or change its value. The value is a value-type
+    element
+    
+    RFC5261 allows the specification of an insertion point for new items.
+    All new items here are appended to the children of the targeted parent.
+  -->
+
+  <simpleType name="XpathType">
+    <restriction base="string">
+      <pattern
+             value="(/)?((&id;)((/&step;)*(/&last;))?|(&step;/)*(&last;))"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="XpathAddType">
+    <restriction base="string">
+      <pattern
+             value="(/)?((&id;)((/&step;)*(/&child;))?|(&step;/)*(&child;))"/>
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="AddValueType">
+    <restriction base="string">
+      <pattern value="&aname;|&nspa;"/>
+    </restriction>
+  </simpleType>
+  
+  <complexType name="BaseUpdateType" abstract="true">
+    <attribute name="sel" type="tns:XpathAddType"
+                  use="required"/>
+  </complexType>
+  
+  <complexType name="NewValueType" abstract="true">
+    <complexContent mixed="false">
+      <extension base="tns:BaseUpdateType">
+        <choice> 
+          <element ref="xcal:baseComponent"/>
+          <element ref="xcal:baseProperty"/>
+          <element ref="xcal:baseParameter"/>
+         </choice>
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <complexType name="AddType">
+    <complexContent mixed="false">
+      <extension base="tns:NewValueType">
+        <attribute name="type" type="tns:AddValueType"/>
+     </extension>
+    </complexContent>
+  </complexType>
+  
+  <complexType name="ReplaceType">
+    <complexContent mixed="false">
+      <extension base="tns:NewValueType">
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <complexType name="RemoveType">
+    <complexContent mixed="false">
+      <extension base="tns:BaseUpdateType" />
+    </complexContent>
+  </complexType>
+  
+  <element name="baseUpdate" type="tns:BaseUpdateType" />
+  
+  <complexType name="ArrayOfUpdates">
+    <sequence>
+      <element ref="tns:baseUpdate" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <element name="add" type="tns:AddType"
+           substitutionGroup="tns:baseUpdate"/>
+
+  <element name="replace" type="tns:ReplaceType"
+           substitutionGroup="tns:baseUpdate"/>
+
+  <element name="remove" type="tns:RemoveType"
+           substitutionGroup="tns:baseUpdate"/>
+  
+  <complexType name="NamespaceType">
+    <attribute name="prefix" type="string"/>
+    <attribute name="uri" type="string"
+               use="required"/>
+  </complexType>
+  
+  <complexType name="ArrayOfNamespaces">
+    <sequence>
+      <element name="namespace" type="tns:NamespaceType" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="UpdateItemType">
+    <annotation>
+      <documentation xml:lang="en">
+           Message to update a calendar item.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseEntityRequestType">
+        <sequence>
+          <element name="namespaces" type="tns:ArrayOfNamespaces" />
+          <element name="updates" type="tns:ArrayOfUpdates" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="update-item" type="tns:UpdateItemType" />
+  
+  <complexType name="UpdateItemResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Response to message to update an item.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseResponseType">
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="update-item-response" type="tns:UpdateItemResponseType" />
+</schema>

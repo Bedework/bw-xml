@@ -49,6 +49,9 @@
     <property name="org.bedework.schemas.base"
               location="${project.home}/schemas" />
 
+    <property name="org.bedework.calws-soap.base"
+              location="${project.home}/calws-soap" />
+
     <property name="org.bedework.exchangews.base"
               location="${project.home}/exchangews" />
 
@@ -73,11 +76,20 @@
     <property name="tzsvc.jar"
               location="${dist.home}/${org.bedework.module.tzschema.jar}-${project.version}.jar" />
 
+    <property name="calws-soap.jar"
+              location="${dist.home}/${org.bedework.module.calws-soapschema.jar}-${project.version}.jar" />
+
     <property name="icalendar.jar"
               location="${dist.home}/${org.bedework.module.icalschema.jar}-${project.version}.jar" />
 
     <property name="vcard.jar"
               location="${dist.home}/${org.bedework.module.vcardschema.jar}-${project.version}.jar" />
+    
+    <property name="calws-soap.wsdllocation"
+      value="http://localhost:8080/calws-soap/wssvc.wsdl" />
+    <!--
+              value="${bedework-options.org.bedework.app.Exsynch.remoteWSDLURI}" />
+    -->
     
     <property name="exchange.wsdllocation"
               value="${bedework-options.org.bedework.app.Exsynch.exchangeWSDLURI}" />
@@ -86,8 +98,7 @@
               value="${bedework-options.org.bedework.app.Exsynch.remoteWSDLURI}" />
     
     <property name="wsdl.deploy.dir"
-              location="${org.bedework.appserver.dir}/${org.bedework.server.resource.root.dir}${org.bedework.app.exsynchwcb.wsdl,deploy.dir}" />
-    <echo message="*****deploy to ${wsdl.deploy.dir}"/>
+              location="${org.bedework.appserver.dir}/${org.bedework.server.resource.root.dir}/wsdls" />
     
     <!-- Filesets used for dependencies -->
     <fileset id="org.bedework.schemas.files"
@@ -116,6 +127,15 @@
               module-base="${org.bedework.exsynchws.base}/gensrc"
               jar-file="${exsynchws.jar}"
               bindingsdir="${org.bedework.exsynchws.base}/wsdlbindings"
+              dependencies="org.bedework.schemas.files"
+    />
+
+    <!-- calws-soap - web service -->
+    <wsimport wsdl="${org.bedework.calws-soap.base}/wssvc.wsdl"
+              wsdllocation="${calws-soap.wsdllocation}"
+              module-base="${org.bedework.calws-soap.base}/gensrc"
+              jar-file="${calws-soap.jar}"
+              bindingsdir="${org.bedework.calws-soap.base}/wsdlbindings"
               dependencies="org.bedework.schemas.files"
     />
 
@@ -156,16 +176,24 @@
     <echo message="appserver deploy dir ${org.bedework.server.resource.root.dir}"/>
     <debugMsg message="Copy the wsdl to ${exchange.wsdllocation}"/>
 
-    <copy todir="${wsdl.deploy.dir}" overwrite="yes">
+    <copy todir="${wsdl.deploy.dir}/exchange" overwrite="yes">
       <fileset dir="${org.bedework.exchangews.base}"
                includes="*.xsd,*.wsdl" />
     </copy>
 
     <!-- Exchange synch wsdl -->
-    <debugMsg message="Copy the wsdl to ${exsynch.wsdllocation}"/>
+    <debugMsg message="Copy the wsdl to ${wsdl.deploy.dir}/exsynch"/>
 
-    <copy todir="${wsdl.deploy.dir}" overwrite="yes">
+    <copy todir="${wsdl.deploy.dir}/exsynch" overwrite="yes">
       <fileset dir="${org.bedework.exsynchws.base}"
+               includes="*.xsd,*.wsdl" />
+    </copy>
+
+    <!-- CalWs wsdl -->
+    <debugMsg message="Copy the wsdl to ${wsdl.deploy.dir}/calws-soap"/>
+
+    <copy todir="${wsdl.deploy.dir}/calws-soap" overwrite="yes">
+      <fileset dir="${org.bedework.calws-soap.base}"
                includes="*.xsd,*.wsdl" />
     </copy>
   </target>

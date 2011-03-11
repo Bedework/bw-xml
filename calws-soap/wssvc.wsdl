@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:tns="http://docs.oasis-open.org/ns/wscal/calws-soap" 
+                  xmlns:s="http://www.w3.org/2001/XMLSchema" 
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+                  targetNamespace="http://docs.oasis-open.org/ns/wscal/calws-soap" 
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema>
+      <s:import schemaLocation="wsmessages.xsd" 
+                namespace="http://docs.oasis-open.org/ns/wscal/calws-soap" />
+    </s:schema>
+  </wsdl:types> 
+
+  <!-- =========================== getProperties =========================== -->  
+
+  <wsdl:message name="GetPropertiesIn">
+    <wsdl:part name="request" element="tns:get-properties" />
+  </wsdl:message>
+  
+  <wsdl:message name="GetPropertiesOut">
+    <wsdl:part name="response" element="tns:get-properties-response" />
+  </wsdl:message>
+
+  <!-- ============================= createItem =============================== -->  
+
+  <wsdl:message name="CreateItemIn">
+    <wsdl:part name="request" element="tns:create-item" />
+  </wsdl:message>
+  
+  <wsdl:message name="CreateItemOut">
+    <wsdl:part name="response" element="tns:create-response" />
+  </wsdl:message>
+
+  <!-- ============================= fetchItem =============================== -->  
+
+  <wsdl:message name="FetchItemIn">
+    <wsdl:part name="request" element="tns:fetch-item" />
+  </wsdl:message>
+  
+  <wsdl:message name="FetchItemOut">
+    <wsdl:part name="response" element="tns:fetch-item-response" />
+  </wsdl:message>
+
+  <!-- ============================= UpdateItem =============================== -->  
+
+  <wsdl:message name="UpdateItemIn">
+    <wsdl:part name="request" element="tns:update-item" />
+  </wsdl:message>
+  
+  <wsdl:message name="UpdateItemOut">
+    <wsdl:part name="response" element="tns:update-item-response" />
+  </wsdl:message>
+
+  <!-- ============================== port ================================= -->  
+  
+  <wsdl:portType name="ExsynchRemoteServicePortType">
+    <wsdl:operation name="GetProperties">
+      <wsdl:input message="tns:GetPropertiesIn" />
+      <wsdl:output message="tns:GetPropertiesOut" />
+    </wsdl:operation>
+    
+    <wsdl:operation name="CreateItem">
+      <wsdl:input message="tns:CreateItemIn" />
+      <wsdl:output message="tns:CreateItemOut" />
+    </wsdl:operation>
+    
+    <wsdl:operation name="FetchItem">
+      <wsdl:input message="tns:FetchItemIn" />
+      <wsdl:output message="tns:FetchItemOut" />
+    </wsdl:operation>
+    
+    <wsdl:operation name="UpdateItem">
+      <wsdl:input message="tns:UpdateItemIn" />
+      <wsdl:output message="tns:UpdateItemOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <!-- ============================ binding ================================ -->  
+  
+  <wsdl:binding name="ExsynchRemoteServiceBinding" 
+                type="tns:ExsynchRemoteServicePortType">
+    <wsdl:documentation>
+      <wsi:Claim conformsTo="http://ws-i.org/profiles/basic/1.0" 
+                 xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" />
+    </wsdl:documentation>
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    
+    <wsdl:operation name="GetProperties">
+      <soap:operation soapAction="http://http://docs.oasis-open.org/ns/wscal/calws-soap/get-properties" />
+      <wsdl:input>
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="CreateItem">
+      <soap:operation soapAction="http://http://docs.oasis-open.org/ns/wscal/calws-soap/create-item" />
+      <wsdl:input>
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="FetchItem">
+      <soap:operation soapAction="http://http://docs.oasis-open.org/ns/wscal/calws-soap/fetch-item" />
+      <wsdl:input>
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="UpdateItem">
+      <soap:operation soapAction="http://http://docs.oasis-open.org/ns/wscal/calws-soap/update-item" />
+      <wsdl:input>
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <wsdl:service name="ExsynchRemoteService">
+    <wsdl:port name="ExsynchRSPort" binding="tns:ExsynchRemoteServiceBinding">
+       <soap:address location="http://localhost:8080/pubcaldav/exsynchws/"></soap:address>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>  
