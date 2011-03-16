@@ -86,10 +86,7 @@
               location="${dist.home}/${org.bedework.module.vcardschema.jar}-${project.version}.jar" />
     
     <property name="calws-soap.wsdllocation"
-      value="http://localhost:8080/calws-soap/wssvc.wsdl" />
-    <!--
-              value="${bedework-options.org.bedework.app.Exsynch.remoteWSDLURI}" />
-    -->
+              value="${bedework-options.org.bedework.app.Usercaldav.calSoapWsWSDLURI}" />
     
     <property name="exchange.wsdllocation"
               value="${bedework-options.org.bedework.app.Exsynch.exchangeWSDLURI}" />

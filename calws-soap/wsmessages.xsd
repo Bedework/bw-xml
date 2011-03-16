@@ -157,12 +157,6 @@
     </annotation>
     <complexContent mixed="false">
       <extension base="tns:BaseRequestType">
-        <sequence>
-          <choice>
-            <element name="calendar-href" type="string" />
-            <element name="principal-href" type="string" />
-          </choice>
-        </sequence>
       </extension>
     </complexContent>
   </complexType>
@@ -187,7 +181,7 @@
 
   <!-- ============================ create-item =============================== -->
   
-  <complexType name="CreateItemType">
+  <complexType name="AddItemType">
     <annotation>
       <documentation xml:lang="en">
            Message to create a calendar item.
@@ -202,9 +196,9 @@
     </complexContent>
   </complexType>
   
-  <element name="create-item" type="tns:CreateItemType" />
+  <element name="add-item" type="tns:AddItemType" />
   
-  <complexType name="CreateItemResponseType">
+  <complexType name="AddItemResponseType">
     <annotation>
       <documentation xml:lang="en">
            Response to message to add an item.
@@ -216,7 +210,7 @@
     </complexContent>
   </complexType>
   
-  <element name="create-response" type="tns:CreateItemResponseType" />
+  <element name="add-item-response" type="tns:AddItemResponseType" />
 
   <!-- ============================ fetch =============================== -->
   

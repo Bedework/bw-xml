@@ -24,11 +24,11 @@
   <!-- ============================= createItem =============================== -->  
 
   <wsdl:message name="CreateItemIn">
-    <wsdl:part name="request" element="tns:create-item" />
+    <wsdl:part name="request" element="tns:add-item" />
   </wsdl:message>
   
   <wsdl:message name="CreateItemOut">
-    <wsdl:part name="response" element="tns:create-response" />
+    <wsdl:part name="response" element="tns:add-item-response" />
   </wsdl:message>
 
   <!-- ============================= fetchItem =============================== -->  
@@ -53,7 +53,7 @@
 
   <!-- ============================== port ================================= -->  
   
-  <wsdl:portType name="ExsynchRemoteServicePortType">
+  <wsdl:portType name="CalWsServicePortType">
     <wsdl:operation name="GetProperties">
       <wsdl:input message="tns:GetPropertiesIn" />
       <wsdl:output message="tns:GetPropertiesOut" />
@@ -77,8 +77,8 @@
   
   <!-- ============================ binding ================================ -->  
   
-  <wsdl:binding name="ExsynchRemoteServiceBinding" 
-                type="tns:ExsynchRemoteServicePortType">
+  <wsdl:binding name="CalWsServiceBinding" 
+                type="tns:CalWsServicePortType">
     <wsdl:documentation>
       <wsi:Claim conformsTo="http://ws-i.org/profiles/basic/1.0" 
                  xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" />
@@ -86,7 +86,7 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     
     <wsdl:operation name="GetProperties">
-      <soap:operation soapAction="http://http://docs.oasis-open.org/ns/wscal/calws-soap/get-properties" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/get-properties" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -96,7 +96,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="CreateItem">
-      <soap:operation soapAction="http://http://docs.oasis-open.org/ns/wscal/calws-soap/create-item" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/create-item" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -106,7 +106,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="FetchItem">
-      <soap:operation soapAction="http://http://docs.oasis-open.org/ns/wscal/calws-soap/fetch-item" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/fetch-item" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -116,7 +116,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="UpdateItem">
-      <soap:operation soapAction="http://http://docs.oasis-open.org/ns/wscal/calws-soap/update-item" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/update-item" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -126,9 +126,9 @@
     </wsdl:operation>
   </wsdl:binding>
 
-  <wsdl:service name="ExsynchRemoteService">
-    <wsdl:port name="ExsynchRSPort" binding="tns:ExsynchRemoteServiceBinding">
-       <soap:address location="http://localhost:8080/pubcaldav/exsynchws/"></soap:address>
+  <wsdl:service name="CalWsService">
+    <wsdl:port name="CalWsPort" binding="tns:CalWsServiceBinding">
+       <soap:address location="http://localhost:8080/ucaldav/calws-soap/"></soap:address>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>  

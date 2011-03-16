@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="exsynchws/gensrc/src"/>
+	<classpathentry excluding="ietf/params/xml/ns/icalendar_2/|org/oasis_open/docs/ns/xri/" kind="src" path="calws-soap/gensrc/src"/>
 	<classpathentry kind="src" path="exchangews/gensrc/src"/>
 	<classpathentry excluding="ietf/params/xml/ns/icalendar_2/" kind="src" path="timezones/gensrc/src"/>
 	<classpathentry kind="lib" path="dist/bw-exsynchwsschema-3.7.jar"/>
