@@ -39,7 +39,10 @@
   <!-- Patterns should allow us to restrict this 
      e.g.     19980119T070000Z
   -->
-  <xs:element name="utc-date-time" type="xs:string"/>
+  <xs:simpleType name="UTCDateTimeType">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:element name="utc-date-time" type="xcal:UTCDateTimeType"/>
   
 	<!-- 3.3.6 DURATION 
 	<xs:element name="duration" type="xs:string"/>-->

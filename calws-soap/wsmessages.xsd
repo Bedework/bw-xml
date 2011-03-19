@@ -97,7 +97,6 @@
     </complexContent>
   </complexType>
 
-
   <complexType name="BaseRequestType">
     <annotation>
       <documentation xml:lang="en">
@@ -138,15 +137,14 @@
     </sequence>
   </complexType>
   
-  <!-- *********************************************************************
-       Syncher to Remote system 
-       fetch: fetch one or more calendar items
-       create: add a new calendar item
-       update: update a calendar item
-       delete: delete a calendar item
-       ********************************************************************* -->
+  <complexType name="UTCTimeRangeType">
+    <sequence>
+      <element name="start" type="xcal:UTCDateTimeType" minOccurs="0" />
+      <element name="end" type="xcal:UTCDateTimeType" minOccurs="0" />
+    </sequence>
+  </complexType>
 
-  <!-- ========================== get-properties =========================== -->
+  <!-- =========================== getProperties =========================== -->
   
   <complexType name="GetPropertiesType">
     <annotation>
@@ -161,15 +159,13 @@
     </complexContent>
   </complexType>
   
-  <element name="get-properties" 
+  <element name="getProperties" 
            type="tns:GetPropertiesType" />
   
   <complexType name="GetPropertiesResponseType">
     <annotation>
       <documentation xml:lang="en">
-           Respond to the ping
-           token: sent in initial request
-           status: OK
+           Respond to the get-properties request
       </documentation>
     </annotation>
     <sequence>
@@ -177,9 +173,54 @@
     </sequence>
   </complexType>
 
-  <element name="get-properties-response" type="tns:GetPropertiesResponseType" />
+  <element name="getPropertiesResponse" type="tns:GetPropertiesResponseType" />
 
-  <!-- ============================ create-item =============================== -->
+  <!-- =========================== freebusyQuery =========================== -->
+  
+  <complexType name="FreebusyReportType">
+    <annotation>
+      <documentation xml:lang="en">
+           Request a freebusy report on the targeted resource. This is NOT a
+           scheduling freebusy request which incorporates information such as 
+           availability etc, but a simple report of the state of the targeted
+           collection(s)
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseRequestType">
+        <sequence>
+          <element name="time-range" type="tns:UTCTimeRangeType"
+                   minOccurs="0" />
+          <element name="depth" type="int" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="freebusyReport" 
+           type="tns:FreebusyReportType" />
+  
+  <complexType name="FreebusyReportResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Respond to the freebusy request.
+           Returned icalendar data will be an icalendar entity containing a 
+           vfreebusy object. Note that the time period returned may not be as
+           requested. The server is at liberty to extend or truncate the period.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseResponseType">
+        <sequence>
+          <element ref="xcal:icalendar" minOccurs="0" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="freebusyReportResponse" type="tns:FreebusyReportResponseType" />
+
+  <!-- ========================== create-item ============================== -->
   
   <complexType name="AddItemType">
     <annotation>
