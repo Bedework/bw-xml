@@ -22,12 +22,16 @@
 <schema xmlns="http://www.w3.org/2001/XMLSchema" 
         xmlns:tns="http://docs.oasis-open.org/ns/wscal/calws-soap" 
         xmlns:xcal="urn:ietf:params:xml:ns:icalendar-2.0"
+        xmlns:cdav="urn:ietf:params:xml:ns:caldav"
         xmlns:xrd="http://docs.oasis-open.org/ns/xri/xrd-1.0"
         targetNamespace="http://docs.oasis-open.org/ns/wscal/calws-soap" 
         elementFormDefault="qualified">
         
   <import schemaLocation="../schemas/icalendar/iCalendar.xsd" 
           namespace="urn:ietf:params:xml:ns:icalendar-2.0" />
+        
+  <import schemaLocation="../schemas/caldav/caldav.xsd" 
+          namespace="urn:ietf:params:xml:ns:caldav" />
         
   <import schemaLocation="../schemas/xrd/xrd-1.0-os.xsd" 
           namespace="http://docs.oasis-open.org/ns/xri/xrd-1.0" />
@@ -96,6 +100,13 @@
       </extension>
     </complexContent>
   </complexType>
+  
+  <simpleType name="DepthType">
+    <restriction base="string">
+    </restriction>
+  </simpleType>
+  
+  <element name="depth" type="tns:DepthType" />
 
   <complexType name="BaseRequestType">
     <annotation>
@@ -219,6 +230,147 @@
   </complexType>
 
   <element name="freebusyReportResponse" type="tns:FreebusyReportResponseType" />
+
+  <!-- ======================== calendar-query ============================= -->
+  
+  <complexType name="AllpropType">
+    <annotation>
+      <documentation xml:lang="en">
+        Used in a calendar query to specify that all properties be returned.
+        What "all" really means is defined in the specification.
+      </documentation>
+    </annotation>
+  </complexType>
+  
+  <element name="allprop" type="tns:AllpropType" />
+
+<!--   
+  <complexType name="PropnameType">
+    <annotation>
+      <documentation xml:lang="en">
+        Used in a calendar query to specify a property to be returned.
+      </documentation>
+    </annotation>
+  </complexType>
+  
+  <element name="propname" type="tns:PropnameType" />
+   -->
+   
+  <complexType name="CalendarDataResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Calendar data returned as response
+      </documentation>
+    </annotation>
+    <sequence>
+      <choice>
+        <element name="text" type="string" />
+        <element ref="xcal:icalendar" />
+      </choice>
+    </sequence>
+    
+    <attribute name="content-type" type="string" default="application/xml+calendar" />
+    <attribute name="version" type="string" default="2.0" />
+  </complexType>
+   
+  <complexType name="MultistatusPropElementType">
+    <annotation>
+      <documentation xml:lang="en">
+           prop element type in propstat
+      </documentation>
+    </annotation>
+    <sequence>
+      <choice>
+        <element name="calendar-data" type="tns:CalendarDataResponseType" />
+      </choice>
+    </sequence>
+  </complexType>
+  
+  <complexType name="PropstatType">
+    <annotation>
+      <documentation xml:lang="en">
+           Contains prop elements with the same status
+      </documentation>
+    </annotation>
+    <sequence>
+      <element name="prop" type="tns:MultistatusPropElementType"
+               minOccurs="0" maxOccurs="unbounded" />
+      <element name="status" type="string" />
+    </sequence>
+  </complexType>
+  
+  <element name="propstat" type="tns:PropstatType" />
+
+  <complexType name="MultistatResponseElementType">
+    <annotation>
+      <documentation xml:lang="en">
+           One part of a Multistatus
+      </documentation>
+    </annotation>
+    <sequence>
+      <element name="href" type="string" />
+      <element name="etag" type="string" />
+      <element ref="tns:propstat" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+   
+  <complexType name="MultistatusType">
+    <annotation>
+      <documentation xml:lang="en">
+           Contains multiple MultistatResponseElementType
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseResponseType">
+        <sequence>
+          <element name="response" type="tns:MultistatResponseElementType" 
+                   minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <complexType name="CalendarQueryType">
+    <annotation>
+      <documentation xml:lang="en">
+           Message to query a calendar.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseEntityRequestType">
+        <sequence>
+          <element ref="tns:depth" />
+          <choice minOccurs="0">
+            <element ref="tns:allprop" />
+          </choice>
+          
+          <element ref="cdav:filter" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="calendarQuery" type="tns:CalendarQueryType" />
+  
+  <complexType name="CalendarQueryResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Response to a calendar query.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:MultistatusType">
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="calendarQueryResponse" type="tns:CalendarQueryResponseType" />
+
+  <!-- 
+         <!ELEMENT calendar-query ((DAV:allprop |
+                                    DAV:propname |
+                                    DAV:prop)?, filter, timezone?, timezone-id?)>
+   -->
 
   <!-- ========================== create-item ============================== -->
   

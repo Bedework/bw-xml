@@ -31,6 +31,16 @@
     <wsdl:part name="response" element="tns:freebusyReportResponse" />
   </wsdl:message>
 
+  <!-- =========================== calendarQuery =========================== -->
+
+  <wsdl:message name="CalendarQueryIn">
+    <wsdl:part name="request" element="tns:calendarQuery" />
+  </wsdl:message>
+  
+  <wsdl:message name="CalendarQueryOut">
+    <wsdl:part name="response" element="tns:calendarQueryResponse"/>
+  </wsdl:message>
+
   <!-- ============================= createItem =============================== -->  
 
   <wsdl:message name="CreateItemIn">
@@ -74,6 +84,11 @@
       <wsdl:output message="tns:FreebusyReportOut" />
     </wsdl:operation>
     
+    <wsdl:operation name="CalendarQuery">
+      <wsdl:input message="tns:CalendarQueryIn" />
+      <wsdl:output message="tns:CalendarQueryOut" />
+    </wsdl:operation>
+    
     <wsdl:operation name="CreateItem">
       <wsdl:input message="tns:CreateItemIn" />
       <wsdl:output message="tns:CreateItemOut" />
@@ -112,6 +127,16 @@
     
     <wsdl:operation name="FreebusyReport">
       <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/FreebusyReport" />
+      <wsdl:input>
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="CalendarQuery">
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/CalendarQuery" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
