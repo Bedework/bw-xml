@@ -368,7 +368,7 @@
   
   <element name="timezone-id" type="tns:TimezoneIdType" />
   
-  <complexType name="TimeRangeType">
+  <element name="time-range" type="tns:UTCTimeRangeType" >
     <annotation>
       <documentation xml:lang="en">
         The CALDAV:time-range XML element specifies that for a
@@ -390,12 +390,7 @@
         "start" attribute.
       </documentation>
     </annotation>
-    <complexContent mixed="false">
-      <extension base="tns:UTCTimeRangeType"/>
-    </complexContent>
-  </complexType>
-  
-  <element name="time-range" type="tns:TimeRangeType" />
+  </element>  
   
   <complexType name="ParamFilterType">
     <annotation>
