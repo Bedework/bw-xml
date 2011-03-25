@@ -342,6 +342,7 @@
           <element ref="tns:depth" />
           <choice minOccurs="0">
             <element ref="tns:allprop" />
+            <element ref="xcal:icalendar" />
           </choice>
           
           <element ref="cdav:filter" />
