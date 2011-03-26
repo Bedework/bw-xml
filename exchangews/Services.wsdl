@@ -1511,7 +1511,7 @@
 
   <wsdl:service name="ExchangeWebService">
     <wsdl:port name="ExchangeWebPort" binding="tns:ExchangeServiceBinding">
-       <soap:address location="https://tootles-fe1.neverland.rpi.edu/EWS/Exchange.asmx"></soap:address>
+       <soap:address location="@SERVICE-URL@"></soap:address>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

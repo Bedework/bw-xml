@@ -94,9 +94,6 @@
     <property name="exsynch.wsdllocation"
               value="${bedework-options.org.bedework.app.Exsynch.remoteWSDLURI}" />
     
-    <property name="wsdl.deploy.dir"
-              location="${org.bedework.appserver.dir}/${org.bedework.server.resource.root.dir}/wsdls" />
-    
     <!-- Filesets used for dependencies -->
     <fileset id="org.bedework.schemas.files"
              dir="${org.bedework.schemas.base}" />
@@ -167,31 +164,46 @@
 
   <target name="deploy" depends="deploy-init,build"
                description="Deploy generated files">
-    <!-- Exchange wsdl -->
-    <echo message="Copy the wsdl to ${exchange.wsdllocation}"/>
-    <echo message="deploy to ${wsdl.deploy.dir}"/>
-    <echo message="appserver deploy dir ${org.bedework.server.resource.root.dir}"/>
-    <debugMsg message="Copy the wsdl to ${exchange.wsdllocation}"/>
+    
+    <if>
+      <isset property="bedework-options.org.bedework.app.Pubcaldav.exsynchWsURI" />
+      <then>
+        <!-- Exchange wsdl -->
+        <debugMsg message="Copy the wsdl to ${org.bedework.exchange.wsdl.deploy.dir}"/>
+    
+        <copy todir="${org.bedework.exchange.wsdl.deploy.dir}" overwrite="yes">
+          <fileset dir="${org.bedework.exchangews.base}"
+                   includes="*.xsd,*.wsdl" />
+          <filterset>
+            <filter token="SERVICE-URL" 
+                     value="${org.bedework.exchange.ws.url}"/>
+          </filterset>
+        </copy>
 
-    <copy todir="${wsdl.deploy.dir}/exchange" overwrite="yes">
-      <fileset dir="${org.bedework.exchangews.base}"
-               includes="*.xsd,*.wsdl" />
-    </copy>
-
-    <!-- Exchange synch wsdl -->
-    <debugMsg message="Copy the wsdl to ${wsdl.deploy.dir}/exsynch"/>
-
-    <copy todir="${wsdl.deploy.dir}/exsynch" overwrite="yes">
-      <fileset dir="${org.bedework.exsynchws.base}"
-               includes="*.xsd,*.wsdl" />
-    </copy>
+        <!-- Exchange synch wsdl -->
+        <debugMsg message="Copy the wsdl to ${org.bedework.exsynch.wsdl.deploy.dir}"/>
+    
+        <copy todir="${org.bedework.exsynch.wsdl.deploy.dir}" overwrite="yes">
+          <fileset dir="${org.bedework.exsynchws.base}"
+                   includes="*.xsd,*.wsdl" />
+          <filterset>
+            <filter token="SERVICE-URL"
+                    value="${org.bedework.exsynch.service}"/>
+          </filterset>
+        </copy>
+        </then>
+      </if>
 
     <!-- CalWs wsdl -->
-    <debugMsg message="Copy the wsdl to ${wsdl.deploy.dir}/calws-soap"/>
+    <debugMsg message="Copy the wsdl to ${org.bedework.calws.wsdl.deploy.dir}"/>
 
-    <copy todir="${wsdl.deploy.dir}/calws-soap" overwrite="yes">
+    <copy todir="${org.bedework.calws.wsdl.deploy.dir}" overwrite="yes">
       <fileset dir="${org.bedework.calws-soap.base}"
                includes="*.xsd,*.wsdl" />
+      <filterset>
+        <filter token="SERVICE-URL" 
+                value="${org.bedework.calws-soap.service}"/>
+      </filterset>
     </copy>
   </target>
 

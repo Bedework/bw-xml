@@ -178,7 +178,7 @@
 
   <wsdl:service name="ExsynchRemoteService">
     <wsdl:port name="ExsynchRSPort" binding="tns:ExsynchRemoteServiceBinding">
-       <soap:address location="http://localhost:8080/pubcaldav/exsynchws/"></soap:address>
+       <soap:address location="@SERVICE-URL@"></soap:address>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>  
