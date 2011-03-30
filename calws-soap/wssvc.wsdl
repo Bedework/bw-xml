@@ -41,34 +41,34 @@
     <wsdl:part name="response" element="tns:calendarQueryResponse"/>
   </wsdl:message>
 
-  <!-- ============================= createItem =============================== -->  
+  <!-- ============================= addItem =============================== -->  
 
-  <wsdl:message name="CreateItemIn">
-    <wsdl:part name="request" element="tns:add-item" />
+  <wsdl:message name="AddItemIn">
+    <wsdl:part name="request" element="tns:addItem" />
   </wsdl:message>
   
-  <wsdl:message name="CreateItemOut">
-    <wsdl:part name="response" element="tns:add-item-response" />
+  <wsdl:message name="AddItemOut">
+    <wsdl:part name="response" element="tns:addItemResponse" />
   </wsdl:message>
 
   <!-- ============================= fetchItem =============================== -->  
 
   <wsdl:message name="FetchItemIn">
-    <wsdl:part name="request" element="tns:fetch-item" />
+    <wsdl:part name="request" element="tns:fetchItem" />
   </wsdl:message>
   
   <wsdl:message name="FetchItemOut">
-    <wsdl:part name="response" element="tns:fetch-item-response" />
+    <wsdl:part name="response" element="tns:fetchItemResponse" />
   </wsdl:message>
 
   <!-- ============================= UpdateItem =============================== -->  
 
   <wsdl:message name="UpdateItemIn">
-    <wsdl:part name="request" element="tns:update-item" />
+    <wsdl:part name="request" element="tns:updateItem" />
   </wsdl:message>
   
   <wsdl:message name="UpdateItemOut">
-    <wsdl:part name="response" element="tns:update-item-response" />
+    <wsdl:part name="response" element="tns:updateItemResponse" />
   </wsdl:message>
 
   <!-- ============================== port ================================= -->  
@@ -89,9 +89,9 @@
       <wsdl:output message="tns:CalendarQueryOut" />
     </wsdl:operation>
     
-    <wsdl:operation name="CreateItem">
-      <wsdl:input message="tns:CreateItemIn" />
-      <wsdl:output message="tns:CreateItemOut" />
+    <wsdl:operation name="AddItem">
+      <wsdl:input message="tns:AddItemIn" />
+      <wsdl:output message="tns:AddItemOut" />
     </wsdl:operation>
     
     <wsdl:operation name="FetchItem">
@@ -145,8 +145,8 @@
       </wsdl:output>
     </wsdl:operation>
     
-    <wsdl:operation name="CreateItem">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/create-item" />
+    <wsdl:operation name="AddItem">
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/addItem" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -156,7 +156,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="FetchItem">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/fetch-item" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/fetchItem" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -166,7 +166,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="UpdateItem">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/update-item" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/updateItem" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>

@@ -65,30 +65,40 @@
   </complexType>
   
   <!-- Error codes -->
-  <element name="target-exists" type="tns:ErrorCodeType"
+  <element name="targetExists" type="tns:ErrorCodeType"
               substitutionGroup="tns:error" />
-  <element name="not-calendar-data" type="tns:ErrorCodeType" 
+  <element name="notCalendarData" type="tns:ErrorCodeType" 
               substitutionGroup="tns:error" />
-  <element name="invalid-calendar-data" type="tns:ErrorCodeType"
+  <element name="invalidCalendarData" type="tns:ErrorCodeType"
               substitutionGroup="tns:error" />
-  <element name="invalid-calendar-object-resource" type="tns:ErrorCodeType"
+  <element name="invalidCalendarObjectResource" type="tns:ErrorCodeType"
               substitutionGroup="tns:error" />
-  <element name="unsupported-calendar-component" type="tns:ErrorCodeType"
+  <element name="unsupportedCalendarComponent" type="tns:ErrorCodeType"
               substitutionGroup="tns:error" />
-  <element name="invalid-calendar-collection-location" type="tns:ErrorCodeType"
+  <element name="invalidCalendarCollectionLocation" type="tns:ErrorCodeType"
               substitutionGroup="tns:error" />
-  <element name="exceeds-max-resource-size" type="tns:ErrorCodeType"
+  <element name="exceedsMaxResourceSize" type="tns:ErrorCodeType"
               substitutionGroup="tns:error" />
-  <element name="before-min-date-time" type="tns:ErrorCodeType"
+  <element name="beforeMinDateTime" type="tns:ErrorCodeType"
               substitutionGroup="tns:error" />
-  <element name="after-max-date-time" type="tns:ErrorCodeType"
+  <element name="afterMaxDateTime" type="tns:ErrorCodeType"
               substitutionGroup="tns:error" />
-  <element name="too-many-instances" type="tns:ErrorCodeType"
+  <element name="tooManyInstances" type="tns:ErrorCodeType"
               substitutionGroup="tns:error" />
-  <element name="too-many-attendees-per-instance" type="tns:ErrorCodeType"
+  <element name="tooManyAttendeesPerInstance" type="tns:ErrorCodeType"
               substitutionGroup="tns:error" />
 
-  <element name="uid-conflict" type="tns:UidConflictType"
+  <complexType name="InvalidFilterType" >
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+        <sequence> 
+          <element name="detail" type="string" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="invalidFilter" type="tns:InvalidFilterType"
               substitutionGroup="tns:error" />
 
   <complexType name="UidConflictType" >
@@ -100,6 +110,9 @@
       </extension>
     </complexContent>
   </complexType>
+
+  <element name="uidConflict" type="tns:UidConflictType"
+              substitutionGroup="tns:error" />
   
   <simpleType name="DepthType">
     <restriction base="string">
@@ -145,6 +158,7 @@
     <sequence>
       <element name="status" type="tns:StatusType" />
       <element name="message" type="string" minOccurs="0" />
+      <element name="errorResponse" type="tns:ErrorResponseType" minOccurs="0" />
     </sequence>
   </complexType>
   
@@ -390,7 +404,7 @@
     </complexContent>
   </complexType>
   
-  <element name="add-item" type="tns:AddItemType" />
+  <element name="addItem" type="tns:AddItemType" />
   
   <complexType name="AddItemResponseType">
     <annotation>
@@ -404,7 +418,7 @@
     </complexContent>
   </complexType>
   
-  <element name="add-item-response" type="tns:AddItemResponseType" />
+  <element name="addItemResponse" type="tns:AddItemResponseType" />
 
   <!-- ============================ fetch =============================== -->
   
@@ -419,7 +433,7 @@
     </complexContent>
   </complexType>
   
-  <element name="fetch-item" type="tns:FetchItemType" />
+  <element name="fetchItem" type="tns:FetchItemType" />
   
   <complexType name="FetchItemResponseType">
     <annotation>
@@ -436,7 +450,7 @@
     </complexContent>
   </complexType>
   
-  <element name="fetch-item-response" type="tns:FetchItemResponseType" />
+  <element name="fetchItemResponse" type="tns:FetchItemResponseType" />
 
   <!-- ========================== update-item ============================== -->
   <!-- This is a simplified form of the XML patch operations defined in RFC 5261 
@@ -564,7 +578,7 @@
     </complexContent>
   </complexType>
   
-  <element name="update-item" type="tns:UpdateItemType" />
+  <element name="updateItem" type="tns:UpdateItemType" />
   
   <complexType name="UpdateItemResponseType">
     <annotation>
@@ -578,5 +592,5 @@
     </complexContent>
   </complexType>
   
-  <element name="update-item-response" type="tns:UpdateItemResponseType" />
+  <element name="updateItemResponse" type="tns:UpdateItemResponseType" />
 </schema>
