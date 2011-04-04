@@ -125,6 +125,7 @@
     />
 
     <!-- calws-soap - web service -->
+    <echo message="wsdllocation=${calws-soap.wsdllocation}" />
     <wsimport wsdl="${org.bedework.calws-soap.base}/wssvc.wsdl"
               wsdllocation="${calws-soap.wsdllocation}"
               module-base="${org.bedework.calws-soap.base}/gensrc"

@@ -41,6 +41,16 @@
     <wsdl:part name="response" element="tns:calendarQueryResponse"/>
   </wsdl:message>
 
+  <!-- ========================= calendarMultiget ========================== -->
+
+  <wsdl:message name="CalendarMultigetIn">
+    <wsdl:part name="request" element="tns:calendarMultiget" />
+  </wsdl:message>
+  
+  <wsdl:message name="CalendarMultigetOut">
+    <wsdl:part name="response" element="tns:calendarQueryResponse"/>
+  </wsdl:message>
+
   <!-- ============================= addItem =============================== -->  
 
   <wsdl:message name="AddItemIn">
@@ -87,6 +97,11 @@
     <wsdl:operation name="CalendarQuery">
       <wsdl:input message="tns:CalendarQueryIn" />
       <wsdl:output message="tns:CalendarQueryOut" />
+    </wsdl:operation>
+    
+    <wsdl:operation name="CalendarMultiget">
+      <wsdl:input message="tns:CalendarMultigetIn" />
+      <wsdl:output message="tns:CalendarMultigetOut" />
     </wsdl:operation>
     
     <wsdl:operation name="AddItem">
@@ -137,6 +152,16 @@
     
     <wsdl:operation name="CalendarQuery">
       <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/CalendarQuery" />
+      <wsdl:input>
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="CalendarMultiget">
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/CalendarMultiget" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>

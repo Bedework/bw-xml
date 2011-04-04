@@ -132,23 +132,6 @@
     </sequence>
   </complexType>
   
-  <complexType name="BaseEntityRequestType">
-    <annotation>
-      <documentation xml:lang="en">
-           Message from remote service identifying an entity by it's UID and
-           optionally its recurrenceid.
-      </documentation>
-    </annotation>
-    <complexContent mixed="false">
-      <extension base="tns:BaseRequestType">
-        <sequence >
-          <element name="uid" type="string" />
-          <element name="recurrence-id" type="string" minOccurs="0" />
-        </sequence>
-      </extension>
-    </complexContent>
-  </complexType>
-  
   <complexType name="BaseResponseType">
     <annotation>
       <documentation xml:lang="en">
@@ -344,6 +327,24 @@
     </complexContent>
   </complexType>
   
+  <complexType name="CalendarQueryOrMultigetBaseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Base type for query or multiget.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseRequestType">
+        <sequence>
+          <choice minOccurs="0">
+            <element ref="tns:allprop" />
+            <element ref="xcal:icalendar" />
+          </choice>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  
   <complexType name="CalendarQueryType">
     <annotation>
       <documentation xml:lang="en">
@@ -351,14 +352,9 @@
       </documentation>
     </annotation>
     <complexContent mixed="false">
-      <extension base="tns:BaseEntityRequestType">
+      <extension base="tns:CalendarQueryOrMultigetBaseType">
         <sequence>
           <element ref="tns:depth" />
-          <choice minOccurs="0">
-            <element ref="tns:allprop" />
-            <element ref="xcal:icalendar" />
-          </choice>
-          
           <element ref="cdav:filter" />
         </sequence>
       </extension>
@@ -370,7 +366,7 @@
   <complexType name="CalendarQueryResponseType">
     <annotation>
       <documentation xml:lang="en">
-           Response to a calendar query.
+           Response to a calendar query or multiget.
       </documentation>
     </annotation>
     <complexContent mixed="false">
@@ -380,6 +376,23 @@
   </complexType>
   
   <element name="calendarQueryResponse" type="tns:CalendarQueryResponseType" />
+  
+  <complexType name="CalendarMultigetType">
+    <annotation>
+      <documentation xml:lang="en">
+           Message to fetch multiple calendar entities.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:CalendarQueryOrMultigetBaseType">
+        <sequence>
+          <element name="href" type="string" maxOccurs="unbounded" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="calendarMultiget" type="tns:CalendarMultigetType" />
 
   <!-- 
          <!ELEMENT calendar-query ((DAV:allprop |
@@ -387,7 +400,7 @@
                                     DAV:prop)?, filter, timezone?, timezone-id?)>
    -->
 
-  <!-- ========================== create-item ============================== -->
+  <!-- ========================== addItem ============================== -->
   
   <complexType name="AddItemType">
     <annotation>
@@ -396,7 +409,7 @@
       </documentation>
     </annotation>
     <complexContent mixed="false">
-      <extension base="tns:BaseEntityRequestType">
+      <extension base="tns:BaseRequestType">
         <sequence>
           <element ref="xcal:icalendar" />
         </sequence>
@@ -414,6 +427,9 @@
     </annotation>
     <complexContent mixed="false">
       <extension base="tns:BaseResponseType">
+        <sequence>
+          <element name="href" type="string" minOccurs="0" />
+        </sequence>
       </extension>
     </complexContent>
   </complexType>
@@ -429,7 +445,7 @@
       </documentation>
     </annotation>
     <complexContent mixed="false">
-      <extension base="tns:BaseEntityRequestType"/>
+      <extension base="tns:BaseRequestType"/>
     </complexContent>
   </complexType>
   
@@ -569,7 +585,7 @@
       </documentation>
     </annotation>
     <complexContent mixed="false">
-      <extension base="tns:BaseEntityRequestType">
+      <extension base="tns:BaseRequestType">
         <sequence>
           <element name="namespaces" type="tns:ArrayOfNamespaces" />
           <element name="updates" type="tns:ArrayOfUpdates" />
@@ -579,7 +595,7 @@
   </complexType>
   
   <element name="updateItem" type="tns:UpdateItemType" />
-  
+
   <complexType name="UpdateItemResponseType">
     <annotation>
       <documentation xml:lang="en">
@@ -590,7 +606,7 @@
       <extension base="tns:BaseResponseType">
       </extension>
     </complexContent>
-  </complexType>
-  
+  </complexType> 
+
   <element name="updateItemResponse" type="tns:UpdateItemResponseType" />
 </schema>
