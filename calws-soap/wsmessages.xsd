@@ -376,6 +376,14 @@
   </complexType>
   
   <element name="calendarQueryResponse" type="tns:CalendarQueryResponseType" />
+
+  <!-- ====================== calendarMultiget ============================= -->
+
+  <complexType name="ArrayOfHrefs">
+    <sequence>
+      <element name="href" type="string" maxOccurs="unbounded" />
+    </sequence>
+  </complexType>
   
   <complexType name="CalendarMultigetType">
     <annotation>
@@ -386,7 +394,7 @@
     <complexContent mixed="false">
       <extension base="tns:CalendarQueryOrMultigetBaseType">
         <sequence>
-          <element name="href" type="string" maxOccurs="unbounded" />
+          <element name="hrefs" type="tns:ArrayOfHrefs" />
         </sequence>
       </extension>
     </complexContent>
