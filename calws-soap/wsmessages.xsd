@@ -340,6 +340,10 @@
             <element ref="tns:allprop" />
             <element ref="xcal:icalendar" />
           </choice>
+          <choice minOccurs="0">
+            <element name="expand" type="cdav:ExpandType" />
+            <element name="limitRecurrenceSet" type="cdav:LimitRecurrenceSetType" />
+          </choice>
         </sequence>
       </extension>
     </complexContent>

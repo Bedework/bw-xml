@@ -461,13 +461,15 @@
     <sequence> 
       <choice minOccurs="0">
         <element ref="tns:is-not-defined" />
-        <choice>
-          <element ref="tns:time-range" />
-          <element ref="tns:text-match" />
-        </choice>
-      </choice>
+        <sequence> 
+          <choice>
+            <element ref="tns:time-range" />
+            <element ref="tns:text-match" />
+          </choice>
       
-      <element ref="tns:param-filter" minOccurs="0" maxOccurs="unbounded" />
+          <element ref="tns:param-filter" minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+      </choice>
     </sequence>
     <attribute name="name" type="string" use="required" />
   </complexType>  
