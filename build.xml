@@ -164,7 +164,11 @@
      =================================================================== -->
 
   <target name="deploy" depends="deploy-init,build"
-               description="Deploy generated files">
+          description="Deploy generated files">
+    <!-- Copy the schemas in first -->
+    <copy todir="${org.bedework.wsdl.deploy.dir}/schemas" overwrite="yes">
+      <fileset dir="${org.bedework.schemas.base}"/>
+    </copy>
     
     <if>
       <isset property="bedework-options.org.bedework.app.Pubcaldav.exsynchWsURI" />
@@ -192,8 +196,8 @@
                     value="${org.bedework.exsynch.service}"/>
           </filterset>
         </copy>
-        </then>
-      </if>
+      </then>
+    </if>
 
     <!-- CalWs wsdl -->
     <debugMsg message="Copy the wsdl to ${org.bedework.calws.wsdl.deploy.dir}"/>
