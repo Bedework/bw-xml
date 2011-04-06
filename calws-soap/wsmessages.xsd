@@ -26,7 +26,7 @@
         xmlns:xrd="http://docs.oasis-open.org/ns/xri/xrd-1.0"
         targetNamespace="http://docs.oasis-open.org/ns/wscal/calws-soap" 
         elementFormDefault="qualified">
-        
+     
   <import schemaLocation="../schemas/icalendar/iCalendar.xsd" 
           namespace="urn:ietf:params:xml:ns:icalendar-2.0" />
         
@@ -37,7 +37,7 @@
           namespace="http://docs.oasis-open.org/ns/xri/xrd-1.0" />
 
   <!-- Schema for CalWS SOAP messages. -->
-  
+ 
   <simpleType name="StatusType">
     <restriction base="string">
       <enumeration value="OK" />
@@ -144,7 +144,7 @@
       <element name="errorResponse" type="tns:ErrorResponseType" minOccurs="0" />
     </sequence>
   </complexType>
-  
+
   <complexType name="UTCTimeRangeType">
     <sequence>
       <element name="start" type="xcal:UTCDateTimeType" minOccurs="0" />
