@@ -67,6 +67,10 @@
   <!-- Error codes -->
   <element name="targetExists" type="tns:ErrorCodeType"
               substitutionGroup="tns:error" />
+  <element name="targetDoesNotExist" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" />
+  <element name="targetNotEntity" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" />
   <element name="notCalendarData" type="tns:ErrorCodeType" 
               substitutionGroup="tns:error" />
   <element name="invalidCalendarData" type="tns:ErrorCodeType"
@@ -448,7 +452,7 @@
   
   <element name="addItemResponse" type="tns:AddItemResponseType" />
 
-  <!-- ============================ fetch =============================== -->
+  <!-- ============================ fetchItem ============================== -->
   
   <complexType name="FetchItemType">
     <annotation>
@@ -479,6 +483,34 @@
   </complexType>
   
   <element name="fetchItemResponse" type="tns:FetchItemResponseType" />
+
+  <!-- ============================ deleteItem ============================== -->
+  
+  <complexType name="DeleteItemType">
+    <annotation>
+      <documentation xml:lang="en">
+           Message to delete a calendar item.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseRequestType"/>
+    </complexContent>
+  </complexType>
+  
+  <element name="deleteItem" type="tns:DeleteItemType" />
+  
+  <complexType name="DeleteItemResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Response to message to delete an item.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseResponseType" />
+    </complexContent>
+  </complexType>
+  
+  <element name="deleteItemResponse" type="tns:DeleteItemResponseType" />
 
   <!-- ========================== update-item ============================== -->
   <!-- This is a simplified form of the XML patch operations defined in RFC 5261 

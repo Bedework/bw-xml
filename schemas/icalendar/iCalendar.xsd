@@ -75,6 +75,8 @@
     </xs:complexContent>
   </xs:complexType>
   
+  <xs:element name="vcalendar" type="xcal:VcalendarType"/>
+  
 	<!-- 3.6.1 Event Component -->
   <xs:complexType name="VeventType">
     <xs:complexContent mixed="false">

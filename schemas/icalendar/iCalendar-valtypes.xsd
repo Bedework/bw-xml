@@ -45,6 +45,8 @@
   <xs:element name="utc-date-time" type="xcal:UTCDateTimeType"/>
   
 	<!-- 3.3.6 DURATION 
+  We cannot have a duration value type here as the value-type element has the same 
+  name as the property.  
 	<xs:element name="duration" type="xs:string"/>-->
   
 	<!-- 3.3.7 FLOAT -->
