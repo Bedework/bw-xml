@@ -46,6 +46,11 @@
 		</sequence>
 		<attribute name="ref" type="anyURI" use="optional"/>
 	</complexType>
+  
+        <!-- 
+  <complexType name="XRDAnyType" abstract="true" />
+  <element name="anyElement" type="xrd:XRDAnyType" />
+         -->
 
 	<element name="XRD" type="xrd:XRDType"/>
 	<complexType name="XRDType">
@@ -56,6 +61,9 @@
 				<element ref="xrd:Alias"/>
 				<element ref="xrd:Property"/>
 				<element ref="xrd:Link"/>
+        <!-- 
+        <element ref="xrd:anyElement" />
+         -->
 				<any namespace="##other" processContents="lax"/>
 			</choice>
 		</sequence>

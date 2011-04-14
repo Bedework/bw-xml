@@ -186,7 +186,43 @@
   </complexType>
 
   <element name="getPropertiesResponse" type="tns:GetPropertiesResponseType" />
+  
+  <!-- 
+  <complexType name="SupportedCalendarComponentSetType">
+    <annotation>
+      <documentation xml:lang="en">
+           Type returned in an XRD object to define the allowable component types 
+           within a collection or supported by the system.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="xrd:XRDAnyType">
+        <sequence>
+          <element ref="xcal:baseComponent" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
 
+  <element name="supported-calendar-component-set" 
+           type="tns:SupportedCalendarComponentSetType"
+           substitutionGroup="xrd:anyElement"/>
+ -->
+  <complexType name="SupportedCalendarComponentSetType">
+    <annotation>
+      <documentation xml:lang="en">
+           Type returned in an XRD object to define the allowable component types 
+           within a collection or supported by the system.
+      </documentation>
+    </annotation>
+        <sequence>
+          <element ref="xcal:baseComponent" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+  </complexType>
+
+  <element name="supported-calendar-component-set" 
+           type="tns:SupportedCalendarComponentSetType" />
+           
   <!-- =========================== freebusyQuery =========================== -->
   
   <complexType name="FreebusyReportType">
@@ -581,6 +617,12 @@
   </complexType>
   
   <complexType name="ReplaceType">
+    <annotation>
+      <documentation xml:lang="en">
+           This completely replaces the targeted element with the supplied new
+           element. 
+      </documentation>
+    </annotation>
     <complexContent mixed="false">
       <extension base="tns:NewValueType">
       </extension>
