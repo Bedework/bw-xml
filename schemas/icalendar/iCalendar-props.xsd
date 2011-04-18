@@ -24,9 +24,11 @@
        ===================================================================== -->  
   <xs:complexType name="BasePropertyType" abstract="true" >
     <xs:sequence>
-      <xs:element name="parameters" type="xcal:ArrayOfParameters"/>
+      <xs:element ref="xcal:parameters" />
     </xs:sequence>
   </xs:complexType>
+  
+  <xs:element name="parameters" type="xcal:ArrayOfParameters"/>
 
   <xs:element name="baseProperty" type="xcal:BasePropertyType" />
 

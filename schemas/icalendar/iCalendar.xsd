@@ -23,8 +23,8 @@
           
   <xs:complexType name="BaseComponentType" abstract="true" >
     <xs:sequence>
-      <xs:element name="properties" type="xcal:ArrayOfProperties"/>
-      <xs:element name="components" type="xcal:ArrayOfComponents"/>
+      <xs:element ref="xcal:properties" minOccurs="0" />
+      <xs:element ref="xcal:components" minOccurs="0" />
     </xs:sequence>
   </xs:complexType>
 
@@ -35,6 +35,9 @@
       <xs:element ref="xcal:baseComponent" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+  
+  <xs:element name="properties" type="xcal:ArrayOfProperties"/>
+  <xs:element name="components" type="xcal:ArrayOfComponents"/>
 
   <xs:element name="vevent" type="xcal:VeventType"
               substitutionGroup="xcal:baseComponent"/>
