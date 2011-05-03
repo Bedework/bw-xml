@@ -98,7 +98,6 @@
   
   <element name="comp" type="tns:CompType" />
 
-  
   <complexType name="ExpandType">
     <annotation>
       <documentation xml:lang="en">
@@ -549,7 +548,6 @@
          <!ELEMENT calendar-query ((DAV:allprop |
                                     DAV:propname |
                                     DAV:prop)?, filter, timezone?, timezone-id?)>
-
    -->
 
 </schema>
