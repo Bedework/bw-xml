@@ -194,8 +194,7 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="ArrayOfTimezoneContainedComponents"
-                  abstract="true">
+  <xs:complexType name="ArrayOfTimezoneContainedComponents">
     <xs:sequence>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="xcal:standard"/>
