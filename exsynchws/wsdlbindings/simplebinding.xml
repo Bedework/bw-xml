@@ -4,6 +4,6 @@
                xmlns:xjc= "http://java.sun.com/xml/ns/jaxb/xjc" 
                jaxb:extensionBindingPrefixes="xjc">
   <jaxb:globalBindings>
-    <xjc:simple />
+<!--     <xjc:simple /> -->
   </jaxb:globalBindings>
 </jaxb:bindings>

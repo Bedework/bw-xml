@@ -58,24 +58,24 @@
   <!-- =====================================================================
        3.4 Calendar Components
        ===================================================================== -->  
-
+ 
   <xs:complexType name="WsCalendarGluonType">
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:BaseComponentType"/>
+      <xs:extension base="xcal:EventTodoComponentType"/>
     </xs:complexContent>
   </xs:complexType>
               
   <xs:element name="gluon" type="xcal:WsCalendarGluonType"
-              substitutionGroup="xcal:baseComponent"/>
+              substitutionGroup="xcal:vcalendarContainedComponent"/>
 
   <xs:complexType name="WsCalendarIntervalType">
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:BaseComponentType"/>
+      <xs:extension base="xcal:EventTodoComponentType"/>
     </xs:complexContent>
   </xs:complexType>
               
   <xs:element name="interval" type="xcal:WsCalendarIntervalType"
-              substitutionGroup="xcal:baseComponent"/>
+              substitutionGroup="xcal:vcalendarContainedComponent"/>
 
   <!-- =====================================================================
        3.7 Calendar Properties

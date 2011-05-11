@@ -566,8 +566,8 @@
         <element ref="xcal:baseComponent"/>
         <element ref="xcal:baseProperty"/>
         <element ref="xcal:baseParameter"/>
-        <element ref="xcal:components"/>
-        <element ref="xcal:properties"/>
+        <element name="components" type="tns:ComponentsSelectionType" />
+        <element name="properties" type="tns:PropertiesSelectionType" />
         <element ref="xcal:parameters"/>
       </choice>
     
@@ -581,6 +581,22 @@
   </complexType>
 
   <element name="select" type="tns:SelectElementType" />
+  
+  <complexType name="ComponentsSelectionType">
+    <annotation>
+      <documentation xml:lang="en">
+         Used to indicate the selection should be on components..
+      </documentation>
+    </annotation>
+  </complexType>
+  
+  <complexType name="PropertiesSelectionType">
+    <annotation>
+      <documentation xml:lang="en">
+         Used to indicate the selection should be on properties..
+      </documentation>
+    </annotation>
+  </complexType>
   
   <complexType name="BaseUpdateType" abstract="true">
     <annotation>
@@ -601,7 +617,7 @@
         For replace replaces the targeted element with the supplied new
         element. 
         
-        For update this replaces the targeted element value with the supplied new
+        For change this replaces the targeted element value with the supplied new
         element value.
       </documentation>
     </annotation>

@@ -14,14 +14,7 @@
 	<xs:element name="binary" type="xs:string"/>
   
 	<!-- 3.3.2 BOOLEAN -->
-	<xs:element name="boolean" type="xcal:BooleanType" />
-  
-  <xs:simpleType name="BooleanType">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="TRUE"/>
-      <xs:enumeration value="FALSE"/>
-    </xs:restriction>
-  </xs:simpleType>
+	<xs:element name="boolean" type="xs:boolean" />
   
 	<!-- 3.3.3 CAL-ADDRESS -->
   <xs:simpleType name="CalAddressType">
@@ -50,10 +43,10 @@
 	<xs:element name="duration" type="xs:string"/>-->
   
 	<!-- 3.3.7 FLOAT -->
-	<xs:element name="float" type="xs:string"/>
+	<xs:element name="float" type="xs:float"/>
   
 	<!-- 3.3.8 INTEGER -->
-	<xs:element name="integer" type="xs:string"/>
+	<xs:element name="integer" type="xs:integer"/>
   
 	<!-- 3.3.9 PERIOD -->
 	<xs:element name="period" type="xs:string"/>

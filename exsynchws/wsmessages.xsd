@@ -18,7 +18,7 @@
   <!ENTITY cnodes "(&text;(&pos;)?)|(&com;(&pos;)?)|((&pi;)(&pos;)?)">
   <!ENTITY child  "&cnodes;|&step;">
   <!ENTITY last   "(&child;|&aname;|&nspa;)">
- ]>
+ ]> 
 <schema xmlns="http://www.w3.org/2001/XMLSchema" 
         xmlns:tns="http://www.bedework.org/exsynch/wsmessages" 
         xmlns:xcal="urn:ietf:params:xml:ns:icalendar-2.0"
