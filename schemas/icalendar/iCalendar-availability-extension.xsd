@@ -33,15 +33,24 @@
       
    -->
    
-  <xs:simpleType name="BusytypeValueType">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="BUSY"/>
-      <xs:enumeration value="BUSY-UNAVAILABLE"/> <!-- default -->
-      <xs:enumeration value="BUSY-TENTATIVE"/> 
-    </xs:restriction>
-  </xs:simpleType>
-  
   <xs:complexType name="BusytypePropType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+       encodingparam      = "ENCODING" "="
+                          ( "8BIT"
+          ; "8bit" text encoding is defined in [RFC2045]
+                          / "BASE64"
+          ; "BASE64" binary encoding format is defined in [RFC4648]
+                          )
+      busytypevalue = "BUSY" 
+                    / "BUSY-UNAVAILABLE" 
+                    / "BUSY-TENTATIVE" 
+                    / iana-token 
+                    / x-name
+                    
+                    ; Default is "BUSY-UNAVAILABLE".
+      </xs:documentation>
+    </xs:annotation>
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextPropertyType"/>
     </xs:complexContent>

@@ -77,6 +77,17 @@
   <xs:element name="schedule-status" type="xcal:ScheduleStatusParamType"
               substitutionGroup="xcal:baseParameter" />
   
+  <!-- Parameters that take a simple boolean value -->
+  <xs:complexType name="BooleanParameterType" >
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:BaseParameterType">
+        <xs:sequence> 
+          <xs:element ref="xcal:boolean" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  
   <!-- Parameters that take a simple text value -->
   <xs:complexType name="TextParameterType" >
     <xs:complexContent mixed="false">
@@ -134,21 +145,27 @@
   </xs:complexType>
   
   <!-- 3.2.3 Calendar User Type -->
-  <xs:simpleType name="CutypeValueType">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="INDIVIDUAL"/>
-      <xs:enumeration value="GROUP"/>
-      <xs:enumeration value="RESOURCE"/>
-      <xs:enumeration value="ROOM"/>
-      <xs:enumeration value="UNKNOWN"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
+ 
   <xs:complexType name="CutypeParamType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+       cutypeparam        = "CUTYPE" "="
+                          ("INDIVIDUAL"   ; An individual
+                         / "GROUP"        ; A group of individuals
+                         / "RESOURCE"     ; A physical resource
+                         / "ROOM"         ; A room resource
+                         / "UNKNOWN"      ; Otherwise not known
+                         / x-name         ; Experimental type
+                         / iana-token)    ; Other IANA-registered
+                                          ; type
+       ; Default is INDIVIDUAL
+      </xs:documentation>
+    </xs:annotation>
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextParameterType"/>
     </xs:complexContent>
   </xs:complexType>
+
   
   <!-- 3.2.4 Delegators -->
   <xs:complexType name="DelegatedFromParamType">
@@ -175,14 +192,17 @@
   
   <!-- 3.2.7 Inline Encoding -->
 
-  <xs:simpleType name="EncodingValueType">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="8BIT"/>
-      <xs:enumeration value="BASE64"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
   <xs:complexType name="EncodingParamType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+       encodingparam      = "ENCODING" "="
+                          ( "8BIT"
+          ; "8bit" text encoding is defined in [RFC2045]
+                          / "BASE64"
+          ; "BASE64" binary encoding format is defined in [RFC4648]
+                          )
+      </xs:documentation>
+    </xs:annotation>
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextParameterType"/>
     </xs:complexContent>
@@ -196,16 +216,20 @@
   </xs:complexType>
   
   <!-- 3.2.9 Free/Busy Time Type -->
-  <xs:simpleType name="FbtypeValueType">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="FREE"/>
-      <xs:enumeration value="BUSY"/>
-      <xs:enumeration value="BUSY-UNAVAILABLE"/>
-      <xs:enumeration value="BUSY-TENTATIVE"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
   <xs:complexType name="FbtypeParamType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+       fbtypeparam        = "FBTYPE" "=" 
+                         ("FREE" 
+                          / "BUSY"
+                          / "BUSY-UNAVAILABLE" 
+                          / "BUSY-TENTATIVE"
+                          / x-name  ; Some experimental iCalendar free/busy type.
+                          / iana-token)
+                ; Some other IANA-registered iCalendar free/busy type.
+       ; Default is BUSY
+      </xs:documentation>
+    </xs:annotation>
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextParameterType"/>
     </xs:complexContent>
@@ -227,41 +251,49 @@
   </xs:complexType>
   
   <!-- 3.2.12 Participation Status -->
-  <xs:simpleType name="PartstatValueType">
-    <xs:union memberTypes="xcal:TypePartstatEvent xcal:TypePartstatTodo xcal:TypePartstatJour"/>
-  </xs:simpleType>
-  
-  <xs:simpleType name="TypePartstatEvent">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="NEEDS-ACTION"/>
-      <xs:enumeration value="ACCEPTED"/>
-      <xs:enumeration value="DECLINED"/>
-      <xs:enumeration value="TENTATIVE"/>
-      <xs:enumeration value="DELEGATED"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
-  <xs:simpleType name="TypePartstatTodo">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="NEEDS-ACTION"/>
-      <xs:enumeration value="ACCEPTED"/>
-      <xs:enumeration value="DECLINED"/>
-      <xs:enumeration value="TENTATIVE"/>
-      <xs:enumeration value="DELEGATED"/>
-      <xs:enumeration value="COMPLETED"/>
-      <xs:enumeration value="IN-PROCESS"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
-  <xs:simpleType name="TypePartstatJour">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="NEEDS-ACTION"/>
-      <xs:enumeration value="ACCEPTED"/>
-      <xs:enumeration value="DECLINED"/>
-    </xs:restriction>
-  </xs:simpleType>
   
   <xs:complexType name="PartstatParamType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+       partstat-event   = ("NEEDS-ACTION"    ; Event needs action
+                        / "ACCEPTED"         ; Event accepted
+                        / "DECLINED"         ; Event declined
+                        / "TENTATIVE"        ; Event tentatively
+                                             ; accepted
+                        / "DELEGATED"        ; Event delegated
+                        / x-name             ; Experimental status
+                        / iana-token)        ; Other IANA-registered
+                                             ; status
+       ; These are the participation statuses for a "VEVENT".
+       ; Default is NEEDS-ACTION.
+
+       partstat-todo    = ("NEEDS-ACTION"    ; To-do needs action
+                        / "ACCEPTED"         ; To-do accepted
+                        / "DECLINED"         ; To-do declined
+                        / "TENTATIVE"        ; To-do tentatively
+                                             ; accepted
+                        / "DELEGATED"        ; To-do delegated
+                        / "COMPLETED"        ; To-do completed
+                                             ; COMPLETED property has
+                                             ; DATE-TIME completed
+                        / "IN-PROCESS"       ; To-do in process of
+                                             ; being completed
+                        / x-name             ; Experimental status
+                        / iana-token)        ; Other IANA-registered
+                                             ; status
+       ; These are the participation statuses for a "VTODO".
+       ; Default is NEEDS-ACTION.
+
+       partstat-jour    = ("NEEDS-ACTION"    ; Journal needs action
+                        / "ACCEPTED"         ; Journal accepted
+                        / "DECLINED"         ; Journal declined
+                        / x-name             ; Experimental status
+                        / iana-token)        ; Other IANA-registered
+                                             ; status
+       ; These are the participation statuses for a "VJOURNAL".
+       ; Default is NEEDS-ACTION.
+      </xs:documentation>
+    </xs:annotation>
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextParameterType"/>
     </xs:complexContent>
@@ -285,62 +317,65 @@
   </xs:complexType>
   
   <!-- 3.2.14 Alarm Trigger Relationship -->
-  <xs:simpleType name="RelatedValueType">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="START"/>
-      <xs:enumeration value="END"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
   <xs:complexType name="RelatedParamType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+       trigrelparam       = "RELATED" "="
+                           ("START"       ; Trigger off of start
+                          / "END")        ; Trigger off of end
+      </xs:documentation>
+    </xs:annotation>
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextParameterType"/>
     </xs:complexContent>
   </xs:complexType>
   
   <!-- 3.2.15 Relationship Type -->
-  <!-- Enumerated values are not extensible
-  <xs:simpleType name="ReltypeValueType">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="PARENT"/>
-      <xs:enumeration value="CHILD"/>
-      <xs:enumeration value="SIBLING"/>
-    </xs:restriction>
-  </xs:simpleType>
- -->  
   <xs:complexType name="ReltypeParamType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+       reltypeparam       = "RELTYPE" "="
+                           ("PARENT"    ; Parent relationship - Default
+                          / "CHILD"     ; Child relationship
+                          / "SIBLING"   ; Sibling relationship
+                          / iana-token  ; Some other IANA-registered
+                                        ; iCalendar relationship type
+                          / x-name)     ; A non-standard, experimental
+                                        ; relationship type
+        Ws-Calendar adds the values
+                           / "FINISHTOSTART"
+                           / "FINISHTOFINISH"
+                           / "STARTTOFINISH"
+                           / "STARTTOSTART"             
+                           
+       ; Default is PARENT
+      </xs:documentation>
+    </xs:annotation>
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextParameterType"/>
     </xs:complexContent>
   </xs:complexType>
   
   <!-- 3.2.16 Participation Role -->
-  <xs:simpleType name="RoleValueType">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="CHAIR"/>
-      <xs:enumeration value="REQ-PARTICIPANT"/>
-      <xs:enumeration value="OPT-PARTICIPANT"/>
-      <xs:enumeration value="NON-PARTICIPANT"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
   <xs:complexType name="RoleParamType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        Standard values
+           "CHAIR" 
+           "REQ-PARTICIPANT" 
+           "OPT-PARTICIPANT" 
+           "NON-PARTICIPANT"
+      </xs:documentation>
+    </xs:annotation>
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextParameterType"/>
     </xs:complexContent>
   </xs:complexType>
   
   <!-- 3.2.17 RSVP Expectation -->
-  <xs:simpleType name="RsvpValueType">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="TRUE"/>
-      <xs:enumeration value="FALSE"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
   <xs:complexType name="RsvpParamType">
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:TextParameterType"/>
+      <xs:extension base="xcal:BooleanParameterType"/>
     </xs:complexContent>
   </xs:complexType>
   
@@ -361,28 +396,33 @@
   
   <!-- Scheduling parameters - Defined by CalDAV scheduling -->
   
-  <xs:simpleType name="ScheduleAgentValueType">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="SERVER"/>
-      <xs:enumeration value="CLIENT"/>
-      <xs:enumeration value="NONE"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
   <xs:complexType name="ScheduleAgentParamType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        scheduleagentparam = "SCHEDULE-AGENT" "="
+                        ("SERVER"      ; The server handles scheduling
+                       / "CLIENT"      ; The client handles scheduling
+                       / "NONE"        ; No automatic scheduling
+                       / x-name        ; Experimental type
+                       / iana-token)   ; Other IANA registered type
+                                       ;
+                                       ; Default is SERVER
+      </xs:documentation>
+    </xs:annotation>
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextParameterType"/>
     </xs:complexContent>
   </xs:complexType>
   
-  <xs:simpleType name="ScheduleForceSendValueType">
-    <xs:restriction base="xs:token">
-      <xs:enumeration value="REQUEST"/>
-      <xs:enumeration value="REPLY"/>
-    </xs:restriction>
-  </xs:simpleType>
-  
   <xs:complexType name="ScheduleForceSendParamType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+      scheduleforcesendparam = "SCHEDULE-FORCE-SEND" "="
+                              ("REQUEST"    ; Force a "REQUEST"
+                             / "REPLY"      ; Force a "REPLY"
+                             / iana-token)  ; IANA registered method
+      </xs:documentation>
+    </xs:annotation>
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextParameterType"/>
     </xs:complexContent>

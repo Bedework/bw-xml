@@ -24,23 +24,32 @@
   <xs:element name="cal-address" type="xcal:CalAddressType" />  
   
 	<!-- 3.3.4 DATE -->
-	<xs:element name="date" type="xs:string"/>
+	<xs:element name="date" type="xs:date"/>
   
 	<!-- 3.3.5 DATE-TIME -->
-	<xs:element name="date-time" type="xs:string"/>
-  
-  <!-- Patterns should allow us to restrict this 
-     e.g.     19980119T070000Z
-  -->
-  <xs:simpleType name="UTCDateTimeType">
-    <xs:restriction base="xs:string"/>
+  <!-- 
+  <xs:element name="date-time" type="xs:string"/>
+ -->  
+   <xs:simpleType name="DateTimeType">
+    <xs:restriction base="xs:dateTime">
+      <xs:pattern value="(\-|\+)?\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d*)Z?"/>
+    </xs:restriction>
   </xs:simpleType>
+  
+  <xs:element name="date-time" type="xcal:DateTimeType"/>
+  
+  <xs:simpleType name="UTCDateTimeType">
+    <xs:restriction base="xs:dateTime">
+      <xs:pattern value="(\-|\+)?\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d*)Z"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
   <xs:element name="utc-date-time" type="xcal:UTCDateTimeType"/>
   
 	<!-- 3.3.6 DURATION 
   We cannot have a duration value type here as the value-type element has the same 
   name as the property.  
-	<xs:element name="duration" type="xs:string"/>-->
+	<xs:element name="duration" type="xs:duration"/>-->
   
 	<!-- 3.3.7 FLOAT -->
 	<xs:element name="float" type="xs:float"/>
@@ -49,8 +58,21 @@
 	<xs:element name="integer" type="xs:integer"/>
   
 	<!-- 3.3.9 PERIOD -->
-	<xs:element name="period" type="xs:string"/>
-  
+
+  <xs:complexType name="PeriodType">
+    <xs:sequence>
+      <xs:element name="start" type="xcal:DateTimeType" />
+      <xs:sequence>
+        <xs:choice>
+          <xs:element name="end" type="xcal:DateTimeType" />
+          <xs:element name="duration" type="xs:duration" />
+        </xs:choice>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="period" type="xcal:PeriodType" />
+     
   <!-- 3.3.10 RECUR -->
   <xs:complexType name="RecurType">
     <xs:sequence>

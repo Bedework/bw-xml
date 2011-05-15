@@ -22,7 +22,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:BaseParameterType">
         <xs:sequence>
-          <xs:element  name="duration" type="xs:string"/>
+          <xs:element  name="duration" type="xs:duration"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -32,29 +32,44 @@
   <xs:element name="gap" type="xcal:DurationParameterType" 
               substitutionGroup="xcal:baseParameter" />
 
-  <!-- The following are used with attach -->
+  <xs:complexType name="ToleranceValueType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+         A tolerance value is a set of durations which indicate the allowed
+         tolerance for the indicated value, e.g. startafter=PT5M indicates that
+         5 minutes late is acceptable. 
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="startbefore" type="xs:duration" />
+    
+      <xs:element name="startafter" type="xs:duration" />
+    
+      <xs:element name="endtbefore" type="xs:duration" />
+    
+      <xs:element name="endafter" type="xs:duration" />
+    
+      <xs:element name="durationlong" type="xs:duration" />
+    
+      <xs:element name="durationshort" type="xs:duration" />
+    
+      <xs:element name="granularity" type="xs:duration" />
+    </xs:sequence>
+  </xs:complexType>
+              
+  <xs:element name="tolerance" type="xcal:TolerancePropType"
+              substitutionGroup="xcal:baseProperty" /> 
   
-  <xs:element name="startbeforetolerance" type="xcal:DurationParameterType" 
-              substitutionGroup="xcal:baseParameter" />
-
-  <xs:element name="startaftertolerance" type="xcal:DurationParameterType" 
-              substitutionGroup="xcal:baseParameter" />
-
-  <xs:element name="endtbeforetolerance" type="xcal:DurationParameterType" 
-              substitutionGroup="xcal:baseParameter" />
-
-  <xs:element name="endaftertolerance" type="xcal:DurationParameterType" 
-              substitutionGroup="xcal:baseParameter" />
-
-  <xs:element name="durationlongtolerance" type="xcal:DurationParameterType" 
-              substitutionGroup="xcal:baseParameter" />
-
-  <xs:element name="durationshorttolerance" type="xcal:DurationParameterType" 
-              substitutionGroup="xcal:baseParameter" />
-
-  <xs:element name="granularity" type="xcal:DurationParameterType" 
-              substitutionGroup="xcal:baseParameter" />
-           
+  <xs:complexType name="TolerancePropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:RecurPropertyType">
+        <xs:sequence>
+          <xs:element name="tolerate" type="xcal:ToleranceValueType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+    
   <!-- =====================================================================
        3.4 Calendar Components
        ===================================================================== -->  
