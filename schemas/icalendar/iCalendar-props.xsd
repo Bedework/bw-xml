@@ -24,7 +24,8 @@
        ===================================================================== -->  
   <xs:complexType name="BasePropertyType" abstract="true" >
     <xs:sequence>
-      <xs:element ref="xcal:parameters" />
+      <xs:element ref="xcal:parameters" 
+                  minOccurs="0" />
     </xs:sequence>
   </xs:complexType>
   

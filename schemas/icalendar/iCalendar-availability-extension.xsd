@@ -76,9 +76,7 @@
 
   <xs:complexType name="ArrayOfVavailabilityContainedComponents">
     <xs:sequence>
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="xcal:available"/>
-      </xs:choice>
+      <xs:element ref="xcal:available" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
        

@@ -18,7 +18,7 @@
        ===================================================================== -->
 
   <!-- Parameters that take a duration value -->
-  <xs:complexType name="DurationParameterType" >
+  <xs:complexType name="DurationParameterType" mixed="false" >
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:BaseParameterType">
         <xs:sequence>
@@ -32,7 +32,7 @@
   <xs:element name="gap" type="xcal:DurationParameterType" 
               substitutionGroup="xcal:baseParameter" />
 
-  <xs:complexType name="ToleranceValueType">
+  <xs:complexType name="ToleranceValueType" mixed="false">
     <xs:annotation>
       <xs:documentation xml:lang="en">
          A tolerance value is a set of durations which indicate the allowed
@@ -41,28 +41,35 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="startbefore" type="xs:duration" />
+      <xs:element name="startbefore" type="xs:duration" 
+                  minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="startafter" type="xs:duration" />
+      <xs:element name="startafter" type="xs:duration" 
+                  minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="endtbefore" type="xs:duration" />
+      <xs:element name="endbefore" type="xs:duration" 
+                  minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="endafter" type="xs:duration" />
+      <xs:element name="endafter" type="xs:duration" 
+                  minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="durationlong" type="xs:duration" />
+      <xs:element name="durationlong" type="xs:duration" 
+                  minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="durationshort" type="xs:duration" />
+      <xs:element name="durationshort" type="xs:duration" 
+                  minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="granularity" type="xs:duration" />
+      <xs:element name="granularity" type="xs:duration" 
+                  minOccurs="0" maxOccurs="1" />
     </xs:sequence>
   </xs:complexType>
               
   <xs:element name="tolerance" type="xcal:TolerancePropType"
               substitutionGroup="xcal:baseProperty" /> 
   
-  <xs:complexType name="TolerancePropType">
+  <xs:complexType name="TolerancePropType" mixed="false">
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:RecurPropertyType">
+      <xs:extension base="xcal:BasePropertyType">
         <xs:sequence>
           <xs:element name="tolerate" type="xcal:ToleranceValueType"/>
         </xs:sequence>
@@ -74,7 +81,7 @@
        3.4 Calendar Components
        ===================================================================== -->  
  
-  <xs:complexType name="WsCalendarGluonType">
+  <xs:complexType name="WsCalendarGluonType" mixed="false">
     <xs:annotation>
       <xs:documentation xml:lang="en">
          A gluon takes vavailability.
@@ -90,7 +97,7 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="ArrayOfGluonContainedComponents">
+  <xs:complexType name="ArrayOfGluonContainedComponents" mixed="false">
     <xs:sequence>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
         <xs:element ref="xcal:vavailability"/>
