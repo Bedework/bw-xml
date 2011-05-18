@@ -61,6 +61,12 @@
     <property name="org.bedework.icalendar.base"
               location="${project.home}/icalendar" />
 
+    <property name="org.bedework.category.base"
+              location="${project.home}/category" />
+
+    <property name="org.bedework.catdav.base"
+              location="${project.home}/catdav" />
+
     <property name="org.bedework.tzsvc.base"
               location="${project.home}/timezones" />
 
@@ -84,6 +90,12 @@
 
     <property name="vcard.jar"
               location="${dist.home}/${org.bedework.module.vcardschema.jar}-${project.version}.jar" />
+
+    <property name="category.jar"
+              location="${dist.home}/${org.bedework.module.catschema.jar}-${project.version}.jar" />
+
+    <property name="catdavschema.jar"
+              location="${dist.home}/${org.bedework.module.catdavschema.jar}-${project.version}.jar" />
     
     <property name="calws-soap.wsdllocation"
               value="${bedework-options.org.bedework.app.Usercaldav.calSoapWsWSDLURI}" />
@@ -146,6 +158,20 @@
     <xjc schema="${org.bedework.schemas.base}/icalendar/iCalendar.xsd"
          module-base="${org.bedework.icalendar.base}/gensrc"
          jar-file="${icalendar.jar}"
+         bindingsdir="${project.home}/xjcbindings"
+    />
+
+    <!-- category -->
+    <xjc schema="${org.bedework.schemas.base}/category/category.xsd"
+         module-base="${org.bedework.category.base}/gensrc"
+         jar-file="${category.jar}"
+         bindingsdir="${project.home}/xjcbindings"
+    />
+
+    <!-- catdav -->
+    <xjc schema="${org.bedework.schemas.base}/catdav/catdav.xsd"
+         module-base="${org.bedework.catdav.base}/gensrc"
+         jar-file="${catdavschema.jar}"
          bindingsdir="${project.home}/xjcbindings"
     />
 

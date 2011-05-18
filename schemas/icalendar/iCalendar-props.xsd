@@ -504,7 +504,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:BasePropertyType">
         <xs:sequence>
-          <xs:element  name="duration" type="xs:duration"/>
+          <xs:element  name="duration" type="xcal:DurationValueType"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -695,7 +695,7 @@
       <xs:extension base="xcal:BasePropertyType">
         <xs:sequence>
           <xs:choice>
-            <xs:element name="duration" type="xs:duration"/>
+            <xs:element name="duration" type="xcal:DurationValueType"/>
             <xs:element ref="xcal:date-time"/>
           </xs:choice>
         </xs:sequence>

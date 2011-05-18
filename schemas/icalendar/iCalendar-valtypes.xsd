@@ -51,6 +51,45 @@
   name as the property.  
 	<xs:element name="duration" type="xs:duration"/>-->
   
+  <xs:simpleType name="DurationValueType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        Durations are a problem: 
+           XML schema types allow Years, Months, Days, Hours, Minutes, Seconds
+           Ical allows Weeks, Days, Hours, Minutes, Seconds
+           
+        These overlap and we really need a combination of both.
+        So the compromise is to have a pattern restricted String type and note
+        that if data is to be exported into the icalendar world it cannot have 
+        years or months.
+        
+        Ultimately it is to be hoped the two worlds can be aligned.
+        
+        RFC5545 (icalendar) specifies
+        dur-value  = (["+"] / "-") "P" (dur-date / dur-time / dur-week)
+
+        dur-date   = dur-day [dur-time]
+        dur-time   = "T" (dur-hour / dur-minute / dur-second)
+        dur-week   = 1*DIGIT "W"
+        dur-hour   = 1*DIGIT "H" [dur-minute]
+        dur-minute = 1*DIGIT "M" [dur-second]
+        dur-second = 1*DIGIT "S"
+        dur-day    = 1*DIGIT "D"
+        
+        So P5W is valid: P5WT10M is not. If weeks re specified nothing else can be
+        
+        XML specifies
+           PnYnMnDTnHnMnS
+        
+        The elements must appear in the order specified and the 'T' is omitted 
+        if hours minutes and seconds are absent.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(\+|\-)?P((\d+Y)?(\d+M)?(\d+D)?T?(\d+H)?(\d+M)?(\d+S)?)|(\d+W)"/>
+    </xs:restriction>
+  </xs:simpleType>
+  
 	<!-- 3.3.7 FLOAT -->
 	<xs:element name="float" type="xs:float"/>
   
@@ -65,7 +104,7 @@
       <xs:sequence>
         <xs:choice>
           <xs:element name="end" type="xcal:DateTimeType" />
-          <xs:element name="duration" type="xs:duration" />
+          <xs:element name="duration" type="xcal:DurationValueType" />
         </xs:choice>
       </xs:sequence>
     </xs:sequence>

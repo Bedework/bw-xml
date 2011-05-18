@@ -472,11 +472,15 @@
        ============================================================= -->
   
   <!-- Vcard Stream -->
-  <xs:complexType name="VcardsType">
+  <xs:element name="vcards" type="v:ArrayOfVcards"/>
+  
+  <xs:complexType name="ArrayOfVcards">
     <xs:sequence>
-      <xs:element name="vcards" type="v:VcardType" maxOccurs="unbounded"/>
+      <xs:element ref="v:vcard" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+  
+  <xs:element name="vcard" type="v:VcardType"/>
           
   <xs:complexType name="GroupType" >
     <xs:sequence>

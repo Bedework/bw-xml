@@ -41,25 +41,25 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="startbefore" type="xs:duration" 
+      <xs:element name="startbefore" type="xcal:DurationValueType" 
                   minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="startafter" type="xs:duration" 
+      <xs:element name="startafter" type="xcal:DurationValueType" 
                   minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="endbefore" type="xs:duration" 
+      <xs:element name="endbefore" type="xcal:DurationValueType" 
                   minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="endafter" type="xs:duration" 
+      <xs:element name="endafter" type="xcal:DurationValueType" 
                   minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="durationlong" type="xs:duration" 
+      <xs:element name="durationlong" type="xcal:DurationValueType" 
                   minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="durationshort" type="xs:duration" 
+      <xs:element name="durationshort" type="xcal:DurationValueType" 
                   minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="granularity" type="xs:duration" 
+      <xs:element name="granularity" type="xcal:DurationValueType" 
                   minOccurs="0" maxOccurs="1" />
     </xs:sequence>
   </xs:complexType>
