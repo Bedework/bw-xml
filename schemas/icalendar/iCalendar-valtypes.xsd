@@ -32,7 +32,7 @@
  -->  
    <xs:simpleType name="DateTimeType">
     <xs:restriction base="xs:dateTime">
-      <xs:pattern value="(\-|\+)?\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d*)Z?"/>
+      <xs:pattern value="(\-|\+)?\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}(\.\d*)?Z?"/>
     </xs:restriction>
   </xs:simpleType>
   
@@ -211,7 +211,9 @@
   
 	<!-- 3.3.14 UTC-OFFSET -->
   <xs:simpleType name="UtcOffsetType">
-    <xs:restriction base="xs:string"/>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(\-|\+)?\d{2}:\d{2}"/>
+    </xs:restriction>
   </xs:simpleType>
   
   <xs:element name="utc-offset" type="xcal:UtcOffsetType" />  

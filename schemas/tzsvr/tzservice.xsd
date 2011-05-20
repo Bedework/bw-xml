@@ -38,7 +38,7 @@
         made to the timezone data.  
       </documentation>
     </annotation>
-    <restriction base="string"/>
+    <restriction base="tns:UTCDateTimeType"/>
   </simpleType>
 
   <simpleType name="LastmodifiedType">
@@ -48,7 +48,7 @@
         modified. 
       </documentation>
     </annotation>
-    <restriction base="string"/>
+    <restriction base="tns:UTCDateTimeType"/>
   </simpleType>
   
   <complexType name="LocalNameType">
@@ -65,7 +65,7 @@
     <simpleContent>
       <extension base="string">
         <attribute ref="xml:lang" />
-        <attribute name="pref" type="boolean" />
+        <attribute name="pref" type="boolean" default="false" />
       </extension>
     </simpleContent>
   </complexType>
@@ -77,7 +77,9 @@
         observance takes effect.   
       </documentation>
     </annotation>
-    <restriction base="string"/>
+    <restriction base="dateTime">
+      <pattern value="\d{4}\-\d{2}\-\d{2}T\d{2}:\d{2}:\d{2}(\.\d*)?"/>
+    </restriction>
   </simpleType>
               
   <simpleType name="TzidType">
@@ -97,7 +99,9 @@
         and minutes before the start of this observance.   
       </documentation>
     </annotation>
-    <restriction base="string"/>
+    <restriction base="string">
+      <pattern value="(\-|\+)?\d{2}:\d{2}"/>
+    </restriction>
   </simpleType>
               
   <simpleType name="UtcOffsetToType">
@@ -107,7 +111,9 @@
         minutes at and after the start of this observance.   
       </documentation>
     </annotation>
-    <restriction base="string"/>
+    <restriction base="string">
+      <pattern value="(\-|\+)?\d{2}:\d{2}"/>
+    </restriction>
   </simpleType>
   
   <complexType name="AliasType">
@@ -125,7 +131,23 @@
     </simpleContent>
   </complexType>
   
+  <complexType name="InactiveType">
+    <annotation>
+      <documentation xml:lang="en">
+        The inactive empty element flags timezones that are 
+        no longer active. 
+      </documentation>
+    </annotation>
+  </complexType>
+  
   <complexType name="BaseResultType" abstract="true" />
+  
+  <simpleType name="UTCDateTimeType">
+    <restriction base="dateTime">
+      <pattern 
+        value="(\-|\+)?\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d*)Z"/>
+    </restriction>
+  </simpleType>
   
   <!-- *************************************************************
                              capabilities response
@@ -197,10 +219,11 @@
     <sequence >
       <element name="tzid" type="tns:TzidType" minOccurs="1" />
       <element name="last-modified" type="tns:LastmodifiedType" />
+      <element name="inactive" type="tns:InactiveType" minOccurs="0" />
       <element name="local-name" type="tns:LocalNameType"
-               maxOccurs="unbounded" />
+               minOccurs="0" maxOccurs="unbounded" />
       <element name="alias" type="tns:AliasType"
-               maxOccurs="unbounded" />
+               minOccurs="0" maxOccurs="unbounded" />
     </sequence>
   </complexType>
   
