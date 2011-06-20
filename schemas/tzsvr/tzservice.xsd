@@ -125,9 +125,7 @@
       </documentation>
     </annotation>
     <simpleContent>
-      <extension base="string">
-        <attribute ref="xml:lang" />
-      </extension>
+      <extension base="string"/>
     </simpleContent>
   </complexType>
   
@@ -150,8 +148,42 @@
   </simpleType>
   
   <!-- *************************************************************
+                             error response
+       ************************************************************* -->
+  
+  <complexType name="ErrorResponseType" mixed="true" >
+    <annotation>
+      <documentation xml:lang="en">
+        Useful messages SHOULD be returned as an error element. 
+      </documentation>
+    </annotation>
+    <sequence> 
+      <any minOccurs="0"/>
+    </sequence>
+  </complexType>
+  
+  <element name="error" type="tns:ErrorResponseType" />
+  
+  <!-- *************************************************************
                              capabilities response
        ************************************************************* -->
+  
+  <complexType name="CapabilitiesInfoType">
+    <annotation>
+      <documentation xml:lang="en">
+        The element used as the container for information about the 
+        servers source of data and contacts.
+      </documentation>
+    </annotation>
+    <sequence>
+      <choice>
+      <element name="source" type="string" />
+      <element name="primary-source" type="string" />
+      </choice>
+      <element name="contact"  type="string" 
+               minOccurs="0" maxOccurs="unbounded" />
+    </sequence>
+  </complexType>
   
   <complexType name="CapabilitiesAcceptParameterType">
     <annotation>
@@ -173,7 +205,7 @@
     <annotation>
       <documentation xml:lang="en">
         The element used as the container for information defining an 
-        operation and its parameters. .
+        operation and its parameters.
       </documentation>
     </annotation>
     <sequence> 
@@ -195,6 +227,9 @@
     <complexContent mixed="false">
       <extension base="tns:BaseResultType">
         <sequence> 
+          <element name="info" 
+                    type="tns:CapabilitiesInfoType" />
+        
           <element name="operation" 
                     type="tns:CapabilitiesOperationType"
                     maxOccurs="unbounded" />

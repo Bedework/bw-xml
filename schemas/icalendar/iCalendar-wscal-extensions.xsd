@@ -32,6 +32,10 @@
   <xs:element name="gap" type="xcal:DurationParameterType" 
               substitutionGroup="xcal:baseParameter" />
 
+  <!-- Granularity is used in the VAVAILABILITY and AVAILABILITY components -->
+  <xs:element name="granularity" type="xcal:DurationPropType"
+              substitutionGroup="xcal:baseProperty" />
+
   <xs:complexType name="ToleranceValueType" mixed="false">
     <xs:annotation>
       <xs:documentation xml:lang="en">
@@ -59,7 +63,7 @@
       <xs:element name="durationshort" type="xcal:DurationValueType" 
                   minOccurs="0" maxOccurs="1" />
     
-      <xs:element name="granularity" type="xcal:DurationValueType" 
+      <xs:element name="precision" type="xcal:DurationValueType" 
                   minOccurs="0" maxOccurs="1" />
     </xs:sequence>
   </xs:complexType>

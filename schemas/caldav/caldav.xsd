@@ -31,8 +31,13 @@
         A type used by a number of filter elements.
       </documentation>
     </annotation>
+    
+    <!-- 
     <attribute name="start" type="xcal:UTCDateTimeType" />
     <attribute name="end" type="xcal:UTCDateTimeType" />
+     -->
+    <attribute name="start" type="string" />
+    <attribute name="end" type="string" />
   </complexType>
         
   <complexType name="AllcompType">
