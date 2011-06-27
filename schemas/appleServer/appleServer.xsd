@@ -310,7 +310,7 @@
       <element ref="CS:summary" minOccurs="0" />
     </sequence>
   </complexType>
-  
+
   <element name="invite-reply" type="CS:InviteReplyType" />
 
   <simpleType name="InReplyToType">
