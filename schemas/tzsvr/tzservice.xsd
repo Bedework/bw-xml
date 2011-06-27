@@ -58,8 +58,8 @@
         timezone identifier needs to be presented to a user. 
         The xml:lang attribute is used to indicate the language 
         associated with each value.  
-        If multiple names are provided for the same locale the first is 
-        considered the preferred name.
+        If multiple names are provided for the same locale the preferred name 
+        can be flagged with the pref attribute.
       </documentation>
     </annotation>
     <simpleContent>
@@ -92,30 +92,17 @@
     <restriction base="string"/>
   </simpleType>
               
-  <simpleType name="UtcOffsetFromType">
+  <simpleType name="UtcOffsetType">
     <annotation>
       <documentation xml:lang="en">
-        The utc-offset-from element defines the UTC offset in hours 
-        and minutes before the start of this observance.   
+        This type specifies the UTC offset in hours, minutes and optional seconds.   
       </documentation>
     </annotation>
     <restriction base="string">
-      <pattern value="(\-|\+)?\d{2}:\d{2}"/>
+      <pattern value="(\-|\+)?\d{2}:\d{2}(:\d{2})?"/>
     </restriction>
   </simpleType>
               
-  <simpleType name="UtcOffsetToType">
-    <annotation>
-      <documentation xml:lang="en">
-        The utc-offset-to element defines the UTC offset in hours and 
-        minutes at and after the start of this observance.   
-      </documentation>
-    </annotation>
-    <restriction base="string">
-      <pattern value="(\-|\+)?\d{2}:\d{2}"/>
-    </restriction>
-  </simpleType>
-  
   <complexType name="AliasType">
     <annotation>
       <documentation xml:lang="en">
@@ -293,6 +280,12 @@
       <documentation xml:lang="en">
         In an expanded timezone, the observance element specifies a 
         single timezone observance.  
+        
+        The utc-offset-from element defines the UTC offset in hours 
+        and minutes before the start of this observance.   
+        
+        The utc-offset-to element defines the UTC offset in hours and 
+        minutes at and after the start of this observance.   
       </documentation>
     </annotation>
     <sequence> 
@@ -301,8 +294,8 @@
                maxOccurs="unbounded" />
       <element name="onset" type="tns:OnsetType" minOccurs="1" />
       <element name="utc-offset-from" 
-               type="tns:UtcOffsetFromType" minOccurs="1" />
-      <element name="utc-offset-to" type="tns:UtcOffsetToType" 
+               type="tns:UtcOffsetType" minOccurs="1" />
+      <element name="utc-offset-to" type="tns:UtcOffsetType" 
                minOccurs="1" />
     </sequence>
   </complexType>
