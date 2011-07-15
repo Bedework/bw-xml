@@ -58,8 +58,8 @@
         timezone identifier needs to be presented to a user. 
         The xml:lang attribute is used to indicate the language 
         associated with each value.  
-        If multiple names are provided for the same locale the preferred name 
-        can be flagged with the pref attribute.
+        If multiple names are provided for the same locale the preferred 
+        name can be flagged with the pref attribute.
       </documentation>
     </annotation>
     <simpleContent>
@@ -95,7 +95,8 @@
   <simpleType name="UtcOffsetType">
     <annotation>
       <documentation xml:lang="en">
-        This type specifies the UTC offset in hours, minutes and optional seconds.   
+        This type specifies the UTC offset in hours, minutes and 
+        optional seconds.   
       </documentation>
     </annotation>
     <restriction base="string">

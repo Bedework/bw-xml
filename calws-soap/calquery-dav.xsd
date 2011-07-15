@@ -1,49 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" 
-        xmlns:tns="urn:ietf:params:xml:ns:caldav" 
+        xmlns:tns="http://docs.oasis-open.org/ns/wscal/calws-soap" 
         xmlns:xcal="urn:ietf:params:xml:ns:icalendar-2.0"
-        targetNamespace="urn:ietf:params:xml:ns:caldav" 
+        targetNamespace="http://docs.oasis-open.org/ns/wscal/calws-soap" 
         elementFormDefault="qualified">
   <!-- =============================================================
-       CalDAV XML schema 
+       This query is functionally equivalent to the CalDAV XML query.
+       
+       It differs in that date/time and boolean attributes must all be XML 
+       schema types.  
        
        Note: this schema is incomplete. It currently only defines 
        elements required for CalWS.
        ============================================================= -->
         
-  <import schemaLocation="../icalendar/iCalendar.xsd" 
+  <import schemaLocation="../schemas/icalendar/iCalendar.xsd" 
           namespace="urn:ietf:params:xml:ns:icalendar-2.0" />
-  
-  <simpleType name="YesNoType">
-    <annotation>
-      <documentation xml:lang="en">
-        The CALDAV spec has a yes/no option rather than boolean.
-      </documentation>
-    </annotation>
-    <restriction base="string">
-      <pattern value="yes|no"/>
-    </restriction>
-  </simpleType>
-  
+<!--   
   <complexType name="UTCTimeRangeType">
     <annotation>
       <documentation xml:lang="en">
         A type used by a number of filter elements.
       </documentation>
     </annotation>
-    
-    <!-- 
     <attribute name="start" type="xcal:UTCDateTimeType" />
     <attribute name="end" type="xcal:UTCDateTimeType" />
-     -->
-    <attribute name="start" type="string" />
-    <attribute name="end" type="string" />
   </complexType>
-        
+       -->  
   <complexType name="AllcompType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:allcomp XML element can be used when the
+        The allcomp XML element can be used when the
         client wants all types of components returned by a calendaring
         REPORT request.
       </documentation>
@@ -51,11 +38,11 @@
   </complexType>
   
   <element name="allcomp" type="tns:AllcompType" />
-        
+<!--         
   <complexType name="AllpropType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:allprop XML element can be used when the
+        The allprop XML element can be used when the
         client wants all properties of components returned by a
         calendaring REPORT request.
       </documentation>
@@ -63,7 +50,7 @@
   </complexType>
   
   <element name="allprop" type="tns:AllpropType" />
-  
+   -->
   <complexType name="PropType">
     <annotation>
       <documentation xml:lang="en">
@@ -77,7 +64,7 @@
       </documentation>
     </annotation>
     <attribute name="name" type="string" use="required" />
-    <attribute name="novalue" type="tns:YesNoType" default="no" />
+    <attribute name="novalue" type="boolean" default="false" />
   </complexType>
   
   <element name="prop" type="tns:PropType" />
@@ -106,7 +93,7 @@
   <complexType name="ExpandType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:expand XML element specifies that for a
+        The expand XML element specifies that for a
         given calendaring REPORT request, the server MUST expand the
         recurrence set into calendar components that define exactly one
         recurrence instance, and MUST return only those whose scheduled
@@ -118,8 +105,8 @@
         time value.  The value of the "end" attribute MUST be greater than
         the value of the "start" attribute.
   
-        The server MUST use the same logic as defined for CALDAV:time-
-        range to determine if a recurrence instance intersects the
+        The server MUST use the same logic as defined for time-range 
+        to determine if a recurrence instance intersects the
         specified time range.
   
         Recurring components, other than the initial instance, MUST
@@ -143,7 +130,7 @@
   <complexType name="LimitRecurrenceSetType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:limit-recurrence-set XML element specifies
+        The limit-recurrence-set XML element specifies
         that for a given calendaring REPORT request, the server MUST
         return, in addition to the "master component", only the
         "overridden components" that impact a specified time range.  An
@@ -158,8 +145,8 @@
         time value.  The value of the "end" attribute MUST be greater than
         the value of the "start" attribute.
   
-        The server MUST use the same logic as defined for CALDAV:time-
-        range to determine if the current or original scheduled time of an
+        The server MUST use the same logic as defined for time-range 
+        to determine if the current or original scheduled time of an
         "overridden" recurrence instance intersects the specified time
         range.
   
@@ -183,7 +170,7 @@
   <complexType name="LimitFreebusySetType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:limit-freebusy-set XML element specifies
+        The limit-freebusy-set XML element specifies
         that for a given calendaring REPORT request, the server MUST only
         return the FREEBUSY property values of a VFREEBUSY component that
         intersects a specified time range.
@@ -194,8 +181,8 @@
         time" value.  The value of the "end" attribute MUST be greater
         than the value of the "start" attribute.
   
-        The server MUST use the same logic as defined for CALDAV:time-
-        range to determine if a FREEBUSY property value intersects the
+        The server MUST use the same logic as defined for time-range 
+        to determine if a FREEBUSY property value intersects the
         specified time range.
       </documentation>
     </annotation>
@@ -218,32 +205,32 @@
   <complexType name="CalendarDataType">
     <annotation>
       <documentation xml:lang="en">
-        When nested in the CALDAV:supported-calendar-data
-        property, the CALDAV:calendar-data XML element specifies a media
-        type supported by the CalDAV server for calendar object resources.
+        When nested in the supported-calendar-data element,
+        the calendar-data XML element specifies a media
+        type supported by the server for calendar object resources.
   
-        When used in a calendaring REPORT request, the CALDAV:calendar-
-        data XML element specifies which parts of calendar object
-        resources need to be returned in the response.  If the CALDAV:
-        calendar-data XML element doesn't contain any CALDAV:comp element,
+        When used in a calendaring REPORT request, the calendar-data 
+        XML element specifies which parts of calendar object
+        resources need to be returned in the response.  If the 
+        calendar-data XML element doesn't contain any comp element,
         calendar object resources will be returned in their entirety.
   
-        Finally, when used in a calendaring REPORT response, the CALDAV:
+        Finally, when used in a calendaring REPORT response, the 
         calendar-data XML element specifies the content of a calendar
         object resource.  Given that XML parsers normalize the two-
         character sequence CRLF (US-ASCII decimal 13 and US-ASCII decimal
         10) to a single LF character (US-ASCII decimal 10), the CR
         character (US-ASCII decimal 13) MAY be omitted in calendar object
-        resources specified in the CALDAV:calendar-data XML element.
-        Furthermore, calendar object resources specified in the CALDAV:
+        resources specified in the calendar-data XML element.
+        Furthermore, calendar object resources specified in the 
         calendar-data XML element MAY be invalid per their media type
-        specification if the CALDAV:calendar-data XML element part of the
+        specification if the calendar-data XML element part of the
         calendaring REPORT request did not specify required properties
-        (e.g., UID, DTSTAMP, etc.), or specified a CALDAV:prop XML element
+        (e.g., UID, DTSTAMP, etc.), or specified a prop XML element
         with the "novalue" attribute set to "yes".
         
-        NOTE: This schema type only applies to calendar-data used in CalDAV
-        calendar-query requests. The response - with String content is not
+        NOTE: This schema type only applies to calendar-data used in
+        calendar-query requests. The response with String content is not
         covered here as it requires mixed content.
       </documentation>
     </annotation>
@@ -251,7 +238,7 @@
     <!-- String content content-type text/calendar requested -->
     
     <sequence> 
-      <!-- EMPTY when nested in the CALDAV:supported-calendar-data property
+      <!-- EMPTY when nested in the supported-calendar-data property
           to specify a supported media type for calendar object
           resources; -->
           
@@ -279,7 +266,7 @@
   <complexType name="TextMatchType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:text-match XML element specifies text used
+        The text-match XML element specifies text used
         for a substring match against the property or parameter value
         specified in a calendaring REPORT request.
   
@@ -299,7 +286,7 @@
     <simpleContent>
       <extension base="string">
         <attribute name="collation" type="string" default="i;ascii-casemap" />
-        <attribute name="negate-condition" type="tns:YesNoType" default="no" />
+        <attribute name="negate-condition" type="boolean" default="false" />
       </extension>
     </simpleContent>
   </complexType>
@@ -309,7 +296,7 @@
   <complexType name="IsNotDefinedType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:is-not-defined XML element specifies that a
+        The is-not-defined XML element specifies that a
         match occurs if the enclosing component, property, or parameter
         value specified in a calendaring REPORT request does not exist in
         the calendar data being tested.
@@ -322,18 +309,18 @@
   <complexType name="TimezoneType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:timezone XML element specifies that for a
+        The timezone XML element specifies that for a
         given calendaring REPORT request, the server MUST rely on the
-        specified VTIMEZONE component instead of the CALDAV:calendar-
-        timezone property of the calendar collection, in which the
+        specified VTIMEZONE component instead of the calendar-timezone 
+        property of the calendar collection, in which the
         calendar object resource is contained to resolve "date" values and
         "date with local time" values (i.e., floating time) to "date with
         UTC time" values.  The server will require this information to
         determine if a calendar component scheduled with "date" values or
-        "date with local time" values intersects a CALDAV:time-range
-        specified in a CALDAV:calendar-query REPORT.
+        "date with local time" values intersects a time-range
+        specified in a calendar-query REPORT.
   
-        Note:  The iCalendar data embedded within the CALDAV:timezone XML
+        Note:  The iCalendar data embedded within the timezone XML
         element MUST follow the standard XML character data encoding
         rules, including use of &lt;, &gt;, &amp; etc. entity encoding or
         the use of a <![CDATA[ ... ]]> construct.  In the later case, the
@@ -352,16 +339,16 @@
   <complexType name="TimezoneIdType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:timezone-id XML element specifies that for a
+        The timezone-id XML element specifies that for a
         given calendaring REPORT request, the server MUST rely on the
-        specified timezone instead of the CALDAV:calendar-timezone
+        specified timezone instead of the calendar-timezone
         property of the calendar collection, in which the
         calendar object resource is contained to resolve "date" values and
         "date with local time" values (i.e., floating time) to "date with
         UTC time" values.  The server will require this information to
         determine if a calendar component scheduled with "date" values or
-        "date with local time" values intersects a CALDAV:time-range
-        specified in a CALDAV:calendar-query REPORT.
+        "date with local time" values intersects a time-range
+        specified in a calendar-query REPORT.
       </documentation>
     </annotation>
     <simpleContent>
@@ -375,7 +362,7 @@
   <element name="time-range" type="tns:UTCTimeRangeType" >
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:time-range XML element specifies that for a
+        The time-range XML element specifies that for a
         given calendaring REPORT request, the server MUST only return the
         calendar object resources that, depending on the context, have a
         component or property whose value intersects a specified time
@@ -386,9 +373,9 @@
         the time range.  Both attributes MUST be specified as "date with
         UTC time" value.  Time ranges open at one end can be specified by
         including only one attribute; however, at least one attribute MUST
-        always be present in the CALDAV:time-range element.  If either the
-        "start" or "end" attribute is not specified in the CALDAV:time-
-        range XML element, assume "-infinity" and "+infinity" as their
+        always be present in the time-range element.  If either the
+        "start" or "end" attribute is not specified in the time-range 
+        XML element, assume "-infinity" and "+infinity" as their
         value, respectively.  If both "start" and "end" are present, the
         value of the "end" attribute MUST be greater than the value of the
         "start" attribute.
@@ -399,20 +386,20 @@
   <complexType name="ParamFilterType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:param-filter XML element specifies a query
+        The param-filter XML element specifies a query
         targeted at a specific calendar property parameter (e.g.,
         PARTSTAT) in the scope of the calendar property on which it is
-        defined.  A calendar property parameter is said to match a CALDAV:
+        defined.  A calendar property parameter is said to match a 
         param-filter if:
   
-        *  The CALDAV:param-filter XML element is empty and a parameter of
+        *  The param-filter XML element is empty and a parameter of
            the type specified by the "name" attribute exists on the
            calendar property being examined;
   
         or:
   
-        *  The CALDAV:param-filter XML element contains a CALDAV:is-not-
-           defined XML element and no parameter of the type specified by
+        *  The param-filter XML element contains a is-not-defined 
+           XML element and no parameter of the type specified by
            the "name" attribute exists on the calendar property being
            examined;
       </documentation>
@@ -431,34 +418,34 @@
   <complexType name="PropFilterType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:prop-filter XML element specifies a query
+        The prop-filter XML element specifies a query
         targeted at a specific calendar property (e.g., CATEGORIES) in the
         scope of the enclosing calendar component.  A calendar property is
-        said to match a CALDAV:prop-filter if:
+        said to match a prop-filter if:
   
-        *  The CALDAV:prop-filter XML element is empty and a property of
+        *  The prop-filter XML element is empty and a property of
            the type specified by the "name" attribute exists in the
            enclosing calendar component;
   
         or:
   
-        *  The CALDAV:prop-filter XML element contains a CALDAV:is-not-
-           defined XML element and no property of the type specified by
+        *  The prop-filter XML element contains a is-not-defined 
+           XML element and no property of the type specified by
            the "name" attribute exists in the enclosing calendar
            component;
   
         or:
   
-        *  The CALDAV:prop-filter XML element contains a CALDAV:time-range
+        *  The prop-filter XML element contains a time-range
            XML element and the property value overlaps the specified time
-           range, and all specified CALDAV:param-filter child XML elements
+           range, and all specified param-filter child XML elements
            also match the targeted property;
   
         or:
   
-        *  The CALDAV:prop-filter XML element contains a CALDAV:text-match
+        *  The prop-filter XML element contains a text-match
            XML element and the property value matches it, and all
-           specified CALDAV:param-filter child XML elements also match the
+           specified param-filter child XML elements also match the
            targeted property;
       </documentation>
     </annotation>
@@ -483,39 +470,39 @@
   <complexType name="CompFilterType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:comp-filter XML element specifies a query
+        The comp-filter XML element specifies a query
         targeted at the calendar object (i.e., VCALENDAR) or at a specific
         calendar component type (e.g., VEVENT).  The scope of the
-        CALDAV:comp-filter XML element is the calendar object when used as
-        a child of the CALDAV:filter XML element.  The scope of the
-        CALDAV:comp-filter XML element is the enclosing calendar component
-        when used as a child of another CALDAV:comp-filter XML element.  A
-        CALDAV:comp-filter is said to match if:
+        comp-filter XML element is the calendar object when used as
+        a child of the filter XML element.  The scope of the
+        comp-filter XML element is the enclosing calendar component
+        when used as a child of another comp-filter XML element.  A
+        comp-filter is said to match if:
   
-        *  The CALDAV:comp-filter XML element is empty and the calendar
+        *  The comp-filter XML element is empty and the calendar
            object or calendar component type specified by the "name"
            attribute exists in the current scope;
   
         or:
   
-        *  The CALDAV:comp-filter XML element contains a CALDAV:is-not-
-           defined XML element and the calendar object or calendar
+        *  The comp-filter XML element contains a is-not-defined 
+           XML element and the calendar object or calendar
            component type specified by the "name" attribute does not exist
            in the current scope;
   
         or:
   
-        *  The CALDAV:comp-filter XML element contains a CALDAV:time-range
+        *  The comp-filter XML element contains a time-range
            XML element and at least one recurrence instance in the
            targeted calendar component is scheduled to overlap the
-           specified time range, and all specified CALDAV:prop-filter and
-           CALDAV:comp-filter child XML elements also match the targeted
+           specified time range, and all specified prop-filter and
+           comp-filter child XML elements also match the targeted
            calendar component;
   
         or:
   
-        *  The CALDAV:comp-filter XML element only contains CALDAV:prop-
-           filter and CALDAV:comp-filter child XML elements that all match
+        *  The comp-filter XML element only contains prop-filter 
+           and comp-filter child XML elements that all match
            the targeted calendar component.
       </documentation>
     </annotation>
@@ -537,7 +524,7 @@
   <complexType name="FilterType">
     <annotation>
       <documentation xml:lang="en">
-        The CALDAV:filter XML element specifies the search
+        The filter XML element specifies the search
         filter used to limit the calendar components returned by a
         calendaring REPORT request.
       </documentation>

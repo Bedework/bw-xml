@@ -67,6 +67,9 @@
     <property name="org.bedework.category.base"
               location="${project.home}/category" />
 
+    <property name="org.bedework.caldav.base"
+              location="${project.home}/caldav" />
+
     <property name="org.bedework.catdav.base"
               location="${project.home}/catdav" />
 
@@ -99,6 +102,9 @@
 
     <property name="category.jar"
               location="${dist.home}/${org.bedework.module.catschema.jar}-${project.version}.jar" />
+
+    <property name="caldavschema.jar"
+              location="${dist.home}/${org.bedework.module.caldavschema.jar}-${project.version}.jar" />
 
     <property name="catdavschema.jar"
               location="${dist.home}/${org.bedework.module.catdavschema.jar}-${project.version}.jar" />
@@ -179,6 +185,13 @@
     <xjc schema="${org.bedework.schemas.base}/category/category.xsd"
          module-base="${org.bedework.category.base}/gensrc"
          jar-file="${category.jar}"
+         bindingsdir="${project.home}/xjcbindings"
+    />
+
+    <!-- caldav -->
+    <xjc schema="${org.bedework.schemas.base}/caldav/caldav.xsd"
+         module-base="${org.bedework.caldav.base}/gensrc"
+         jar-file="${caldavschema.jar}"
          bindingsdir="${project.home}/xjcbindings"
     />
 

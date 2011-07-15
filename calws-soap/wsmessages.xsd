@@ -3,19 +3,18 @@
 <schema xmlns="http://www.w3.org/2001/XMLSchema" 
         xmlns:tns="http://docs.oasis-open.org/ns/wscal/calws-soap" 
         xmlns:xcal="urn:ietf:params:xml:ns:icalendar-2.0"
-        xmlns:cdav="urn:ietf:params:xml:ns:caldav"
         xmlns:xrd="http://docs.oasis-open.org/ns/xri/xrd-1.0"
         targetNamespace="http://docs.oasis-open.org/ns/wscal/calws-soap" 
         elementFormDefault="qualified">
     
   <import schemaLocation="../schemas/icalendar/iCalendar.xsd" 
           namespace="urn:ietf:params:xml:ns:icalendar-2.0" />
-        
-  <import schemaLocation="../schemas/caldav/caldav.xsd" 
-          namespace="urn:ietf:params:xml:ns:caldav" />
-        
+                 
   <import schemaLocation="../schemas/xrd/xrd-1.0-os.xsd" 
           namespace="http://docs.oasis-open.org/ns/xri/xrd-1.0" />
+        
+  <include schemaLocation="wserrors.xsd" />
+  <include schemaLocation="calquery-dav.xsd" />
 
   <!-- Schema for CalWS SOAP messages. -->
  
@@ -27,77 +26,6 @@
       <enumeration value="Error" />
     </restriction>
   </simpleType>
-
-  <complexType name="ErrorCodeType" >
-  </complexType>
-
-  <element name="error" type="tns:ErrorCodeType" />
-  
-  <complexType name="ErrorResponseType">
-    <annotation>
-      <documentation xml:lang="en">
-           Message from service indicating an error.
-      </documentation>
-    </annotation>
-    <sequence >
-      <element ref="tns:error" />
-      <element name="description" type="string" minOccurs="0" />
-    </sequence>
-  </complexType>
-  
-  <!-- Error codes -->
-  <element name="targetExists" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" />
-  <element name="targetDoesNotExist" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" />
-  <element name="targetNotEntity" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" />
-  <element name="notCalendarData" type="tns:ErrorCodeType" 
-              substitutionGroup="tns:error" />
-  <element name="invalidCalendarData" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" />
-  <element name="invalidCalendarObjectResource" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" />
-  <element name="unsupportedCalendarComponent" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" />
-  <element name="invalidCalendarCollectionLocation" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" />
-  <element name="exceedsMaxResourceSize" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" />
-  <element name="beforeMinDateTime" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" />
-  <element name="afterMaxDateTime" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" />
-  <element name="tooManyInstances" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" />
-  <element name="tooManyAttendeesPerInstance" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" />
-
-  <complexType name="InvalidFilterType" >
-    <complexContent mixed="false">
-      <extension base="tns:ErrorCodeType">
-        <sequence> 
-          <element name="detail" type="string" />
-        </sequence>
-      </extension>
-    </complexContent>
-  </complexType>
-
-  <element name="invalidFilter" type="tns:InvalidFilterType"
-              substitutionGroup="tns:error" />
-
-  <complexType name="UidConflictType" >
-    <complexContent mixed="false">
-      <extension base="tns:ErrorCodeType">
-        <sequence> 
-          <element name="href" type="string" />
-        </sequence>
-      </extension>
-    </complexContent>
-  </complexType>
-
-  <element name="uidConflict" type="tns:UidConflictType"
-              substitutionGroup="tns:error" />
   
   <simpleType name="DepthType">
     <restriction base="string">
@@ -115,12 +43,15 @@
     <sequence>
       <element name="href" type="string" />
     </sequence>
+    
+    <attribute name="id" type="int" default="0" />
   </complexType>
   
-  <complexType name="BaseResponseType">
+  <complexType name="BaseResponseType" abstract="true">
     <annotation>
       <documentation xml:lang="en">
-           Responses have this as the base type.
+           Responses have this as the base type. If the request had an id 
+           attribute its value will be set as the response id attribute value.
       </documentation>
     </annotation>
     <sequence>
@@ -128,7 +59,11 @@
       <element name="message" type="string" minOccurs="0" />
       <element name="errorResponse" type="tns:ErrorResponseType" minOccurs="0" />
     </sequence>
+    
+    <attribute name="id" type="int" default="0" />
   </complexType>
+  
+  <element name="baseResponse" type="tns:BaseResponseType" abstract="true"/>
 
   <complexType name="UTCTimeRangeType">
     <sequence>
@@ -161,9 +96,13 @@
            Respond to the get-properties request
       </documentation>
     </annotation>
-    <sequence>
-      <element ref="xrd:XRD" />
-    </sequence>
+    <complexContent mixed="false">
+      <extension base="tns:BaseResponseType">
+        <sequence>
+          <element ref="xrd:XRD" />
+        </sequence>
+      </extension>
+    </complexContent>
   </complexType>
 
   <element name="getPropertiesResponse" type="tns:GetPropertiesResponseType" />
@@ -204,15 +143,15 @@
   <element name="supported-calendar-component-set" 
            type="tns:SupportedCalendarComponentSetType" />
            
-  <!-- =========================== freebusyQuery =========================== -->
+  <!-- ========================== freebusyReport =========================== -->
   
   <complexType name="FreebusyReportType">
     <annotation>
       <documentation xml:lang="en">
-           Request a freebusy report on the targeted resource. This is NOT a
+           Request a freebusy report on the targeted principal. This is a
            scheduling freebusy request which incorporates information such as 
-           availability etc, but a simple report of the state of the targeted
-           collection(s)
+           availability etc. As such the response may depend on information not
+           visible to the caller.
       </documentation>
     </annotation>
     <complexContent mixed="false">
@@ -220,7 +159,6 @@
         <sequence>
           <element name="time-range" type="tns:UTCTimeRangeType"
                    minOccurs="0" />
-          <element name="depth" type="int" />
         </sequence>
       </extension>
     </complexContent>
@@ -247,7 +185,8 @@
     </complexContent>
   </complexType>
 
-  <element name="freebusyReportResponse" type="tns:FreebusyReportResponseType" />
+  <element name="freebusyReportResponse" type="tns:FreebusyReportResponseType"
+           substitutionGroup="tns:baseResponse" />
 
   <!-- ======================== calendar-query ============================= -->
   
@@ -287,7 +226,7 @@
       </choice>
     </sequence>
     
-    <attribute name="content-type" type="string" default="application/xml+calendar" />
+    <attribute name="content-type" type="string" default="application/calendar+xml" />
     <attribute name="version" type="string" default="2.0" />
   </complexType>
    
@@ -327,7 +266,7 @@
     </annotation>
     <sequence>
       <element name="href" type="string" />
-      <element name="etag" type="string" />
+      <element name="etoken" type="string" />
       <element ref="tns:propstat" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
@@ -362,8 +301,8 @@
             <element ref="xcal:icalendar" />
           </choice>
           <choice minOccurs="0">
-            <element name="expand" type="cdav:ExpandType" />
-            <element name="limitRecurrenceSet" type="cdav:LimitRecurrenceSetType" />
+            <element name="expand" type="tns:ExpandType" />
+            <element name="limitRecurrenceSet" type="tns:LimitRecurrenceSetType" />
           </choice>
         </sequence>
       </extension>
@@ -380,7 +319,7 @@
       <extension base="tns:CalendarQueryOrMultigetBaseType">
         <sequence>
           <element ref="tns:depth" />
-          <element ref="cdav:filter" />
+          <element ref="tns:filter" />
         </sequence>
       </extension>
     </complexContent>
@@ -462,12 +401,14 @@
       <extension base="tns:BaseResponseType">
         <sequence>
           <element name="href" type="string" minOccurs="0" />
+          <element name="etoken" type="string" minOccurs="0" />
         </sequence>
       </extension>
     </complexContent>
   </complexType>
   
-  <element name="addItemResponse" type="tns:AddItemResponseType" />
+  <element name="addItemResponse" type="tns:AddItemResponseType"
+           substitutionGroup="tns:baseResponse" />
 
   <!-- ============================ fetchItem ============================== -->
   
@@ -493,13 +434,15 @@
     <complexContent mixed="false">
       <extension base="tns:BaseResponseType">
         <sequence>
+          <element name="etoken" type="string" minOccurs="0" />
           <element ref="xcal:icalendar" minOccurs="0" />
         </sequence>
       </extension>
     </complexContent>
   </complexType>
   
-  <element name="fetchItemResponse" type="tns:FetchItemResponseType" />
+  <element name="fetchItemResponse" type="tns:FetchItemResponseType"
+           substitutionGroup="tns:baseResponse" />
 
   <!-- ============================ deleteItem ============================== -->
   
@@ -527,7 +470,8 @@
     </complexContent>
   </complexType>
   
-  <element name="deleteItemResponse" type="tns:DeleteItemResponseType" />
+  <element name="deleteItemResponse" type="tns:DeleteItemResponseType"
+           substitutionGroup="tns:baseResponse" />
 
   <!-- ========================== update-item ============================== -->
   <!-- This is an XML patch operations specifically for xcalendar updates.
@@ -689,11 +633,14 @@
     <annotation>
       <documentation xml:lang="en">
            Message to update a calendar item.
+           
+           The supplied etoken MUST match the etoken held by the service.
       </documentation>
     </annotation>
     <complexContent mixed="false">
       <extension base="tns:BaseRequestType">
         <sequence>
+          <element name="etoken" type="string" />
           <element name="select" type="tns:SelectElementType" 
                    maxOccurs="unbounded" />
         </sequence>
@@ -707,13 +654,105 @@
     <annotation>
       <documentation xml:lang="en">
            Response to message to update an item.
+           
+           The server will return an etoken value which should replace the
+           value currently held by the client. 
       </documentation>
     </annotation>
     <complexContent mixed="false">
       <extension base="tns:BaseResponseType">
+        <sequence>
+          <element name="etoken" type="string" />
+        </sequence>
       </extension>
     </complexContent>
   </complexType> 
 
-  <element name="updateItemResponse" type="tns:UpdateItemResponseType" />
+  <element name="updateItemResponse" type="tns:UpdateItemResponseType"
+           substitutionGroup="tns:baseResponse" />
+
+  <!-- =========================== multiOp =============================== -->
+
+  <complexType name="ArrayOfOperations">
+    <annotation>
+      <documentation xml:lang="en">
+        A structure containing all the operations allowed within a MultiOpType 
+      </documentation>
+    </annotation>
+    <sequence>
+      <choice minOccurs="1" maxOccurs="unbounded"> 
+        <element ref="tns:getProperties"/>
+        <element ref="tns:freebusyReport"/>
+        <element ref="tns:calendarQuery"/>
+        <element ref="tns:calendarMultiget"/>
+        <element ref="tns:addItem"/>
+        <element ref="tns:fetchItem"/>
+        <element ref="tns:deleteItem"/>
+        <element ref="tns:updateItem"/>
+       </choice>
+    </sequence>
+  </complexType>
+
+  <complexType name="MultiOpType">
+    <annotation>
+      <documentation xml:lang="en">
+           This type is a wrapper around a number of sub-operations allowing 
+           complex structures to be updated in a single, atomic operation.
+           
+           Each sub-operation is one of the other possible operations, e.g. 
+           updateItem, deleteItem etc.
+           
+           Inclusion of a multiOp is disallowed.
+           
+           The response is a MultiOpResponseType which wraps one response per
+           sub-operation. It will terminate on the first failure and all 
+           updates to that point rolled back.
+           
+           Inclusion of an id attribute in the sub-operation request will aid
+           in associating responses with requests.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseRequestType">
+        <sequence>
+          <element name="operations" 
+                   type="tns:ArrayOfOperations"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="multiOp" type="tns:MultiOpType" />
+
+  <complexType name="ArrayOfResponses">
+    <annotation>
+      <documentation xml:lang="en">
+        A structure containing all the responses from a MultiOpType operation 
+      </documentation>
+    </annotation>
+    <sequence>
+      <element ref="tns:baseResponse" minOccurs="0" maxOccurs="unbounded"/>
+    </sequence>
+  </complexType>
+
+  <complexType name="MultiOpResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Response to a multi-op message. This is a sequence of responses to 
+           each operation. The multi-op operation itself has a status which is 
+           almost always success. Each embedded response needs to be examined to
+           determine if it succeeded or failed.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseResponseType">
+        <sequence>
+          <element name="responses" 
+                   type="tns:ArrayOfResponses"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType> 
+
+  <element name="multiOpResponse" type="tns:MultiOpResponseType" />
 </schema>
