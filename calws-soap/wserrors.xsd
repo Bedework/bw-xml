@@ -171,8 +171,21 @@
     </annotation>
   </element>
   
+  <element name="missingEtoken" type="tns:ErrorCodeType"
+           substitutionGroup="tns:error" >
+    <annotation>
+      <documentation xml:lang="en">
+        An operation was attempted which required a change token but none was
+        supplied.
+        
+        Note that it appears that the marshelling/demarshelling should handle 
+        this as the token is required. It doesn't. 
+      </documentation>
+    </annotation>
+  </element>
+  
   <element name="mismatchedEtoken" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+           substitutionGroup="tns:error" >
     <annotation>
       <documentation xml:lang="en">
         An update operation was attempted with an etoken value which does not 
