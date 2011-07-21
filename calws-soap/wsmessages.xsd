@@ -499,9 +499,14 @@
       <documentation xml:lang="en">
          Each element of this type acts upon the result of it's parent element.
          The contained selector is an icalendar fragment which must be of the 
-         appropriate type for the point we are at in the selection. For example,
-         if the parent selected the "components" element then the fragment must
-         be a BaseComponentType.
+         appropriate type for the point we are at in the selection or an 
+         element indicating we are selecting the components, properties or 
+         parameters from the parent. 
+         
+         For example, if the parent selected the "components" 
+         element then the fragment must be a BaseComponentType.
+         
+         Note that we can have multiple updates for a single selected parent.
       </documentation>
     </annotation>
     <sequence>
@@ -512,12 +517,12 @@
         <element ref="xcal:baseParameter"/>
         <element name="components" type="tns:ComponentsSelectionType" />
         <element name="properties" type="tns:PropertiesSelectionType" />
-        <element ref="xcal:parameters"/>
+        <element name="parameters" type="tns:ParametersSelectionType" />
       </choice>
     
       <choice> 
         <element name="select" type="tns:SelectElementType" maxOccurs="unbounded" />
-        <element ref="tns:baseUpdate" />
+        <element ref="tns:baseUpdate" maxOccurs="unbounded" />
       </choice>
     </sequence>
     
@@ -542,18 +547,40 @@
     </annotation>
   </complexType>
   
+  <complexType name="ParametersSelectionType">
+    <annotation>
+      <documentation xml:lang="en">
+         Used to indicate the selection should be on parameters.
+      </documentation>
+    </annotation>
+  </complexType>
+  
   <complexType name="BaseUpdateType" abstract="true">
     <annotation>
       <documentation xml:lang="en">
-         Every update contains a selector.
+         Every update is based on this.
       </documentation>
     </annotation>
-    <sequence>
-      <element name="select" type="tns:SelectElementType" minOccurs="0" />
-    </sequence>
+  </complexType>
+  
+  <element name="baseUpdate" type="tns:BaseUpdateType" abstract="true"/>
+  
+  <complexType name="SelectUpdateType" abstract="true">
+    <annotation>
+      <documentation xml:lang="en">
+         Every update other than add contains a selector.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseUpdateType">
+        <sequence>
+          <element name="select" type="tns:SelectElementType" minOccurs="0" />
+        </sequence>
+      </extension>
+    </complexContent>
   </complexType>
 
-  <complexType name="NewValueType" abstract="true">
+  <complexType name="NewValueType">
     <annotation>
       <documentation xml:lang="en">
         For add this provides a new element to be appended as a child.
@@ -565,21 +592,22 @@
         element value.
       </documentation>
     </annotation>
-    <complexContent mixed="false">
-      <extension base="tns:BaseUpdateType">
-        <choice> 
-          <element ref="xcal:baseComponent"/>
-          <element ref="xcal:baseProperty"/>
-          <element ref="xcal:baseParameter"/>
-         </choice>
-      </extension>
-    </complexContent>
+    <choice> 
+      <element ref="xcal:baseComponent"/>
+      <element ref="xcal:baseProperty"/>
+      <element ref="xcal:baseParameter"/>
+     </choice>
   </complexType>
+  
+  <element name="newValue" type="tns:NewValueType" />
   
   <complexType name="AddType">
     <complexContent mixed="false">
-      <extension base="tns:NewValueType">
-     </extension>
+      <extension base="tns:BaseUpdateType">
+        <sequence>
+          <element ref="tns:newValue"/>
+        </sequence>
+      </extension>
     </complexContent>
   </complexType>
   
@@ -591,7 +619,10 @@
       </documentation>
     </annotation>
     <complexContent mixed="false">
-      <extension base="tns:NewValueType">
+      <extension base="tns:SelectUpdateType">
+        <sequence>
+          <element ref="tns:newValue"/>
+        </sequence>
       </extension>
     </complexContent>
   </complexType>
@@ -604,19 +635,20 @@
       </documentation>
     </annotation>
     <complexContent mixed="false">
-      <extension base="tns:NewValueType">
+      <extension base="tns:SelectUpdateType">
+        <sequence>
+          <element ref="tns:newValue"/>
+        </sequence>
       </extension>
     </complexContent>
   </complexType>
   
   <complexType name="RemoveType">
     <complexContent mixed="false">
-      <extension base="tns:BaseUpdateType" />
+      <extension base="tns:SelectUpdateType" />
     </complexContent>
   </complexType>
   
-  <element name="baseUpdate" type="tns:BaseUpdateType" />
-
   <element name="add" type="tns:AddType"
            substitutionGroup="tns:baseUpdate"/>
 
