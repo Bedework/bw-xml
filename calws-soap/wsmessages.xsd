@@ -480,7 +480,7 @@
     replacement value is going to be a problem. However, for icalendar patching we 
     can restrict the value to be an icalendar element.
     
-    We select the outer vcalendar if we wish to add a component
+    We select the outer vcalendar then components if we wish to add a component
   
     We select a component if we wish to add a property or a component to that 
     component or if we wish to delete that component 
@@ -507,14 +507,20 @@
          element then the fragment must be a BaseComponentType.
          
          Note that we can have multiple updates for a single selected parent.
+         
+         The root element of the update must be a SelectElementType with the 
+         base component being an (empty) vcalendar element.
       </documentation>
     </annotation>
     <sequence>
       <choice> 
         <element ref="xcal:vcalendar"/>
+        <element ref="xcal:vcalendarContainedComponent"/>
         <element ref="xcal:baseComponent"/>
+        <element ref="xcal:valarm"/>
+        
         <element ref="xcal:baseProperty"/>
-        <element ref="xcal:baseParameter"/>
+        <element ref="xcal:baseParameter"/> 
         <element name="components" type="tns:ComponentsSelectionType" />
         <element name="properties" type="tns:PropertiesSelectionType" />
         <element name="parameters" type="tns:ParametersSelectionType" />
