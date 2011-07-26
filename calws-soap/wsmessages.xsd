@@ -586,13 +586,10 @@
     </complexContent>
   </complexType>
 
-  <complexType name="NewValueType">
+  <group name="NewValueType">
     <annotation>
       <documentation xml:lang="en">
         For add this provides a new element to be appended as a child.
-        
-        For replace replaces the targeted element with the supplied new
-        element. 
         
         For change this replaces the targeted element value with the supplied new
         element value.
@@ -603,31 +600,13 @@
       <element ref="xcal:baseProperty"/>
       <element ref="xcal:baseParameter"/>
      </choice>
-  </complexType>
-  
-  <element name="newValue" type="tns:NewValueType" />
+  </group>
   
   <complexType name="AddType">
     <complexContent mixed="false">
       <extension base="tns:BaseUpdateType">
         <sequence>
-          <element ref="tns:newValue"/>
-        </sequence>
-      </extension>
-    </complexContent>
-  </complexType>
-  
-  <complexType name="ReplaceType">
-    <annotation>
-      <documentation xml:lang="en">
-           This completely replaces the targeted element with the supplied new
-           element. 
-      </documentation>
-    </annotation>
-    <complexContent mixed="false">
-      <extension base="tns:SelectUpdateType">
-        <sequence>
-          <element ref="tns:newValue"/>
+          <group ref="tns:NewValueType"/>
         </sequence>
       </extension>
     </complexContent>
@@ -643,7 +622,7 @@
     <complexContent mixed="false">
       <extension base="tns:SelectUpdateType">
         <sequence>
-          <element ref="tns:newValue"/>
+          <group ref="tns:NewValueType"/>
         </sequence>
       </extension>
     </complexContent>
@@ -656,9 +635,6 @@
   </complexType>
   
   <element name="add" type="tns:AddType"
-           substitutionGroup="tns:baseUpdate"/>
-
-  <element name="replace" type="tns:ReplaceType"
            substitutionGroup="tns:baseUpdate"/>
 
   <element name="change" type="tns:ChangeType"
