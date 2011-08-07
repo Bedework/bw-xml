@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:tns="http://www.bedework.org/exsynch/wsmessages" 
+<wsdl:definitions xmlns:tns="http://www.bedework.org/synch/wsmessages" 
                   xmlns:s="http://www.w3.org/2001/XMLSchema" 
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-                  targetNamespace="http://www.bedework.org/exsynch/wsmessages" 
+                  targetNamespace="http://www.bedework.org/synch/wsmessages" 
+                  xmlns:cws="http://docs.oasis-open.org/ns/wscal/calws-soap"
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema>
       <s:import schemaLocation="wsmessages.xsd" 
-                namespace="http://www.bedework.org/exsynch/wsmessages" />
+                namespace="http://www.bedework.org/synch/wsmessages" />
+      <s:import schemaLocation="../calws-soap/wsmessages.xsd" 
+                namespace="http://docs.oasis-open.org/ns/wscal/calws-soap" />
     </s:schema>
   </wsdl:types> 
 
   <!-- =========================== getProperties =========================== -->  
 
   <wsdl:message name="GetPropertiesIn">
-    <wsdl:part name="request" element="tns:get-properties" />
+    <wsdl:part name="request" element="cws:getProperties" />
   </wsdl:message>
   
   <wsdl:message name="GetPropertiesOut">
-    <wsdl:part name="response" element="tns:get-properties-response" />
+    <wsdl:part name="response" element="cws:getPropertiesResponse" />
   </wsdl:message>
 
   <!-- ====================== startServiceNotification ===================== -->  
@@ -44,36 +47,37 @@
   <!-- ============================= addItem =============================== -->  
 
   <wsdl:message name="AddItemIn">
-    <wsdl:part name="addItemRequest" element="tns:add-item" />
+    <wsdl:part name="addItemRequest" element="cws:addItem" />
   </wsdl:message>
   
   <wsdl:message name="AddItemOut">
-    <wsdl:part name="addItemResponse" element="tns:add-item-response" />
+    <wsdl:part name="addItemResponse" element="cws:addItemResponse" />
   </wsdl:message>
 
   <!-- ============================= fetchItem =============================== -->  
 
   <wsdl:message name="FetchItemIn">
-    <wsdl:part name="fetchItemRequest" element="tns:fetch-item" />
+    <wsdl:part name="fetchItemRequest" element="cws:fetchItem" />
   </wsdl:message>
   
   <wsdl:message name="FetchItemOut">
-    <wsdl:part name="fetchItemResponse" element="tns:fetch-item-response" />
+    <wsdl:part name="fetchItemResponse" element="cws:fetchItemResponse" />
   </wsdl:message>
 
   <!-- ============================= UpdateItem =============================== -->  
 
   <wsdl:message name="UpdateItemIn">
-    <wsdl:part name="request" element="tns:update-item" />
+    <wsdl:part name="idToken" element="tns:synchIdToken" />
+    <wsdl:part name="request" element="cws:updateItem" />
   </wsdl:message>
   
   <wsdl:message name="UpdateItemOut">
-    <wsdl:part name="response" element="tns:update-item-response" />
+    <wsdl:part name="response" element="cws:updateItemResponse" />
   </wsdl:message>
 
   <!-- ============================== port ================================= -->  
   
-  <wsdl:portType name="ExsynchRemoteServicePortType">
+  <wsdl:portType name="SynchRemoteServicePortType">
     <wsdl:operation name="GetProperties">
       <wsdl:input message="tns:GetPropertiesIn" />
       <wsdl:output message="tns:GetPropertiesOut" />
@@ -107,8 +111,8 @@
   
   <!-- ============================ binding ================================ -->  
   
-  <wsdl:binding name="ExsynchRemoteServiceBinding" 
-                type="tns:ExsynchRemoteServicePortType">
+  <wsdl:binding name="synchRemoteServiceBinding" 
+                type="tns:SynchRemoteServicePortType">
     <wsdl:documentation>
       <wsi:Claim conformsTo="http://ws-i.org/profiles/basic/1.0" 
                  xmlns:wsi="http://ws-i.org/schemas/conformanceClaim/" />
@@ -116,7 +120,7 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     
     <wsdl:operation name="NotifyRemoteService">
-      <soap:operation soapAction="http://www.bedework.org/exsynch/wsmessages/notify-remote-service" />
+      <soap:operation soapAction="http://www.bedework.org/synch/wsmessages/notify-remote-service" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -126,7 +130,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="GetProperties">
-      <soap:operation soapAction="http://www.bedework.org/exsynch/wsmessages/get-properties" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/getProperties" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -136,7 +140,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="GetSynchInfo">
-      <soap:operation soapAction="http://www.bedework.org/exsynch/wsmessages/get-synch-info" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/getsynchinfo" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -146,7 +150,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="AddItem">
-      <soap:operation soapAction="http://www.bedework.org/exsynch/wsmessages/add-item" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/additem" />
       <wsdl:input>
         <soap:body use="literal" parts="addItemRequest" />
       </wsdl:input>
@@ -156,7 +160,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="FetchItem">
-      <soap:operation soapAction="http://www.bedework.org/exsynch/wsmessages/fetch-item" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/fetchitem" />
       <wsdl:input>
         <soap:body use="literal" parts="fetchItemRequest" />
       </wsdl:input>
@@ -166,7 +170,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="UpdateItem">
-      <soap:operation soapAction="http://www.bedework.org/exsynch/wsmessages/update-item" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/updateitem" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -176,8 +180,8 @@
     </wsdl:operation>
   </wsdl:binding>
 
-  <wsdl:service name="ExsynchRemoteService">
-    <wsdl:port name="ExsynchRSPort" binding="tns:ExsynchRemoteServiceBinding">
+  <wsdl:service name="SynchRemoteService">
+    <wsdl:port name="SynchRSPort" binding="tns:SynchRemoteServiceBinding">
        <soap:address location="@SERVICE-URL@"></soap:address>
     </wsdl:port>
   </wsdl:service>
