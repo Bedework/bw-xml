@@ -1,36 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE schema [
-  <!ENTITY ncname "\i\c*">
-  <!ENTITY qname  "(&ncname;:)?&ncname;">
-  <!ENTITY aname  "@&qname;">
-  <!ENTITY pos    "\[\d+\]">
-  <!ENTITY attr   "\[&aname;='(.)*'\]|\[&aname;=&quot;(.)*&quot;\]">
-  <!ENTITY valueq "\[(&qname;|\.)=&quot;(.)*&quot;\]">
-  <!ENTITY value  "\[(&qname;|\.)='(.)*'\]|&valueq;">
-  <!ENTITY cond   "&attr;|&value;|&pos;">
-  <!ENTITY step   "(&qname;|\*)(&cond;)*">
-  <!ENTITY piq    "processing-instruction\((&quot;&ncname;&quot;)\)">
-  <!ENTITY pi     "processing-instruction\(('&ncname;')?\)|&piq;">
-  <!ENTITY id     "id\(('&ncname;')?\)|id\((&quot;&ncname;&quot;)?\)">
-  <!ENTITY com    "comment\(\)">
-  <!ENTITY text   "text\(\)">
-  <!ENTITY nspa   "namespace::&ncname;">
-  <!ENTITY cnodes "(&text;(&pos;)?)|(&com;(&pos;)?)|((&pi;)(&pos;)?)">
-  <!ENTITY child  "&cnodes;|&step;">
-  <!ENTITY last   "(&child;|&aname;|&nspa;)">
- ]> 
+<!DOCTYPE schema>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" 
         xmlns:tns="http://www.bedework.org/synch/wsmessages" 
         xmlns:xcal="urn:ietf:params:xml:ns:icalendar-2.0"
         xmlns:xrd="http://docs.oasis-open.org/ns/xri/xrd-1.0"
+        xmlns:cws="http://docs.oasis-open.org/ns/wscal/calws-soap"
         targetNamespace="http://www.bedework.org/synch/wsmessages" 
         elementFormDefault="qualified">
+  <import schemaLocation="../calws-soap/wsmessages.xsd" 
+          namespace="http://docs.oasis-open.org/ns/wscal/calws-soap" />
         
   <import schemaLocation="../schemas/icalendar/iCalendar.xsd" 
           namespace="urn:ietf:params:xml:ns:icalendar-2.0" />
         
   <import schemaLocation="../schemas/xrd/xrd-1.0-os.xsd" 
           namespace="http://docs.oasis-open.org/ns/xri/xrd-1.0" />
+          
+  <include schemaLocation="wserrors.xsd" />
 
   <!-- Schema for messages passed from synch processor to the remote service. -->
   
@@ -48,19 +34,6 @@
       <enumeration value="both" />
       <enumeration value="bothExchangeMaster" />
       <enumeration value="bothRemoteMaster" />
-    </restriction>
-  </simpleType>
-  
-  <simpleType name="StatusType">
-    <restriction base="string">
-      <enumeration value="OK" />
-      <enumeration value="Already subscribed" />
-      <enumeration value="Unknown Exchange calendar" />
-      <enumeration value="Invalid token" />
-      <enumeration value="Unknown subscription" />
-      <enumeration value="No Access" />
-      <enumeration value="Service Stopped" />
-      <enumeration value="Error" />
     </restriction>
   </simpleType>
   
@@ -86,8 +59,6 @@
     </annotation>
     <sequence>
       <element name="calendar-href" type="string" />
-      <element name="principal-href" type="string" />
-      <element name="synch-token" type="string" />
     </sequence>
   </complexType>
   
@@ -106,17 +77,6 @@
         </sequence>
       </extension>
     </complexContent>
-  </complexType>
-  
-  <complexType name="BaseSynchResponseType">
-    <annotation>
-      <documentation xml:lang="en">
-           Responses have this as the base type.
-      </documentation>
-    </annotation>
-    <sequence>
-      <element name="subscribe-status" type="tns:StatusType" />
-    </sequence>
   </complexType>
   
   <!-- *********************************************************************
@@ -164,7 +124,7 @@
       </documentation>
     </annotation>
     <complexContent mixed="false">
-      <extension base="tns:BaseSynchResponseType">
+      <extension base="cws:BaseResponseType">
         <sequence >
           <element name="subscription-id" type="string" />
           <element minOccurs="0" name="message" type="string" />
@@ -199,7 +159,7 @@
       </documentation>
     </annotation>
     <complexContent mixed="false">
-      <extension base="tns:BaseSynchResponseType">
+      <extension base="cws:BaseResponseType">
       </extension>
     </complexContent>
   </complexType>
@@ -244,7 +204,7 @@
     </annotation>
     <sequence>
       <element name="token" type="string" />
-      <element name="status" type="tns:StatusType" />
+      <element name="status" type="cws:StatusType" />
     </sequence>
   </complexType>
 

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE schema >
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:tns="http://www.bedework.org/synch/wsmessages" 
+        xmlns:xcal="urn:ietf:params:xml:ns:icalendar-2.0"
+        xmlns:xrd="http://docs.oasis-open.org/ns/xri/xrd-1.0"
+        xmlns:cws="http://docs.oasis-open.org/ns/wscal/calws-soap"
+        targetNamespace="http://www.bedework.org/synch/wsmessages" 
+        elementFormDefault="qualified">
+  <import schemaLocation="../calws-soap/wserrors.xsd" 
+          namespace="http://docs.oasis-open.org/ns/wscal/calws-soap" />
+        
+  <annotation>
+    <documentation xml:lang="en">
+      This schema fragment defines the error codes and types for use by the 
+      Bedework synch service which uses an extension of the CalWS SOAP web service.
+    </documentation>
+  </annotation>
+  
+  <!-- Error codes -->
+  <element name="alreadySubscribed" type="cws:ErrorCodeType"
+              substitutionGroup="cws:error" >
+    <annotation>
+      <documentation xml:lang="en">
+        Already have a subscription to this calendar.
+      </documentation>
+    </annotation>
+  </element>
+
+  <element name="invalidToken" type="cws:ErrorCodeType"
+              substitutionGroup="cws:error" >
+    <annotation>
+      <documentation xml:lang="en">
+        The service synch token is unknown or expired.
+      </documentation>
+    </annotation>
+  </element>
+
+  <element name="unknownSubscription" type="cws:ErrorCodeType"
+              substitutionGroup="cws:error" >
+    <annotation>
+      <documentation xml:lang="en">
+        Unknown subscription.
+      </documentation>
+    </annotation>
+  </element>
+
+  <element name="serviceStopped" type="cws:ErrorCodeType"
+              substitutionGroup="cws:error" >
+    <annotation>
+      <documentation xml:lang="en">
+        The synch service is not running.
+      </documentation>
+    </annotation>
+  </element>
+</schema>

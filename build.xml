@@ -58,8 +58,8 @@
     <property name="org.bedework.exchangews.base"
               location="${project.home}/exchangews" />
 
-    <property name="org.bedework.exsynchws.base"
-              location="${project.home}/exsynchws" />
+    <property name="org.bedework.synchws.base"
+              location="${project.home}/synchws" />
 
     <property name="org.bedework.icalendar.base"
               location="${project.home}/icalendar" />
@@ -85,8 +85,8 @@
     <property name="exchangews.jar"
               location="${dist.home}/${org.bedework.module.exchangewsschema.jar}-${project.version}.jar" />
 
-    <property name="exsynchws.jar"
-              location="${dist.home}/${org.bedework.module.exsynchwsschema.jar}-${project.version}.jar" />
+    <property name="synchws.jar"
+              location="${dist.home}/${org.bedework.module.synchwsschema.jar}-${project.version}.jar" />
 
     <property name="tzsvc.jar"
               location="${dist.home}/${org.bedework.module.tzschema.jar}-${project.version}.jar" />
@@ -113,10 +113,10 @@
               value="${bedework-options.org.bedework.app.Usercaldav.calSoapWsWSDLURI}" />
     
     <property name="exchange.wsdllocation"
-              value="${bedework-options.org.bedework.app.Exsynch.exchangeWSDLURI}" />
+              value="${bedework-options.org.bedework.app.Synch.exchangeWSDLURI}" />
     
-    <property name="exsynch.wsdllocation"
-              value="${bedework-options.org.bedework.app.Exsynch.remoteWSDLURI}" />
+    <property name="synch.wsdllocation"
+              value="${bedework-options.org.bedework.app.Synch.remoteWSDLURI}" />
     
     <!-- Filesets used for dependencies -->
     <fileset id="org.bedework.schemas.files"
@@ -139,12 +139,12 @@
               bindingsdir="${org.bedework.exchangews.base}/wsdlbindings"
     />
 
-    <!-- Exsynch - web service -->
-    <wsimport wsdl="${org.bedework.exsynchws.base}/wssvc.wsdl"
-              wsdllocation="${exsynch.wsdllocation}"
-              module-base="${org.bedework.exsynchws.base}/gensrc"
-              jar-file="${exsynchws.jar}"
-              bindingsdir="${org.bedework.exsynchws.base}/wsdlbindings"
+    <!-- Synch - web service -->
+    <wsimport wsdl="${org.bedework.synchws.base}/wssvc.wsdl"
+              wsdllocation="${synch.wsdllocation}"
+              module-base="${org.bedework.synchws.base}/gensrc"
+              jar-file="${synchws.jar}"
+              bindingsdir="${org.bedework.synchws.base}/wsdlbindings"
               dependencies="org.bedework.schemas.files"
     />
 
@@ -224,7 +224,7 @@
     </copy>
     
     <if>
-      <isset property="bedework-options.org.bedework.app.Pubcaldav.exsynchWsURI" />
+      <isset property="bedework-options.org.bedework.app.Pubcaldav.synchWsURI" />
       <then>
         <!-- Exchange wsdl -->
         <debugMsg message="Copy the wsdl to ${org.bedework.exchange.wsdl.deploy.dir}"/>
@@ -239,14 +239,14 @@
         </copy>
 
         <!-- Exchange synch wsdl -->
-        <debugMsg message="Copy the wsdl to ${org.bedework.exsynch.wsdl.deploy.dir}"/>
+        <debugMsg message="Copy the wsdl to ${org.bedework.synch.wsdl.deploy.dir}"/>
     
-        <copy todir="${org.bedework.exsynch.wsdl.deploy.dir}" overwrite="yes">
-          <fileset dir="${org.bedework.exsynchws.base}"
+        <copy todir="${org.bedework.synch.wsdl.deploy.dir}" overwrite="yes">
+          <fileset dir="${org.bedework.synchws.base}"
                    includes="*.xsd,*.wsdl" />
           <filterset>
             <filter token="SERVICE-URL"
-                    value="${org.bedework.exsynch.service}"/>
+                    value="${org.bedework.synch.service}"/>
           </filterset>
         </copy>
       </then>
