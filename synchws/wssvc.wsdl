@@ -57,6 +57,17 @@
     <wsdl:part name="addItemResponse" element="cws:addItemResponse" />
   </wsdl:message>
 
+  <!-- =========================== calendarQuery =========================== -->
+
+  <wsdl:message name="CalendarQueryIn">
+    <wsdl:part name="idToken" element="tns:synchIdToken" />
+    <wsdl:part name="request" element="cws:calendarQuery" />
+  </wsdl:message>
+  
+  <wsdl:message name="CalendarQueryOut">
+    <wsdl:part name="response" element="cws:calendarQueryResponse"/>
+  </wsdl:message>
+
   <!-- ============================= fetchItem =============================== -->  
 
   <wsdl:message name="FetchItemIn">
@@ -102,6 +113,11 @@
       <wsdl:output message="tns:AddItemOut" />
     </wsdl:operation>
     
+    <wsdl:operation name="CalendarQuery">
+      <wsdl:input message="tns:CalendarQueryIn" />
+      <wsdl:output message="tns:CalendarQueryOut" />
+    </wsdl:operation>
+    
     <wsdl:operation name="FetchItem">
       <wsdl:input message="tns:FetchItemIn" />
       <wsdl:output message="tns:FetchItemOut" />
@@ -124,7 +140,7 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     
     <wsdl:operation name="NotifyRemoteService">
-      <soap:operation soapAction="http://www.bedework.org/synch/wsmessages/notify-remote-service" />
+      <soap:operation soapAction="http://www.bedework.org/synch/wsmessages/notifyRemoteService" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -144,7 +160,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="GetSynchInfo">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/getsynchinfo" />
+      <soap:operation soapAction="http://www.bedework.org/synch/wsmessages/getsynchinfo" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -160,6 +176,16 @@
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" parts="addItemResponse" />
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="CalendarQuery">
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/CalendarQuery" />
+      <wsdl:input>
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
       </wsdl:output>
     </wsdl:operation>
     

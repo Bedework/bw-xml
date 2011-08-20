@@ -19,8 +19,20 @@
   <!-- Schema for CalWS SOAP messages. -->
  
   <simpleType name="StatusType">
+    <annotation>
+      <documentation xml:lang="en">
+           OK: the response was returned successfully.
+           Not Found: The targeted resource was not found.
+           Warning: A response returned but may be incomplete
+           No Access: no access to the targeted resource(s)
+           Service Stopped: service is (temporarily) unavailable
+           Error: some sort of failure
+      </documentation>
+    </annotation>
     <restriction base="string">
       <enumeration value="OK" />
+      <enumeration value="Not Found" />
+      <enumeration value="Warning" />
       <enumeration value="No Access" />
       <enumeration value="Service Stopped" />
       <enumeration value="Error" />
@@ -216,7 +228,8 @@
   <complexType name="CalendarDataResponseType">
     <annotation>
       <documentation xml:lang="en">
-           Calendar data returned as response
+           Calendar data returned as response. Depending on the requested format
+           it will be returned as a string value or an icalendar element
       </documentation>
     </annotation>
     <sequence>
@@ -249,11 +262,14 @@
            Contains prop elements with the same status
       </documentation>
     </annotation>
-    <sequence>
-      <element name="prop" type="tns:MultistatusPropElementType"
-               minOccurs="0" maxOccurs="unbounded" />
-      <element name="status" type="string" />
-    </sequence>
+    <complexContent mixed="false">
+      <extension base="tns:BaseResponseType">
+        <sequence>
+          <element name="prop" type="tns:MultistatusPropElementType"
+                   minOccurs="0" maxOccurs="unbounded" />
+        </sequence>
+      </extension>
+    </complexContent>
   </complexType>
   
   <element name="propstat" type="tns:PropstatType" />
@@ -435,6 +451,7 @@
       <extension base="tns:BaseResponseType">
         <sequence>
           <element name="etoken" type="string" minOccurs="0" />
+          <element name="href" type="string" />
           <element ref="xcal:icalendar" minOccurs="0" />
         </sequence>
       </extension>

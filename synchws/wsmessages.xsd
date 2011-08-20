@@ -18,22 +18,36 @@
           
   <include schemaLocation="wserrors.xsd" />
 
-  <!-- Schema for messages passed from synch processor to the remote service. -->
+  <!-- Schema for synch processor. -->
   
-  <simpleType name="SynchType">
+  <simpleType name="SynchDirectionType">
     <annotation>
       <documentation xml:lang="en">
-           from... synch from that end
+        Used to define which way we are synching
            both  both ways - server tries to resolve conflicts
            both...Master - Named service wins in conflicts.
       </documentation>
     </annotation>
     <restriction base="string">
-      <enumeration value="fromExchange" />
-      <enumeration value="toExchange" />
-      <enumeration value="both" />
-      <enumeration value="bothExchangeMaster" />
-      <enumeration value="bothRemoteMaster" />
+      <enumeration value="BToA" />
+      <enumeration value="AToB" />
+      <enumeration value="bothWays" />
+    </restriction>
+  </simpleType>
+  
+  <simpleType name="SynchMasterType">
+    <annotation>
+      <documentation xml:lang="en">
+        Used to define how we resolve conflicts for 2 way synch
+        None - server does it's best
+        local - A overrides B
+        remote - B overrides A
+      </documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="none" />
+      <enumeration value="A" />
+      <enumeration value="B" />
     </restriction>
   </simpleType>
   
@@ -57,59 +71,66 @@
            Requests have this as the base type.
       </documentation>
     </annotation>
-    <sequence>
-      <element name="calendar-href" type="string" />
-    </sequence>
-  </complexType>
-  
-  <complexType name="BaseSynchEntityRequestType">
-    <annotation>
-      <documentation xml:lang="en">
-           Message from remote service identifying an entity by it's UID and
-           optionally its recurrenceid.
-      </documentation>
-    </annotation>
-    <complexContent mixed="false">
-      <extension base="tns:BaseSynchRequestType">
-        <sequence >
-          <element name="uid" type="string" />
-          <element name="recurrence-id" type="string" minOccurs="0" />
-        </sequence>
-      </extension>
-    </complexContent>
   </complexType>
   
   <!-- *********************************************************************
-       Remote system to syncher
+       to syncher
        subscribe: set up a new subscription for a principal to a calendar
        unsubscribe: remove a new subscription for a principal to a calendar
        ********************************************************************* -->
   
+  <complexType name="SynchPropertyType">
+    <annotation>
+      <documentation xml:lang="en">
+           A single property consisting of a name and value
+      </documentation>
+    </annotation>
+    <sequence >
+      <element name="name" type="string" />
+      <element name="value" type="string" />
+    </sequence>
+  </complexType>
+  
+  <complexType name="ArrayOfSynchProperties">
+    <sequence>
+      <element name="property" type="tns:SynchPropertyType" 
+               minOccurs="0" maxOccurs="unbounded" />
+    </sequence>
+  </complexType>  
+  
+  <complexType name="ConnectorInfoType">
+    <annotation>
+      <documentation xml:lang="en">
+           The name of the connector and proeprties required to make a connection
+      </documentation>
+    </annotation>
+    <sequence >
+      <element name="connectorId" type="string" />
+      <element name="properties" type="tns:ArrayOfSynchProperties" />
+    </sequence>
+  </complexType>
+  
   <complexType name="SubscribeRequestType">
     <annotation>
       <documentation xml:lang="en">
-           Message from remote service requesting new subscription.
+           Message from a service requesting new subscription
+           calendar to 'remote'.
            token
                  Sent in initial startup request
-           principal-href
-                 Principal requesting the subscription.
-           synch-token
-                 Passed back for operations on the calendar
-           exchange-user
-                 Userid for exchange
-           exchange-encpw
-                 Encoded password for exchange
+           localProperties
+                 Set of properties for the local end
+           remoteProperties
+                 Set of properties for the remote end
       </documentation>
     </annotation>
     <complexContent mixed="false">
       <extension base="tns:BaseSynchRequestType">
         <sequence >
           <element name="token" type="string" />
-          <element name="exchange-folder-id" type="string" />
-          <element name="exchange-uri" type="string" />
-          <element name="synch-type" type="tns:SynchType" />
-          <element name="exchange-user" type="string" />
-          <element name="exchange-encpw" type="string" />
+          <element name="direction" type="tns:SynchDirectionType" />
+          <element name="master" type="tns:SynchMasterType" />
+          <element name="endAConnector" type="tns:ConnectorInfoType" />
+          <element name="endBConnector" type="tns:ConnectorInfoType" />
         </sequence>
       </extension>
     </complexContent>
@@ -120,14 +141,13 @@
   <complexType name="SubscribeResponseType">
     <annotation>
       <documentation xml:lang="en">
-           Response to message from remote service requesting new subscription.
+           Response to message from service requesting new subscription.
       </documentation>
     </annotation>
     <complexContent mixed="false">
       <extension base="cws:BaseResponseType">
         <sequence >
-          <element name="subscription-id" type="string" />
-          <element minOccurs="0" name="message" type="string" />
+          <element name="subscriptionId" type="string" />
         </sequence>
       </extension>
     </complexContent>
@@ -138,7 +158,7 @@
   <complexType name="UnsubscribeRequestType">
     <annotation>
       <documentation xml:lang="en">
-           Message from remote service unsubscribing.
+           Message unsubscribing.
       </documentation>
     </annotation>
     <complexContent mixed="false">
@@ -155,7 +175,7 @@
   <complexType name="UnsubscribeResponseType">
     <annotation>
       <documentation xml:lang="en">
-           Response to message from remote service requesting unsubscription.
+           Response to message requesting unsubscription.
       </documentation>
     </annotation>
     <complexContent mixed="false">
@@ -219,7 +239,11 @@
       </documentation>
     </annotation>
     <complexContent mixed="false">
-      <extension base="tns:BaseSynchRequestType"/>
+      <extension base="tns:BaseSynchRequestType">
+        <sequence>
+          <element name="calendarHref" type="string" />
+        </sequence>
+      </extension>
     </complexContent>
   </complexType>
   
@@ -239,8 +263,8 @@
       </documentation>
     </annotation>
     <sequence>
-      <element name="calendar-href" type="string" />
-      <element name="synch-info-responses">
+      <element name="calendarHref" type="string" />
+      <element name="synchInfoResponses">
         <complexType>
           <sequence>
             <element maxOccurs="unbounded" name="synch-info" 

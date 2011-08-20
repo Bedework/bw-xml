@@ -18,14 +18,19 @@
   </annotation>
   
   <!-- Error codes -->
-  <element name="alreadySubscribed" type="cws:ErrorCodeType"
-              substitutionGroup="cws:error" >
+  <complexType name="AlreadySubscribedType" >
     <annotation>
       <documentation xml:lang="en">
         Already have a subscription to this calendar.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="cws:ErrorCodeType"/>
+    </complexContent>
+  </complexType>
+  
+  <element name="alreadySubscribed" type="tns:AlreadySubscribedType"
+              substitutionGroup="cws:error" />
 
   <element name="invalidToken" type="cws:ErrorCodeType"
               substitutionGroup="cws:error" >
