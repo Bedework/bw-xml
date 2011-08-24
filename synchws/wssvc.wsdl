@@ -17,6 +17,7 @@
   <!-- =========================== getProperties =========================== -->  
 
   <wsdl:message name="GetPropertiesIn">
+    <wsdl:part name="idToken" element="tns:synchIdToken" />
     <wsdl:part name="request" element="cws:getProperties" />
   </wsdl:message>
   
@@ -27,12 +28,21 @@
   <!-- ====================== startServiceNotification ===================== -->  
 
   <wsdl:message name="StartServiceIn">
-    <wsdl:part name="idToken" element="tns:synchIdToken" />
-    <wsdl:part name="request" element="tns:start-service-notification" />
+    <wsdl:part name="request" element="tns:startServiceNotification" />
   </wsdl:message>
   
   <wsdl:message name="StartServiceOut">
-    <wsdl:part name="response" element="tns:start-service-response" />
+    <wsdl:part name="response" element="tns:startServiceResponse" />
+  </wsdl:message>
+
+  <!-- ====================== keepAliveNotification ===================== -->  
+
+  <wsdl:message name="KeepAliveIn">
+    <wsdl:part name="request" element="tns:keepAliveNotification" />
+  </wsdl:message>
+  
+  <wsdl:message name="KeepAliveOut">
+    <wsdl:part name="response" element="tns:keepAliveResponse" />
   </wsdl:message>
 
   <!-- ============================ getSynchInfo =========================== -->  
@@ -98,9 +108,14 @@
       <wsdl:output message="tns:GetPropertiesOut" />
     </wsdl:operation>
     
-    <wsdl:operation name="NotifyRemoteService">
+    <wsdl:operation name="StartService">
       <wsdl:input message="tns:StartServiceIn" />
       <wsdl:output message="tns:StartServiceOut" />
+    </wsdl:operation>
+    
+    <wsdl:operation name="PingService">
+      <wsdl:input message="tns:KeepAliveIn" />
+      <wsdl:output message="tns:KeepAliveOut" />
     </wsdl:operation>
     
     <wsdl:operation name="GetSynchInfo">
@@ -139,8 +154,18 @@
     </wsdl:documentation>
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     
-    <wsdl:operation name="NotifyRemoteService">
-      <soap:operation soapAction="http://www.bedework.org/synch/wsmessages/notifyRemoteService" />
+    <wsdl:operation name="StartService">
+      <soap:operation soapAction="http://www.bedework.org/synch/wsmessages/startService" />
+      <wsdl:input>
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="PingService">
+      <soap:operation soapAction="http://www.bedework.org/synch/wsmessages/pingService" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -152,6 +177,7 @@
     <wsdl:operation name="GetProperties">
       <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/getProperties" />
       <wsdl:input>
+        <soap:header message="tns:GetPropertiesIn" use="literal" part="idToken" />
         <soap:body use="literal" parts="request" />
       </wsdl:input>
       <wsdl:output>

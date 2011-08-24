@@ -58,8 +58,9 @@
       </documentation>
     </annotation>
     <sequence>
-      <element name="principal-href" type="string" />
-      <element name="synch-token" type="string" />
+      <element name="principalHref" type="string" />
+      <element name="subscribeUrl" type="string" />
+      <element name="synchToken" type="string" />
     </sequence>
   </complexType>
 
@@ -188,7 +189,8 @@
   
   <!-- *********************************************************************
        Syncher to Remote system 
-       start-service-notification; sent to (re)initialise the service
+       start-service-notification; sent to initialise the service
+       keep-alive-notification; sent to say synch engine is still with us
        get-sycnch-info: return info used to synch
        fetch: fetch one or more calendar items
        add: add a new calendar item
@@ -201,35 +203,69 @@
       <documentation xml:lang="en">
            (Re)initialize the service
            subscribe-url: callback url for notifications and subscribe requests
-           token: random token for subscribe requests. If token is unchanged this
-               is just a keep alive ping
+           id and (encrypted) password - may be required by prior arrangement
       </documentation>
     </annotation>
     <sequence>
-      <element name="subscribe-url" type="string" />
-      <element name="token" type="string" />
+      <element name="subscribeUrl" type="string" />
+      <element name="id" type="string" minOccurs="0" />
+      <element name="pw" type="string" minOccurs="0" />
     </sequence>
   </complexType>
   
-  <element name="start-service-notification" 
+  <element name="startServiceNotification" 
            type="tns:StartServiceNotificationType" />
   
   <complexType name="StartServiceResponseType">
     <annotation>
       <documentation xml:lang="en">
            Respond to the ping
-           token: sent in initial request
+           token: from service
            status: OK
       </documentation>
     </annotation>
-    <sequence>
-      <element name="token" type="string" />
-      <element name="status" type="cws:StatusType" />
-    </sequence>
+    <complexContent mixed="false">
+      <extension base="cws:BaseResponseType">
+        <sequence>
+          <element name="token" type="string" />
+        </sequence>
+      </extension>
+    </complexContent>
   </complexType>
 
-  <element name="start-service-response" type="tns:StartServiceResponseType" />
+  <element name="startServiceResponse" type="tns:StartServiceResponseType" />
+  
+  <complexType name="KeepAliveNotificationType">
+    <annotation>
+      <documentation xml:lang="en">
+           Ping the service
+           subscribe-url: callback url for notifications and subscribe requests
+           token: token as provided at startup
+      </documentation>
+    </annotation>
+    <sequence>
+      <element name="subscribeUrl" type="string" />
+      <element name="token" type="string" />
+    </sequence>
+  </complexType>
+  
+  <element name="keepAliveNotification" 
+           type="tns:KeepAliveNotificationType" />
+  
+  <complexType name="KeepAliveResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+         Response to ping message.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="cws:BaseResponseType">
+      </extension>
+    </complexContent>
+  </complexType>
 
+  <element name="keepAliveResponse" type="tns:KeepAliveResponseType" />
+  
   <!-- ============================ synch-info ============================= -->
   
   <complexType name="GetSynchInfoType">
