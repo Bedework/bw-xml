@@ -14,17 +14,6 @@
     </s:schema>
   </wsdl:types> 
 
-  <!-- =========================== getProperties =========================== -->  
-
-  <wsdl:message name="GetPropertiesIn">
-    <wsdl:part name="idToken" element="tns:synchIdToken" />
-    <wsdl:part name="request" element="cws:getProperties" />
-  </wsdl:message>
-  
-  <wsdl:message name="GetPropertiesOut">
-    <wsdl:part name="response" element="cws:getPropertiesResponse" />
-  </wsdl:message>
-
   <!-- ====================== startServiceNotification ===================== -->  
 
   <wsdl:message name="StartServiceIn">
@@ -43,6 +32,28 @@
   
   <wsdl:message name="KeepAliveOut">
     <wsdl:part name="response" element="tns:keepAliveResponse" />
+  </wsdl:message>
+
+  <!-- =========================== subscribe =========================== -->  
+
+  <wsdl:message name="SubscribeIn">
+    <wsdl:part name="idToken" element="tns:synchIdToken" />
+    <wsdl:part name="request" element="tns:subscribe" />
+  </wsdl:message>
+  
+  <wsdl:message name="SubscribeOut">
+    <wsdl:part name="response" element="tns:subscribeResponse" />
+  </wsdl:message>
+
+  <!-- =========================== getProperties =========================== -->  
+
+  <wsdl:message name="GetPropertiesIn">
+    <wsdl:part name="idToken" element="tns:synchIdToken" />
+    <wsdl:part name="request" element="cws:getProperties" />
+  </wsdl:message>
+  
+  <wsdl:message name="GetPropertiesOut">
+    <wsdl:part name="response" element="cws:getPropertiesResponse" />
   </wsdl:message>
 
   <!-- ============================ getSynchInfo =========================== -->  
@@ -103,11 +114,6 @@
   <!-- ============================== port ================================= -->  
   
   <wsdl:portType name="SynchRemoteServicePortType">
-    <wsdl:operation name="GetProperties">
-      <wsdl:input message="tns:GetPropertiesIn" />
-      <wsdl:output message="tns:GetPropertiesOut" />
-    </wsdl:operation>
-    
     <wsdl:operation name="StartService">
       <wsdl:input message="tns:StartServiceIn" />
       <wsdl:output message="tns:StartServiceOut" />
@@ -116,6 +122,16 @@
     <wsdl:operation name="PingService">
       <wsdl:input message="tns:KeepAliveIn" />
       <wsdl:output message="tns:KeepAliveOut" />
+    </wsdl:operation>
+    
+    <wsdl:operation name="Subscribe">
+      <wsdl:input message="tns:SubscribeIn" />
+      <wsdl:output message="tns:SubscribeOut" />
+    </wsdl:operation>
+    
+    <wsdl:operation name="GetProperties">
+      <wsdl:input message="tns:GetPropertiesIn" />
+      <wsdl:output message="tns:GetPropertiesOut" />
     </wsdl:operation>
     
     <wsdl:operation name="GetSynchInfo">
@@ -167,6 +183,17 @@
     <wsdl:operation name="PingService">
       <soap:operation soapAction="http://www.bedework.org/synch/wsmessages/pingService" />
       <wsdl:input>
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="Subscribe">
+      <soap:operation soapAction="http://www.bedework.org/synch/wsmessages/subscribe" />
+      <wsdl:input>
+        <soap:header message="tns:SubscribeIn" use="literal" part="idToken" />
         <soap:body use="literal" parts="request" />
       </wsdl:input>
       <wsdl:output>
@@ -238,7 +265,7 @@
 
   <wsdl:service name="SynchRemoteService">
     <wsdl:port name="SynchRSPort" binding="tns:SynchRemoteServiceBinding">
-       <soap:address location="@SERVICE-URL@"></soap:address>
+       <soap:address location="@BEDEWORK-SYNCH-SERVICE-URL@"></soap:address>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>  

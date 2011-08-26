@@ -238,15 +238,15 @@
           </filterset>
         </copy>
 
-        <!-- Exchange synch wsdl -->
+        <!-- synch wsdl -->
         <debugMsg message="Copy the wsdl to ${org.bedework.synch.wsdl.deploy.dir}"/>
     
         <copy todir="${org.bedework.synch.wsdl.deploy.dir}" overwrite="yes">
           <fileset dir="${org.bedework.synchws.base}"
                    includes="*.xsd,*.wsdl" />
           <filterset>
-            <filter token="SERVICE-URL"
-                    value="${org.bedework.synch.service}"/>
+            <filter token="BEDEWORK-SYNCH-SERVICE-URL"
+                    value="${org.bedework.bwsynch.service}"/>
           </filterset>
         </copy>
       </then>

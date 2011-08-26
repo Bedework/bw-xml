@@ -154,7 +154,7 @@
     </complexContent>
   </complexType>
 
-  <element name="subscribe-response" type="tns:SubscribeResponseType" />
+  <element name="subscribeResponse" type="tns:SubscribeResponseType" />
   
   <complexType name="UnsubscribeRequestType">
     <annotation>
@@ -207,6 +207,7 @@
       </documentation>
     </annotation>
     <sequence>
+      <element name="connectorId" type="string" />
       <element name="subscribeUrl" type="string" />
       <element name="id" type="string" minOccurs="0" />
       <element name="pw" type="string" minOccurs="0" />
