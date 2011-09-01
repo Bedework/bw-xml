@@ -50,6 +50,21 @@
     </annotation>
   </element>
 
+  <complexType name="UnreachableTargetType" >
+    <annotation>
+      <documentation xml:lang="en">
+        The target of the subscription is unreachable.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="cws:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="unreachableTarget" type="tns:UnreachableTargetType"
+              substitutionGroup="cws:error" />
+
   <element name="serviceStopped" type="cws:ErrorCodeType"
               substitutionGroup="cws:error" >
     <annotation>

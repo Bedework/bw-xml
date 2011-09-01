@@ -299,17 +299,21 @@
            Response to message to remote service requesting synchronization info.
       </documentation>
     </annotation>
-    <sequence>
-      <element name="calendarHref" type="string" />
-      <element name="synchInfoResponses">
-        <complexType>
-          <sequence>
-            <element maxOccurs="unbounded" name="synch-info" 
-                     type="tns:SynchInfoType" />
-          </sequence>
-        </complexType>
-      </element>
-    </sequence>
+    <complexContent mixed="false">
+      <extension base="cws:BaseResponseType">
+        <sequence>
+          <element name="calendarHref" type="string" />
+          <element name="synchInfoResponses">
+            <complexType>
+              <sequence>
+                <element maxOccurs="unbounded" name="synch-info" 
+                         type="tns:SynchInfoType" />
+              </sequence>
+            </complexType>
+          </element>
+        </sequence>
+      </extension>
+    </complexContent>
   </complexType>
   
   <element name="synch-info-response" type="tns:SynchInfoResponseType" />
