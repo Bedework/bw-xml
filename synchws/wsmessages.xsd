@@ -118,16 +118,17 @@
            calendar to 'remote'.
            token
                  Sent in initial startup request
-           localProperties
-                 Set of properties for the local end
-           remoteProperties
-                 Set of properties for the remote end
+           endAConnector
+                 Set of properties for the A end
+           endBConnector
+                 Set of properties for the B end
       </documentation>
     </annotation>
     <complexContent mixed="false">
       <extension base="tns:BaseSynchRequestType">
         <sequence >
           <element name="token" type="string" />
+          <element name="principalHref" type="string" />
           <element name="direction" type="tns:SynchDirectionType" />
           <element name="master" type="tns:SynchMasterType" />
           <element name="endAConnector" type="tns:ConnectorInfoType" />
@@ -289,7 +290,8 @@
   <complexType name="SynchInfoType">
     <sequence>
       <element name="uid" type="string" />
-      <element name="exchange-lastmod" type="string" />
+      <element name="lastMod" type="string" />
+      <element name="lastSynch" type="string" />
     </sequence>
   </complexType>
   
