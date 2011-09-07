@@ -16,6 +16,18 @@
         
   <import schemaLocation="../schemas/icalendar/iCalendar.xsd" 
           namespace="urn:ietf:params:xml:ns:icalendar-2.0" />
+  
+  <simpleType name="AnyofAllofType">
+    <annotation>
+      <documentation xml:lang="en">
+        A CALDAV spec extension to allow AND/OR in filters
+      </documentation>
+    </annotation>
+    <restriction base="string">
+      <pattern value="anyof|allof"/>
+    </restriction>
+  </simpleType>
+  
 <!--   
   <complexType name="UTCTimeRangeType">
     <annotation>
@@ -463,6 +475,7 @@
       </choice>
     </sequence>
     <attribute name="name" type="string" use="required" />
+    <attribute name="test" type="tns:AnyofAllofType" default="anyof" />
   </complexType>  
   
   <element name="prop-filter" type="tns:PropFilterType" />
@@ -517,6 +530,7 @@
       </choice>
     </sequence>
     <attribute name="name" type="string" use="required" />
+    <attribute name="test" type="tns:AnyofAllofType" default="anyof" />
   </complexType>  
   
   <element name="comp-filter" type="tns:CompFilterType" />

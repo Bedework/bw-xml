@@ -56,15 +56,26 @@
     <wsdl:part name="response" element="cws:getPropertiesResponse" />
   </wsdl:message>
 
-  <!-- ============================ getSynchInfo =========================== -->  
+  <!-- =========================== calendarQuery =========================== -->
 
-  <wsdl:message name="GetSynchInfoIn">
+  <wsdl:message name="CalendarQueryIn">
     <wsdl:part name="idToken" element="tns:synchIdToken" />
-    <wsdl:part name="request" element="tns:get-sycnch-info" />
+    <wsdl:part name="request" element="cws:calendarQuery" />
   </wsdl:message>
   
-  <wsdl:message name="GetSynchInfoOut">
-    <wsdl:part name="response" element="tns:synch-info-response" />
+  <wsdl:message name="CalendarQueryOut">
+    <wsdl:part name="response" element="cws:calendarQueryResponse"/>
+  </wsdl:message>
+
+  <!-- ========================= calendarMultiget ========================== -->
+
+  <wsdl:message name="CalendarMultigetIn">
+    <wsdl:part name="idToken" element="tns:synchIdToken" />
+    <wsdl:part name="request" element="cws:calendarMultiget" />
+  </wsdl:message>
+  
+  <wsdl:message name="CalendarMultigetOut">
+    <wsdl:part name="response" element="cws:calendarQueryResponse"/>
   </wsdl:message>
 
   <!-- ============================= addItem =============================== -->  
@@ -76,17 +87,6 @@
   
   <wsdl:message name="AddItemOut">
     <wsdl:part name="addItemResponse" element="cws:addItemResponse" />
-  </wsdl:message>
-
-  <!-- =========================== calendarQuery =========================== -->
-
-  <wsdl:message name="CalendarQueryIn">
-    <wsdl:part name="idToken" element="tns:synchIdToken" />
-    <wsdl:part name="request" element="cws:calendarQuery" />
-  </wsdl:message>
-  
-  <wsdl:message name="CalendarQueryOut">
-    <wsdl:part name="response" element="cws:calendarQueryResponse"/>
   </wsdl:message>
 
   <!-- ============================= fetchItem =============================== -->  
@@ -134,19 +134,19 @@
       <wsdl:output message="tns:GetPropertiesOut" />
     </wsdl:operation>
     
-    <wsdl:operation name="GetSynchInfo">
-      <wsdl:input message="tns:GetSynchInfoIn" />
-      <wsdl:output message="tns:GetSynchInfoOut" />
+    <wsdl:operation name="CalendarQuery">
+      <wsdl:input message="tns:CalendarQueryIn" />
+      <wsdl:output message="tns:CalendarQueryOut" />
+    </wsdl:operation>
+    
+    <wsdl:operation name="CalendarMultiget">
+      <wsdl:input message="tns:CalendarMultigetIn" />
+      <wsdl:output message="tns:CalendarMultigetOut" />
     </wsdl:operation>
     
     <wsdl:operation name="AddItem">
       <wsdl:input message="tns:AddItemIn" />
       <wsdl:output message="tns:AddItemOut" />
-    </wsdl:operation>
-    
-    <wsdl:operation name="CalendarQuery">
-      <wsdl:input message="tns:CalendarQueryIn" />
-      <wsdl:output message="tns:CalendarQueryOut" />
     </wsdl:operation>
     
     <wsdl:operation name="FetchItem">
@@ -212,8 +212,18 @@
       </wsdl:output>
     </wsdl:operation>
     
-    <wsdl:operation name="GetSynchInfo">
-      <soap:operation soapAction="http://www.bedework.org/synch/wsmessages/getsynchinfo" />
+    <wsdl:operation name="CalendarQuery">
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/CalendarQuery" />
+      <wsdl:input>
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="CalendarMultiget">
+      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/CalendarMultiget" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -229,16 +239,6 @@
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" parts="addItemResponse" />
-      </wsdl:output>
-    </wsdl:operation>
-    
-    <wsdl:operation name="CalendarQuery">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/CalendarQuery" />
-      <wsdl:input>
-        <soap:body use="literal" parts="request" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" parts="response" />
       </wsdl:output>
     </wsdl:operation>
     
