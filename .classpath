@@ -7,8 +7,6 @@
 	<classpathentry kind="src" path="exchangews/gensrc/src"/>
 	<classpathentry excluding="org/oasis_open/docs/ns/wscal/calws_soap/" kind="src" path="synchws/gensrc/src"/>
 	<classpathentry excluding="ietf/params/xml/ns/icalendar_2/" kind="src" path="timezones/gensrc/src"/>
-	<classpathentry kind="lib" path="dist/bw-exsynchwsschema-3.7.jar"/>
-	<classpathentry kind="lib" path="dist/bw-tzschema-3.7.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="dist/temp/wsclasses/bwxml"/>
 </classpath>
