@@ -31,6 +31,16 @@
   </complexType>
   
   <!-- Error codes -->
+
+  <element name="forbidden" type="tns:ErrorCodeType"
+              substitutionGroup="tns:error" >
+    <annotation>
+      <documentation xml:lang="en">
+        Attempted to carry out a forbidden operation.
+      </documentation>
+    </annotation>
+  </element>
+
   <element name="targetExists" type="tns:ErrorCodeType"
               substitutionGroup="tns:error" >
     <annotation>

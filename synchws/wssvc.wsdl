@@ -215,6 +215,7 @@
     <wsdl:operation name="CalendarQuery">
       <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/CalendarQuery" />
       <wsdl:input>
+        <soap:header message="tns:CalendarQueryIn" use="literal" part="idToken" />
         <soap:body use="literal" parts="request" />
       </wsdl:input>
       <wsdl:output>
@@ -225,6 +226,7 @@
     <wsdl:operation name="CalendarMultiget">
       <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/CalendarMultiget" />
       <wsdl:input>
+        <soap:header message="tns:CalendarMultigetIn" use="literal" part="idToken" />
         <soap:body use="literal" parts="request" />
       </wsdl:input>
       <wsdl:output>
@@ -235,6 +237,7 @@
     <wsdl:operation name="AddItem">
       <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/additem" />
       <wsdl:input>
+        <soap:header message="tns:AddItemIn" use="literal" part="idToken" />
         <soap:body use="literal" parts="addItemRequest" />
       </wsdl:input>
       <wsdl:output>
@@ -245,6 +248,7 @@
     <wsdl:operation name="FetchItem">
       <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/fetchitem" />
       <wsdl:input>
+        <soap:header message="tns:FetchItemIn" use="literal" part="idToken" />
         <soap:body use="literal" parts="fetchItemRequest" />
       </wsdl:input>
       <wsdl:output>
@@ -255,6 +259,7 @@
     <wsdl:operation name="UpdateItem">
       <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/updateitem" />
       <wsdl:input>
+        <soap:header message="tns:UpdateItemIn" use="literal" part="idToken" />
         <soap:body use="literal" parts="request" />
       </wsdl:input>
       <wsdl:output>
