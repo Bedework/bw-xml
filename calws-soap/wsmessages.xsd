@@ -518,14 +518,16 @@
          
          zero or more of selections of sub-components to update
          zero or more additions or removals of components 
+         
+         Removals MUST be processed ahead of additions.
       </documentation>
     </annotation>
     <sequence>
       <element name="component" type="tns:ComponentSelectionType"
                minOccurs="0" maxOccurs="unbounded" />
-      <element name="add" type="tns:ComponentReferenceType"
-               minOccurs="0" maxOccurs="unbounded" />
       <element name="remove" type="tns:ComponentReferenceType"
+               minOccurs="0" maxOccurs="unbounded" />
+      <element name="add" type="tns:ComponentReferenceType"
                minOccurs="0" maxOccurs="unbounded" />
     </sequence>
   </complexType>
