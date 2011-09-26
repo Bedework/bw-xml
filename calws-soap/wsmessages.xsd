@@ -571,14 +571,16 @@
          Used to contain updates to properties. These updates are either a 
          selection of a property to apply a change and/or to update the 
          parameters or addition or removal of properties.
+         
+         Removals MUST be processed ahead of additions.
       </documentation>
     </annotation>
     <sequence>
       <element name="property" type="tns:PropertySelectionType"
                minOccurs="0" maxOccurs="unbounded" />
-      <element name="add" type="tns:PropertyReferenceType"
-               minOccurs="0" maxOccurs="unbounded" />
       <element name="remove" type="tns:PropertyReferenceType"
+               minOccurs="0" maxOccurs="unbounded" />
+      <element name="add" type="tns:PropertyReferenceType"
                minOccurs="0" maxOccurs="unbounded" />
     </sequence>
   </complexType>
@@ -616,14 +618,16 @@
          Used to contain updates to parameters. These updates are either a 
          selection of a parameter to apply a change or addition or removal of
          parameters.
+         
+         Removals MUST be processed ahead of additions.
       </documentation>
     </annotation>
     <sequence>
       <element name="parameter" type="tns:ParameterSelectionType"
                minOccurs="0" maxOccurs="unbounded" />
-      <element name="add" type="tns:ParameterReferenceType"
-               minOccurs="0" maxOccurs="unbounded" />
       <element name="remove" type="tns:ParameterReferenceType"
+               minOccurs="0" maxOccurs="unbounded" />
+      <element name="add" type="tns:ParameterReferenceType"
                minOccurs="0" maxOccurs="unbounded" />
     </sequence>
   </complexType>
