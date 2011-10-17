@@ -55,6 +55,9 @@
     <property name="org.bedework.calws-soap.base"
               location="${project.home}/calws-soap" />
 
+    <property name="org.bedework.calws-soap-strict.base"
+              location="${project.home}/calws-soap-strict" />
+
     <property name="org.bedework.exchangews.base"
               location="${project.home}/exchangews" />
 
@@ -63,6 +66,9 @@
 
     <property name="org.bedework.icalendar.base"
               location="${project.home}/icalendar" />
+
+    <property name="org.bedework.icalendar-strict.base"
+              location="${project.home}/icalendar-strict" />
 
     <property name="org.bedework.category.base"
               location="${project.home}/category" />
@@ -94,8 +100,14 @@
     <property name="calws-soap.jar"
               location="${dist.home}/${org.bedework.module.calws-soapschema.jar}-${project.version}.jar" />
 
+    <property name="calws-soap-strict.jar"
+              location="${dist.home}/${org.bedework.module.calws-soapschema-strict.jar}-${project.version}.jar" />
+
     <property name="icalendar.jar"
               location="${dist.home}/${org.bedework.module.icalschema.jar}-${project.version}.jar" />
+
+    <property name="icalendar-strict.jar"
+              location="${dist.home}/${org.bedework.module.icalschema-strict.jar}-${project.version}.jar" />
 
     <property name="vcard.jar"
               location="${dist.home}/${org.bedework.module.vcardschema.jar}-${project.version}.jar" />
@@ -166,6 +178,16 @@
               dependencies="org.bedework.schemas.files"
     />
 
+    <!-- calws-soap-strict - web service -->
+    <echo message="wsdllocation=${calws-soap.wsdllocation}" />
+    <wsimport wsdl="${org.bedework.calws-soap-strict.base}/wssvc.wsdl"
+              wsdllocation="${calws-soap.wsdllocation}"
+              module-base="${org.bedework.calws-soap-strict.base}/gensrc"
+              jar-file="${calws-soap-strict.jar}"
+              bindingsdir="${org.bedework.calws-soap-strict.base}/wsdlbindings"
+              dependencies="org.bedework.schemas.files"
+    />
+
     <!-- Timezones - XML data -->
     <xjc schema="${org.bedework.schemas.base}/tzsvr/tzservice.xsd"
          module-base="${org.bedework.tzsvc.base}/gensrc"
@@ -178,6 +200,13 @@
     <xjc schema="${org.bedework.schemas.base}/icalendar/iCalendar.xsd"
          module-base="${org.bedework.icalendar.base}/gensrc"
          jar-file="${icalendar.jar}"
+         bindingsdir="${project.home}/xjcbindings"
+    />
+
+    <!-- icalendar-strict -->
+    <xjc schema="${org.bedework.schemas.base}/icalendar-strict/iCalendar.xsd"
+         module-base="${org.bedework.icalendar-strict.base}/gensrc"
+         jar-file="${icalendar-strict.jar}"
          bindingsdir="${project.home}/xjcbindings"
     />
 
@@ -263,38 +292,5 @@
                 value="${org.bedework.calws-soap.service}"/>
       </filterset>
     </copy>
-  </target>
-
-<!-- ==================== Javadoc Target ===============================
-     The "javadoc" target creates Javadoc API documentation for the Java
-     classes included in your application.  Normally, this is only required
-     when preparing a distribution release, but is available as a separate
-     target in case the developer wants to create Javadocs independently.
-     =================================================================== -->
-
-  <target name="javadoc" depends="init"
-          description="Create Javadoc API documentation">
-    <property name="destdir" location="${dist.home}/docs/api"/>
-    <mkdir dir="${destdir}"/>
-
-    <javadoc sourcepath="${org.bedework.module.common.base}/src:${org.bedework.module.service.base}/src:${org.bedework.module.server.base}/src:"
-           classpathref="compile.classpath"
-                destdir="${destdir}"
-           packagenames="org.bedework.*,
-                         edu.rpi.*"
-                 access="public"
-                 author="true"
-                version="true"
-          breakiterator="yes"
-            windowtitle="${project.name} ${project.version} API Documentation">
-      <doctitle><![CDATA[${project.name} ${project.version}<br/>API Documentation]]></doctitle>
-      <header><![CDATA[${project.name} ${project.version}<br/>API Documentation]]></header>
-      <link href="../../access/api" />
-      <link href="../../calendarapi/api" />
-      <link href="../../davutil/api" />
-      <link href="../../rpiutil/api" />
-      <link href="../../webdav/api" />
-      <link href="${env.JAVA_HOME}/docs/api" />
-    </javadoc>
   </target>
 </project>
