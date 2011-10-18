@@ -7,7 +7,7 @@
         targetNamespace="http://docs.oasis-open.org/ns/wscal/calws-soap" 
         elementFormDefault="qualified">
     
-  <import schemaLocation="../schemas/icalendar/iCalendar.xsd" 
+  <import schemaLocation="../schemas/icalendar-strict/iCalendar.xsd" 
           namespace="urn:ietf:params:xml:ns:icalendar-2.0" />
                  
   <import schemaLocation="../schemas/xrd/xrd-1.0-os.xsd" 
@@ -541,12 +541,7 @@
       </documentation>
     </annotation>
     <sequence>
-      <choice> 
-        <element ref="xcal:vcalendar"/>
-        <element ref="xcal:vcalendarContainedComponent"/>
-        <element ref="xcal:baseComponent"/>
-        <element ref="xcal:valarm"/>
-      </choice>
+      <element ref="xcal:baseComponent"/>
       <element name="properties" type="tns:PropertiesSelectionType"
                minOccurs="0" /> 
       <element name="components" type="tns:ComponentsSelectionType"

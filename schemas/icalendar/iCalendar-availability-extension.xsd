@@ -62,23 +62,12 @@
        
   <xs:complexType name="VavailabilityType">
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:VcalendarContainedComponentType">
-        <xs:sequence>
-          <xs:element name="components" 
-                      type="xcal:ArrayOfVavailabilityContainedComponents"/>
-        </xs:sequence>
-      </xs:extension>
+      <xs:extension base="xcal:BaseComponentType"/>
     </xs:complexContent>
   </xs:complexType>
 
   <xs:element name="vavailability" type="xcal:VavailabilityType"
-              substitutionGroup="xcal:vcalendarContainedComponent"/>
-
-  <xs:complexType name="ArrayOfVavailabilityContainedComponents">
-    <xs:sequence>
-      <xs:element ref="xcal:available" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-  </xs:complexType>
+              substitutionGroup="xcal:baseComponent"/>
        
   <xs:complexType name="AvailableType">
     <xs:complexContent mixed="false">

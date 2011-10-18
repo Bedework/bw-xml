@@ -92,25 +92,12 @@
       </xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:VcalendarContainedComponentType">
-        <xs:sequence>
-          <xs:element name="components" 
-                      type="xcal:ArrayOfGluonContainedComponents"/>
-        </xs:sequence>
-      </xs:extension>
+      <xs:extension base="xcal:BaseComponentType"/>
     </xs:complexContent>
-  </xs:complexType>
-
-  <xs:complexType name="ArrayOfGluonContainedComponents" mixed="false">
-    <xs:sequence>
-      <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="xcal:vavailability"/>
-      </xs:choice>
-    </xs:sequence>
   </xs:complexType>
               
   <xs:element name="gluon" type="xcal:WsCalendarGluonType"
-              substitutionGroup="xcal:vcalendarContainedComponent"/>
+              substitutionGroup="xcal:baseComponent"/>
 
   <xs:complexType name="WsCalendarIntervalType">
     <xs:annotation>
@@ -119,12 +106,12 @@
       </xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:VcalendarContainedComponentType"/>
+      <xs:extension base="xcal:BaseComponentType"/>
     </xs:complexContent>
   </xs:complexType>
               
   <xs:element name="interval" type="xcal:WsCalendarIntervalType"
-              substitutionGroup="xcal:vcalendarContainedComponent"/>
+              substitutionGroup="xcal:baseComponent"/>
 
   <!-- =====================================================================
        3.7 Calendar Properties

@@ -11,7 +11,7 @@
        schema types.
        ============================================================= -->
         
-  <import schemaLocation="../schemas/icalendar/iCalendar.xsd" 
+  <import schemaLocation="../schemas/icalendar-strict/iCalendar.xsd" 
           namespace="urn:ietf:params:xml:ns:icalendar-2.0" />
   
   <simpleType name="AnyofAllofType">
