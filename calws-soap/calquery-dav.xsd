@@ -291,15 +291,15 @@
       </documentation>
     </annotation>
     <sequence> 
-      <!--
       <element ref="xcal:baseParameter" />
-      -->
       <choice minOccurs="0">
         <element ref="tns:is-not-defined" />
         <element ref="tns:textMatch" />
       </choice>
     </sequence>
+      <!--
     <attribute name="name" type="string" use="required" />
+      -->
   </complexType>  
   
   <element name="paramFilter" type="tns:ParamFilterType" />
@@ -339,9 +339,7 @@
       </documentation>
     </annotation>
     <sequence> 
-      <!--
       <element ref="xcal:baseProperty" />
-      -->
       <choice minOccurs="0">
         <element ref="tns:is-not-defined" />
         <sequence> 
@@ -354,13 +352,14 @@
         </sequence>
       </choice>
     </sequence>
+    <!-- 
     <attribute name="name" type="string" use="required" />
+     -->
     <attribute name="test" type="tns:AnyofAllofType" default="anyof" />
   </complexType>  
   
   <element name="propFilter" type="tns:PropFilterType" />
   
-  <!--
   <complexType name="AnyCompType">
     <annotation>
       <documentation xml:lang="en">
@@ -372,7 +371,6 @@
   </complexType>  
   
   <element name="anyComp" type="tns:AnyCompType" />
-  -->
   
   <complexType name="CompFilterType">
     <annotation>
@@ -414,13 +412,10 @@
       </documentation>
     </annotation>
     <sequence> 
-      <!--
-      <choice minOccurs="1">
+      <choice>
         <element ref="tns:anyComp" />
-        <element ref="xcal:vcalendar" />
         <element ref="xcal:baseComponent" />
       </choice>
-      -->
       <choice minOccurs="0">
         <element ref="tns:is-not-defined" />
         <sequence> 
@@ -430,7 +425,9 @@
         </sequence>
       </choice>
     </sequence>
+      <!--
     <attribute name="name" type="string" use="required" />
+      -->
     <attribute name="test" type="tns:AnyofAllofType" default="anyof" />
   </complexType>  
   

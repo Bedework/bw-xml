@@ -45,8 +45,7 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:element name="baseComponent" type="xcal:BaseComponentType" 
-              abstract="true" />
+  <xs:element name="baseComponent" type="xcal:BaseComponentType" />
 
   <xs:complexType name="ArrayOfComponents">
     <xs:sequence>

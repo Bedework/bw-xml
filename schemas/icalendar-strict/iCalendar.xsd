@@ -36,12 +36,13 @@
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
+    <!-- 
       <xs:element ref="xcal:properties" minOccurs="0" />
+     -->
     </xs:sequence>
   </xs:complexType>
 
-  <xs:element name="baseComponent" type="xcal:BaseComponentType" 
-              abstract="true" />
+  <xs:element name="baseComponent" type="xcal:BaseComponentType" />
 
   <xs:element name="properties" type="xcal:ArrayOfProperties"/>
 
@@ -102,11 +103,52 @@
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:BaseComponentType">
         <xs:sequence>
+          <xs:element name="properties" 
+                      type="xcal:ArrayOfVcalendarContainedProperties" minOccurs="0"/>
           <xs:element name="components" 
                       type="xcal:ArrayOfVcalendarContainedComponents"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ArrayOfVcalendarContainedProperties">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        From RFC 5545 Section 3.6
+       icalbody   = calprops component
+
+       calprops   = *(
+                  ;
+                  ; The following are REQUIRED,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  prodid / version /
+                  ;
+                  ; The following are OPTIONAL,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  calscale / method /
+                  ;
+                  ; The following are OPTIONAL,
+                  ; and MAY occur more than once.
+                  ;
+                  x-prop / iana-prop
+                  ;
+                  )
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- Exactly once -->
+        <xs:element ref="xcal:prodid"/>
+        <xs:element ref="xcal:version"/>
+        
+        <!-- 0 or 1 occurrences -->
+        <xs:element ref="xcal:calscale"/>
+        <xs:element ref="xcal:method"/>
+      </xs:choice>
+    </xs:sequence>
   </xs:complexType>
   
   <xs:element name="vcalendar" type="xcal:VcalendarType"/>
@@ -116,11 +158,117 @@
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:BaseComponentType">
         <xs:sequence>
+          <xs:element name="properties" 
+                      type="xcal:ArrayOfEventContainedProperties" minOccurs="0"/>
           <xs:element name="components" 
-                      type="xcal:ArrayOfEventTodoContainedComponents"/>
+                      type="xcal:ArrayOfEventTodoContainedComponents" minOccurs="0"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ArrayOfEventContainedProperties">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        From RFC 5545 Section 3.6.1
+       eventc     = "BEGIN" ":" "VEVENT" CRLF
+                    eventprop *alarmc
+                    "END" ":" "VEVENT" CRLF
+
+       eventprop  = *(
+                  ;
+                  ; The following are REQUIRED,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  dtstamp / uid /
+                  ;
+                  ; The following is REQUIRED if the component
+                  ; appears in an iCalendar object that doesn't
+                  ; specify the "METHOD" property; otherwise, it
+                  ; is OPTIONAL; in any case, it MUST NOT occur
+                  ; more than once.
+                  ;
+                  dtstart /
+                  ;
+                  ; The following are OPTIONAL,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  class / created / description / geo /
+                  last-mod / location / organizer / priority /
+                  seq / status / summary / transp /
+                  url / recurid /
+                  ;
+                  ; The following is OPTIONAL,
+                  ; but SHOULD NOT occur more than once.
+                  ;
+                  rrule /
+                  ;
+                  ; Either 'dtend' or 'duration' MAY appear in
+                  ; a 'eventprop', but 'dtend' and 'duration'
+                  ; MUST NOT occur in the same 'eventprop'.
+                  ;
+                  dtend / duration /
+                  ;
+                  ; The following are OPTIONAL,
+                  ; and MAY occur more than once.
+                  ;
+                  attach / attendee / categories / comment /
+                  contact / exdate / rstatus / related /
+                  resources / rdate / x-prop / iana-prop
+                  ;
+                  )
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- Exactly once -->
+        <xs:element ref="xcal:dtstamp"/>
+        <xs:element ref="xcal:uid"/>
+        
+        <!-- Exactly once - (with conditions) -->
+        <xs:element ref="xcal:dtstart"/>
+        
+        <!-- 0 or 1 occurrences -->
+        <xs:element ref="xcal:class"/>
+        <xs:element ref="xcal:created"/>
+        <xs:element ref="xcal:description"/>
+        <xs:element ref="xcal:geo"/>
+        <xs:element ref="xcal:last-modified"/>
+        <xs:element ref="xcal:location"/>
+        <xs:element ref="xcal:organizer"/>
+        <xs:element ref="xcal:priority"/>
+        <xs:element ref="xcal:recurrence-id"/>
+        <xs:element ref="xcal:sequence"/>
+        <xs:element ref="xcal:status"/>
+        <xs:element ref="xcal:summary"/>
+        <xs:element ref="xcal:transp"/>
+        <xs:element ref="xcal:url"/>
+        
+        <!-- 0 or 1 occurrences (a SHOULD) -->
+        <xs:element ref="xcal:rrule"/>
+        
+        <!-- 0 or 1 occurrences (deprecated) -->
+        <xs:element ref="xcal:exrule"/>
+        
+        <!-- 0 or 1 occurrences (with conditions) -->
+        <xs:choice>
+          <xs:element ref="xcal:dtend"/>
+          <xs:element ref="xcal:duration"/>
+        </xs:choice>
+        
+        <!-- 0 or more occurrences -->
+        <xs:element ref="xcal:attach"/>
+        <xs:element ref="xcal:attendee"/>
+        <xs:element ref="xcal:categories"/>
+        <xs:element ref="xcal:comment"/>
+        <xs:element ref="xcal:contact"/>
+        <xs:element ref="xcal:exdate"/>
+        <xs:element ref="xcal:request-status"/>
+        <xs:element ref="xcal:related"/>
+        <xs:element ref="xcal:resources"/>
+        <xs:element ref="xcal:rdate"/>
+      </xs:choice>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="ArrayOfEventTodoContainedComponents">
@@ -136,11 +284,111 @@
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:BaseComponentType">
         <xs:sequence>
+          <xs:element name="properties" 
+                      type="xcal:ArrayOfTodoContainedProperties" minOccurs="0"/>
           <xs:element name="components" 
                       type="xcal:ArrayOfEventTodoContainedComponents"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ArrayOfTodoContainedProperties">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        From RFC 5545 Section 3.6.2
+       todoc      = "BEGIN" ":" "VTODO" CRLF
+                    todoprop *alarmc
+                    "END" ":" "VTODO" CRLF
+
+       todoprop   = *(
+                  ;
+                  ; The following are REQUIRED,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  dtstamp / uid /
+                  ;
+                  ; The following are OPTIONAL,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  class / completed / created / description /
+                  dtstart / geo / last-mod / location / organizer /
+                  percent / priority / recurid / seq / status /
+                  summary / url /
+                  ;
+                  ; The following is OPTIONAL,
+                  ; but SHOULD NOT occur more than once.
+                  ;
+                  rrule /
+                  ;
+                  ; Either 'due' or 'duration' MAY appear in
+                  ; a 'todoprop', but 'due' and 'duration'
+                  ; MUST NOT occur in the same 'todoprop'.
+                  ; If 'duration' appear in a 'todoprop',
+                  ; then 'dtstart' MUST also appear in
+                  ; the same 'todoprop'.
+                  ;
+                  due / duration /
+                  ;
+                  ; The following are OPTIONAL,
+                  ; and MAY occur more than once.
+                  ;
+                  attach / attendee / categories / comment / contact /
+                  exdate / rstatus / related / resources /
+                  rdate / x-prop / iana-prop
+                  ;
+                  )
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- Exactly once -->
+        <xs:element ref="xcal:dtstamp"/>
+        <xs:element ref="xcal:uid"/>
+        
+        <!-- 0 or 1 occurrences -->
+        <xs:element ref="xcal:class"/>
+        <xs:element ref="xcal:completed"/>
+        <xs:element ref="xcal:created"/>
+        <xs:element ref="xcal:description"/>
+        <xs:element ref="xcal:dtstart"/>
+        <xs:element ref="xcal:geo"/>
+        <xs:element ref="xcal:last-modified"/>
+        <xs:element ref="xcal:location"/>
+        <xs:element ref="xcal:organizer"/>
+        <xs:element ref="xcal:percent-complete"/>
+        <xs:element ref="xcal:priority"/>
+        <xs:element ref="xcal:recurrence-id"/>
+        <xs:element ref="xcal:sequence"/>
+        <xs:element ref="xcal:status"/>
+        <xs:element ref="xcal:summary"/>
+        <xs:element ref="xcal:url"/>
+        
+        <!-- 0 or 1 occurrences (a SHOULD) -->
+        <xs:element ref="xcal:rrule"/>
+        
+        <!-- 0 or 1 occurrences (deprecated) -->
+        <xs:element ref="xcal:exrule"/>
+        
+        <!-- 0 or 1 occurrences (with conditions) -->
+        <xs:choice>
+          <xs:element ref="xcal:due"/>
+          <xs:element ref="xcal:duration"/>
+        </xs:choice>
+        
+        <!-- 0 or more occurrences -->
+        <xs:element ref="xcal:attach"/>
+        <xs:element ref="xcal:attendee"/>
+        <xs:element ref="xcal:categories"/>
+        <xs:element ref="xcal:comment"/>
+        <xs:element ref="xcal:contact"/>
+        <xs:element ref="xcal:exdate"/>
+        <xs:element ref="xcal:request-status"/>
+        <xs:element ref="xcal:related"/>
+        <xs:element ref="xcal:resources"/>
+        <xs:element ref="xcal:rdate"/>
+      </xs:choice>
+    </xs:sequence>
   </xs:complexType>
 
 	<!-- 3.6.3 Journal Component -->
@@ -151,8 +399,89 @@
       </xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:BaseComponentType"/>
+      <xs:extension base="xcal:BaseComponentType">
+        <xs:sequence>
+          <xs:element name="properties" 
+                      type="xcal:ArrayOfJournalContainedProperties" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ArrayOfJournalContainedProperties">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        From RFC 5545 Section 3.6.3
+       journalc   = "BEGIN" ":" "VJOURNAL" CRLF
+                    jourprop
+                    "END" ":" "VJOURNAL" CRLF
+
+       jourprop   = *(
+                  ;
+                  ; The following are REQUIRED,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  dtstamp / uid /
+                  ;
+                  ; The following are OPTIONAL,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  class / created / dtstart /
+                  last-mod / organizer / recurid / seq /
+                  status / summary / url /
+                  ;
+                  ; The following is OPTIONAL,
+                  ; but SHOULD NOT occur more than once.
+                  ;
+                  rrule /
+                  ;
+                  ; The following are OPTIONAL,
+                  ; and MAY occur more than once.
+                  ;
+                  attach / attendee / categories / comment /
+                  contact / description / exdate / related / rdate /
+                  rstatus / x-prop / iana-prop
+                  ;
+                  )
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- Exactly once -->
+        <xs:element ref="xcal:dtstamp"/>
+        <xs:element ref="xcal:uid"/>
+        
+        <!-- 0 or 1 occurrences -->
+        <xs:element ref="xcal:class"/>
+        <xs:element ref="xcal:created"/>
+        <xs:element ref="xcal:dtstart"/>
+        <xs:element ref="xcal:last-modified"/>
+        <xs:element ref="xcal:organizer"/>
+        <xs:element ref="xcal:recurrence-id"/>
+        <xs:element ref="xcal:sequence"/>
+        <xs:element ref="xcal:status"/>
+        <xs:element ref="xcal:summary"/>
+        <xs:element ref="xcal:url"/>
+        
+        <!-- 0 or 1 occurrences (a SHOULD) -->
+        <xs:element ref="xcal:rrule"/>
+        
+        <!-- 0 or 1 occurrences (deprecated) -->
+        <xs:element ref="xcal:exrule"/>
+        
+        <!-- 0 or more occurrences -->
+        <xs:element ref="xcal:attach"/>
+        <xs:element ref="xcal:attendee"/>
+        <xs:element ref="xcal:categories"/>
+        <xs:element ref="xcal:comment"/>
+        <xs:element ref="xcal:contact"/>
+        <xs:element ref="xcal:description"/>
+        <xs:element ref="xcal:exdate"/>
+        <xs:element ref="xcal:rdate"/>
+        <xs:element ref="xcal:related"/>
+        <xs:element ref="xcal:request-status"/>
+      </xs:choice>
+    </xs:sequence>
   </xs:complexType>
   
 	<!-- 3.6.4 Free/Busy Component -->
@@ -163,8 +492,65 @@
       </xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:BaseComponentType"/>
+      <xs:extension base="xcal:BaseComponentType">
+        <xs:sequence>
+          <xs:element name="properties" 
+                      type="xcal:ArrayOfFreebusyContainedProperties" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ArrayOfFreebusyContainedProperties">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        From RFC 5545 Section 3.6.4
+       freebusyc  = "BEGIN" ":" "VFREEBUSY" CRLF
+                    fbprop
+                    "END" ":" "VFREEBUSY" CRLF
+
+       fbprop     = *(
+                  ;
+                  ; The following are REQUIRED,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  dtstamp / uid /
+                  ;
+                  ; The following are OPTIONAL,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  contact / dtstart / dtend /
+                  organizer / url /
+                  ;
+                  ; The following are OPTIONAL,
+                  ; and MAY occur more than once.
+                  ;
+                  attendee / comment / freebusy / rstatus / x-prop /
+                  iana-prop
+                  ;
+                  )
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- Exactly once -->
+        <xs:element ref="xcal:dtstamp"/>
+        <xs:element ref="xcal:uid"/>
+        
+        <!-- 0 or 1 occurrences -->
+        <xs:element ref="xcal:contact"/>
+        <xs:element ref="xcal:dtend"/>
+        <xs:element ref="xcal:dtstart"/>
+        <xs:element ref="xcal:organizer"/>
+        <xs:element ref="xcal:url"/>
+        
+        <!-- 0 or more occurrences -->
+        <xs:element ref="xcal:attendee"/>
+        <xs:element ref="xcal:comment"/>
+        <xs:element ref="xcal:freebusy"/>
+        <xs:element ref="xcal:request-status"/>
+      </xs:choice>
+    </xs:sequence>
   </xs:complexType>
 
 	<!-- 3.6.5 timezone -->
@@ -177,11 +563,56 @@
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:BaseComponentType">
         <xs:sequence>
+          <xs:element name="properties" 
+                      type="xcal:ArrayOfTimezoneContainedProperties" minOccurs="0"/>
           <xs:element name="components" 
                       type="xcal:ArrayOfTimezoneContainedComponents"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ArrayOfTimezoneContainedProperties">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        From RFC 5545 Section 3.6.5
+       timezonec  = "BEGIN" ":" "VTIMEZONE" CRLF
+                    *(
+                    ;
+                    ; 'tzid' is REQUIRED, but MUST NOT occur more
+                    ; than once.
+                    ;
+                    tzid /
+                    ;
+                    ; 'last-mod' and 'tzurl' are OPTIONAL,
+                    ; but MUST NOT occur more than once.
+                    ;
+                    last-mod / tzurl /
+                    ;
+                    ; One of 'standardc' or 'daylightc' MUST occur
+                    ; and each MAY occur more than once.
+                    ;
+                    standardc / daylightc /
+                    ;
+                    ; The following are OPTIONAL,
+                    ; and MAY occur more than once.
+                    ;
+                    x-prop / iana-prop
+                    ;
+                    )
+                    "END" ":" "VTIMEZONE" CRLF
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- Exactly once -->
+        <xs:element name="tzid" type="xcal:TextPropertyType"/>
+        
+        <!-- 0 or 1 occurrences -->
+        <xs:element ref="xcal:last-modified"/>
+        <xs:element ref="xcal:url"/>
+      </xs:choice>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="ArrayOfTimezoneContainedComponents"
@@ -201,7 +632,13 @@
       </xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:BaseComponentType"/>
+      <xs:extension base="xcal:BaseComponentType">
+        <xs:sequence>
+          <xs:element name="properties" 
+                      type="xcal:ArrayOfStandardOrDaylightContainedProperties" 
+                      minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
@@ -212,14 +649,178 @@
       </xs:documentation>
     </xs:annotation>
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:BaseComponentType"/>
+      <xs:extension base="xcal:BaseComponentType">
+        <xs:sequence>
+          <xs:element name="properties" 
+                      type="xcal:ArrayOfStandardOrDaylightContainedProperties" 
+                      minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ArrayOfStandardOrDaylightContainedProperties">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        From RFC 5545 Section 3.6.5
+       standardc  = "BEGIN" ":" "STANDARD" CRLF
+                    tzprop
+                    "END" ":" "STANDARD" CRLF
+
+       daylightc  = "BEGIN" ":" "DAYLIGHT" CRLF
+                    tzprop
+                    "END" ":" "DAYLIGHT" CRLF
+
+       tzprop     = *(
+                    ;
+                    ; The following are REQUIRED,
+                    ; but MUST NOT occur more than once.
+                    ;
+                    dtstart / tzoffsetto / tzoffsetfrom /
+                    ;
+                    ; The following is OPTIONAL,
+                    ; but SHOULD NOT occur more than once.
+                    ;
+                    rrule /
+                    ;
+                    ; The following are OPTIONAL,
+                    ; and MAY occur more than once.
+                    ;
+                    comment / rdate / tzname / x-prop / iana-prop
+                    ;
+                    )
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- Exactly once -->
+        <xs:element ref="xcal:dtstart"/>
+        <xs:element ref="xcal:tzoffsetto"/>
+        <xs:element ref="xcal:tzoffsetfrom"/>
+        
+        <!-- 0 or 1 occurrences (a SHOULD) -->
+        <xs:element ref="xcal:rrule"/>
+        
+        <!-- 0 or more occurrences -->
+        <xs:element ref="xcal:comment"/>
+        <xs:element ref="xcal:rdate"/>
+        <xs:element ref="xcal:tzname"/>
+      </xs:choice>
+    </xs:sequence>
   </xs:complexType>
 
 	<!-- 3.6.6 Alarm Component -->
   <xs:complexType name="ValarmType">
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:BaseComponentType"/>
+      <xs:extension base="xcal:BaseComponentType">
+        <xs:sequence>
+          <xs:element name="properties" 
+                      type="xcal:ArrayOfAlarmContainedProperties" 
+                      minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="ArrayOfAlarmContainedProperties">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+        From RFC 5545 Section 3.6.6
+       alarmc     = "BEGIN" ":" "VALARM" CRLF
+                    (audioprop / dispprop / emailprop)
+                    "END" ":" "VALARM" CRLF
+
+       audioprop  = *(
+                  ;
+                  ; 'action' and 'trigger' are both REQUIRED,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  action / trigger /
+                  ;
+                  ; 'duration' and 'repeat' are both OPTIONAL,
+                  ; and MUST NOT occur more than once each;
+                  ; but if one occurs, so MUST the other.
+                  ;
+                  duration / repeat /
+                  ;
+                  ; The following is OPTIONAL,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  attach /
+                  ;
+                  ; The following is OPTIONAL,
+                  ; and MAY occur more than once.
+                  ;
+                  x-prop / iana-prop
+                  ;
+                  )
+
+       dispprop   = *(
+                  ;
+                  ; The following are REQUIRED,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  action / description / trigger /
+                  ;
+                  ; 'duration' and 'repeat' are both OPTIONAL,
+                  ; and MUST NOT occur more than once each;
+                  ; but if one occurs, so MUST the other.
+                  ;
+                  duration / repeat /
+                  ;
+                  ; The following is OPTIONAL,
+                  ; and MAY occur more than once.
+                  ;
+                  x-prop / iana-prop
+                  ;
+                  )
+
+       emailprop  = *(
+                  ;
+                  ; The following are all REQUIRED,
+                  ; but MUST NOT occur more than once.
+                  ;
+                  action / description / trigger / summary /
+                  ;
+                  ; The following is REQUIRED,
+                  ; and MAY occur more than once.
+                  ;
+                  attendee /
+                  ;
+                  ; 'duration' and 'repeat' are both OPTIONAL,
+                  ; and MUST NOT occur more than once each;
+                  ; but if one occurs, so MUST the other.
+                  ;
+                  duration / repeat /
+                  ;
+                  ; The following are OPTIONAL,
+                  ; and MAY occur more than once.
+                  ;
+                  attach / x-prop / iana-prop
+                  ;
+                  )
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <!-- All - required -->
+      <xs:element ref="xcal:action"/>
+      <xs:element ref="xcal:trigger"/>
+      
+      <!-- display, email - required -->
+      <xs:element ref="xcal:description" minOccurs="0" />
+      
+      <!-- email - required -->
+      <xs:element ref="xcal:summary" minOccurs="0" />
+
+      <!-- All - 0 or 1 -->
+      <xs:element ref="xcal:duration" minOccurs="0" />
+      <xs:element ref="xcal:repeat" minOccurs="0" />
+      
+      <!-- email - 1 or more -->
+      <xs:element ref="xcal:attendee" minOccurs="0" maxOccurs="unbounded" />
+      
+      <!-- audio 0 or 1 , email - 0 or more -->
+      <xs:element ref="xcal:attach" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
   </xs:complexType>
 </xs:schema>
