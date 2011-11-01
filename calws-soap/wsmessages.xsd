@@ -541,7 +541,10 @@
       </documentation>
     </annotation>
     <sequence>
-      <element ref="xcal:baseComponent"/>
+      <choice>
+        <element ref="xcal:vcalendar" />
+        <element ref="xcal:baseComponent" />
+      </choice>
       <element name="properties" type="tns:PropertiesSelectionType"
                minOccurs="0" /> 
       <element name="components" type="tns:ComponentsSelectionType"

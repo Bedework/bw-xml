@@ -66,6 +66,57 @@
 
   <element name="synchIdToken" type="tns:SynchIdTokenType" />
   
+  <complexType name="SynchPropertyInfoType">
+    <annotation>
+      <documentation xml:lang="en">
+           Used to provide information about a property to systems, allows them
+           to request that information from the user. The description is
+           not generically useful being single language. Applications should 
+           key off the name which is also not multi-language.
+      </documentation>
+    </annotation>
+    <sequence >
+      <element name="name" type="string" />
+      <element name="secure" type="boolean" />
+      <element name="description" type="string" />
+      <element name="required" type="boolean" />
+    </sequence>
+  </complexType>
+  
+  <complexType name="ArrayOfSynchPropertyInfo">
+    <sequence>
+      <element name="property" type="tns:SynchPropertyInfoType" 
+               minOccurs="0" maxOccurs="unbounded" />
+    </sequence>
+  </complexType>  
+  
+  <complexType name="SynchConnectorInfoType">
+    <annotation>
+      <documentation xml:lang="en">
+           Used to provide information about a connector to systems. None of this
+           is intended to be displayable. 
+           
+           name: should be unique and can be used to key into localizable information.
+           manager: this is the special manager connector.
+           readOnly: cannot update this end
+           properties: those we need to present to the user
+      </documentation>
+    </annotation>
+    <sequence >
+      <element name="name" type="string" />
+      <element name="manager" type="boolean" />
+      <element name="readOnly" type="boolean" />
+      <element name="properties" type="tns:ArrayOfSynchPropertyInfo" />
+    </sequence>
+  </complexType>
+  
+  <complexType name="ArrayOfSynchConnectorInfo">
+    <sequence>
+      <element name="connector" type="tns:SynchConnectorInfoType" 
+               minOccurs="0" maxOccurs="unbounded" />
+    </sequence>
+  </complexType>  
+  
   <complexType name="BaseSynchRequestType">
     <annotation>
       <documentation xml:lang="en">
@@ -76,14 +127,62 @@
   
   <!-- *********************************************************************
        to syncher
+       getInfo: get information about end-points etc.
        subscribe: set up a new subscription for a principal to a calendar
        unsubscribe: remove a new subscription for a principal to a calendar
        ********************************************************************* -->
+
+  <!-- =========================== getInfo =========================== -->  
+  
+  <complexType name="SynchInfoType">
+    <annotation>
+      <documentation xml:lang="en">
+           Used to provide information about the synch system. Allows the caller
+           to list end-points and their characteristics.
+      </documentation>
+    </annotation>
+    <sequence >
+      <element name="connectors" type="tns:ArrayOfSynchConnectorInfo" />
+    </sequence>
+  </complexType>
+  
+  <complexType name="GetInfoRequestType">
+    <annotation>
+      <documentation xml:lang="en">
+           Message from a service for system information.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseSynchRequestType">
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="getInfo" type="tns:GetInfoRequestType" />
+  
+  <complexType name="GetInfoResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Response to message from service requesting information.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="cws:BaseResponseType">
+        <sequence >
+          <element name="info" type="tns:SynchInfoType" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="getInfoResponse" type="tns:GetInfoResponseType" />
+  
+  <!-- =========================== subscribe =========================== -->  
   
   <complexType name="SynchPropertyType">
     <annotation>
       <documentation xml:lang="en">
-           A single property consisting of a name and value
+           Used to transmit a single property consisting of a name and value
       </documentation>
     </annotation>
     <sequence >
@@ -102,7 +201,7 @@
   <complexType name="ConnectorInfoType">
     <annotation>
       <documentation xml:lang="en">
-           The name of the connector and proeprties required to make a connection
+           The name of the connector and properties required to make a connection
       </documentation>
     </annotation>
     <sequence >
@@ -156,6 +255,8 @@
   </complexType>
 
   <element name="subscribeResponse" type="tns:SubscribeResponseType" />
+  
+  <!-- =========================== unsubscribe =========================== -->  
   
   <complexType name="UnsubscribeRequestType">
     <annotation>

@@ -83,8 +83,8 @@
 	<!-- 3.4 iCalendar Stream -->
 	<xs:complexType name="IcalendarType">
 		<xs:sequence>
-			<xs:element name="vcalendar" type="xcal:VcalendarType" 
-                  maxOccurs="unbounded"/>
+			<xs:element ref="xcal:vcalendar"  
+                        maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 

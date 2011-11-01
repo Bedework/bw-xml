@@ -34,6 +34,17 @@
     <wsdl:part name="response" element="tns:keepAliveResponse" />
   </wsdl:message>
 
+  <!-- =========================== getInfo =========================== -->  
+
+  <wsdl:message name="GetInfoIn">
+    <wsdl:part name="idToken" element="tns:synchIdToken" />
+    <wsdl:part name="request" element="tns:getInfo" />
+  </wsdl:message>
+  
+  <wsdl:message name="GetInfoOut">
+    <wsdl:part name="response" element="tns:getInfoResponse" />
+  </wsdl:message>
+
   <!-- =========================== subscribe =========================== -->  
 
   <wsdl:message name="SubscribeIn">
@@ -124,6 +135,11 @@
       <wsdl:output message="tns:KeepAliveOut" />
     </wsdl:operation>
     
+    <wsdl:operation name="GetInfo">
+      <wsdl:input message="tns:GetInfoIn" />
+      <wsdl:output message="tns:GetInfoOut" />
+    </wsdl:operation>
+    
     <wsdl:operation name="Subscribe">
       <wsdl:input message="tns:SubscribeIn" />
       <wsdl:output message="tns:SubscribeOut" />
@@ -183,6 +199,17 @@
     <wsdl:operation name="PingService">
       <soap:operation soapAction="http://www.bedework.org/synch/wsmessages/pingService" />
       <wsdl:input>
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
+      </wsdl:output>
+    </wsdl:operation>
+    
+    <wsdl:operation name="GetInfo">
+      <soap:operation soapAction="http://www.bedework.org/synch/wsmessages/getInfo" />
+      <wsdl:input>
+        <soap:header message="tns:GetInfoIn" use="literal" part="idToken" />
         <soap:body use="literal" parts="request" />
       </wsdl:input>
       <wsdl:output>

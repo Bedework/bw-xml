@@ -32,65 +32,114 @@
   
   <!-- Error codes -->
 
-  <element name="forbidden" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+  <complexType name="ForbiddenType">
     <annotation>
       <documentation xml:lang="en">
         Attempted to carry out a forbidden operation.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="forbidden" type="tns:ForbiddenType"
+           substitutionGroup="tns:error" />
 
-  <element name="targetExists" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+  <complexType name="TargetExistsType" >
     <annotation>
       <documentation xml:lang="en">
         This may not be possible...
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
 
-  <element name="targetDoesNotExist" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+  <element name="targetExists" type="tns:TargetExistsType"
+              substitutionGroup="tns:error" />
+
+  <complexType name="TargetDoesNotExistType" >
     <annotation>
       <documentation xml:lang="en">
         The supplied href does not reference an existing resource.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
 
-  <element name="targetNotEntity" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+  <element name="targetDoesNotExist" type="tns:TargetDoesNotExistType"
+              substitutionGroup="tns:error" />
+
+  <complexType name="TargetNotEntityType">
     <annotation>
       <documentation xml:lang="en">
         The supplied href does not target an entity. For example a fetch item 
         was attempted against a collection.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
 
-  <element name="notCalendarData" type="tns:ErrorCodeType" 
-              substitutionGroup="tns:error" >
+  <element name="targetNotEntity" type="tns:TargetNotEntityType"
+              substitutionGroup="tns:error" />
+
+  <complexType name="NotCalendarDataType" >
     <annotation>
       <documentation xml:lang="en">
         The supplied entity is not calendar data.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
 
-  <element name="invalidCalendarData" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+  <element name="notCalendarData" type="tns:NotCalendarDataType" 
+              substitutionGroup="tns:error" />
+
+  <complexType name="InvalidCalendarDataType">
     <annotation>
       <documentation xml:lang="en">
          The supplied entity does not represent valid calendar data.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
 
-  <element name="invalidCalendarObjectResource" type="tns:ErrorCodeType"
+  <element name="invalidCalendarData" type="tns:InvalidCalendarDataType"
               substitutionGroup="tns:error" />
-  <element name="unsupportedCalendarComponent" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+              
+  <complexType name="InvalidCalendarObjectResourceType">
+    <annotation>
+      <documentation xml:lang="en">
+         The supplied entity does not represent valid calendar data.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="invalidCalendarObjectResource" 
+           type="tns:InvalidCalendarObjectResourceType"
+           substitutionGroup="tns:error" />
+              
+  <complexType name="UnsupportedCalendarComponentType" >
     <annotation>
       <documentation xml:lang="en">
          Indicates that the calendar collection does not accept components of the
@@ -98,10 +147,17 @@
          be determined by examining the calendar collection properties.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+              
+  <element name="unsupportedCalendarComponent" 
+           type="tns:UnsupportedCalendarComponentType"
+           substitutionGroup="tns:error" />
 
-  <element name="invalidCalendarCollectionLocation" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+  <complexType name="InvalidCalendarCollectionLocationType" >
     <annotation>
       <documentation xml:lang="en">
          Error indicating at least one of two conditions:
@@ -110,10 +166,17 @@
           2) the parent collection of the Request-URI exists but cannot accept members;
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="invalidCalendarCollectionLocation" 
+           type="tns:InvalidCalendarCollectionLocationType"
+           substitutionGroup="tns:error" />
               
-  <element name="exceedsMaxResourceSize" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+  <complexType name="ExceedsMaxResourceSizeType">
     <annotation>
       <documentation xml:lang="en">
            Error indicating that the total size of the event or task is too large.
@@ -121,10 +184,16 @@
            from the properties.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+              
+  <element name="exceedsMaxResourceSize" type="tns:ExceedsMaxResourceSizeType"
+              substitutionGroup="tns:error" />
 
-  <element name="beforeMinDateTime" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+  <complexType name="BeforeMinDateTimeType" >
     <annotation>
       <documentation xml:lang="en">
            Error indicating that the start or end of an event or task is too
@@ -133,10 +202,16 @@
            from the properties.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="beforeMinDateTime" type="tns:BeforeMinDateTimeType"
+              substitutionGroup="tns:error" />
               
-  <element name="afterMaxDateTime" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+  <complexType name="AfterMaxDateTimeType" >
     <annotation>
       <documentation xml:lang="en">
            Error indicating that the start or end of an event or task is too
@@ -145,10 +220,16 @@
            from the properties.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+              
+  <element name="afterMaxDateTime" type="tns:AfterMaxDateTimeType"
+              substitutionGroup="tns:error" />
   
-  <element name="tooManyInstances" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+  <complexType name="TooManyInstancesType" >
     <annotation>
       <documentation xml:lang="en">
            Error indicating that a recurring event has too many instances.
@@ -156,10 +237,16 @@
            from the properties.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="tooManyInstances" type="tns:TooManyInstancesType"
+              substitutionGroup="tns:error" />
               
-  <element name="tooManyAttendeesPerInstance" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+  <complexType name="TooManyAttendeesPerInstanceType" >
     <annotation>
       <documentation xml:lang="en">
            Error indicating that a scheduling message has too many attendees.
@@ -167,10 +254,17 @@
            from the properties.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
               
-  <element name="partialSuccess" type="tns:ErrorCodeType"
-              substitutionGroup="tns:error" >
+  <element name="tooManyAttendeesPerInstance" 
+           type="tns:TooManyAttendeesPerInstanceType"
+           substitutionGroup="tns:error" />
+              
+  <complexType name="PartialSuccessType" >
     <annotation>
       <documentation xml:lang="en">
          Indicates that a MultiOpType operation was partially successful. Returned
@@ -179,10 +273,16 @@
          operations failed.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+              
+  <element name="partialSuccess" type="tns:PartialSuccessType"
+           substitutionGroup="tns:error" />
   
-  <element name="missingEtoken" type="tns:ErrorCodeType"
-           substitutionGroup="tns:error" >
+  <complexType name="MissingChangeTokenType" >
     <annotation>
       <documentation xml:lang="en">
         An operation was attempted which required a change token but none was
@@ -192,22 +292,35 @@
         this as the token is required. It doesn't. 
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
   
-  <element name="mismatchedEtoken" type="tns:ErrorCodeType"
-           substitutionGroup="tns:error" >
+  <element name="missingChangeToken" type="tns:MissingChangeTokenType"
+           substitutionGroup="tns:error" />
+  
+  <complexType name="MismatchedChangeTokenType" >
     <annotation>
       <documentation xml:lang="en">
-        An update operation was attempted with an etoken value which does not 
+        An update operation was attempted with a change token value which does not 
         match that held by the service. The client must refetch the entity to
-        refresh its cached value and etoken.
+        refresh its cached value and token.
         
-        Note that matching of etokens is a server responsibility. The etoken is
+        Note that matching of tokens is a server responsibility. The token is
         opaque to the client but probably structured to the server. Certain 
-        non-conflicting updates may be allowed even if the etoken has changed. 
+        non-conflicting updates may be allowed even if the token has changed. 
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="tns:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+  
+  <element name="mismatchedChangeToken" type="tns:MismatchedChangeTokenType"
+           substitutionGroup="tns:error" />
 
   <complexType name="InvalidFilterType" >
     <complexContent mixed="false">

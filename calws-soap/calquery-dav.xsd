@@ -414,6 +414,7 @@
     <sequence> 
       <choice>
         <element ref="tns:anyComp" />
+        <element ref="xcal:vcalendar" />
         <element ref="xcal:baseComponent" />
       </choice>
       <choice minOccurs="0">
