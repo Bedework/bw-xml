@@ -30,25 +30,37 @@
   </complexType>
   
   <element name="alreadySubscribed" type="tns:AlreadySubscribedType"
-              substitutionGroup="cws:error" />
+           substitutionGroup="cws:error" />
 
-  <element name="invalidToken" type="cws:ErrorCodeType"
-              substitutionGroup="cws:error" >
+  <complexType name="InvalidTokenType" >
     <annotation>
       <documentation xml:lang="en">
         The service synch token is unknown or expired.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="cws:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
 
-  <element name="unknownSubscription" type="cws:ErrorCodeType"
-              substitutionGroup="cws:error" >
+  <element name="invalidToken" type="tns:InvalidTokenType"
+           substitutionGroup="cws:error" />
+
+  <complexType name="UnknownSubscriptionType">
     <annotation>
       <documentation xml:lang="en">
         Unknown subscription.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="cws:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="unknownSubscription" type="tns:UnknownSubscriptionType"
+              substitutionGroup="cws:error" />
 
   <complexType name="UnreachableTargetType" >
     <annotation>
@@ -65,12 +77,18 @@
   <element name="unreachableTarget" type="tns:UnreachableTargetType"
               substitutionGroup="cws:error" />
 
-  <element name="serviceStopped" type="cws:ErrorCodeType"
-              substitutionGroup="cws:error" >
+  <complexType name="ServiceStoppedType" >
     <annotation>
       <documentation xml:lang="en">
         The synch service is not running.
       </documentation>
     </annotation>
-  </element>
+    <complexContent mixed="false">
+      <extension base="cws:ErrorCodeType">
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="serviceStopped" type="tns:ServiceStoppedType"
+              substitutionGroup="cws:error" />
 </schema>

@@ -11,6 +11,9 @@
   <import schemaLocation="../xml.xsd" 
           namespace="http://www.w3.org/XML/1998/namespace" />
         
+  <import schemaLocation="tzsvc-aliases.xsd" 
+          namespace="urn:ietf:params:xml:ns:timezone-service-aliases" />
+        
   <import schemaLocation="../icalendar/iCalendar.xsd" 
           namespace="urn:ietf:params:xml:ns:icalendar-2.0" />
   
