@@ -35,13 +35,27 @@
     </restriction>
   </simpleType>
   
+  <simpleType name="SynchEndType">
+    <annotation>
+      <documentation xml:lang="en">
+        Used to define which end we are talking about
+        None - don't know otherwise A or B end
+      </documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="none" />
+      <enumeration value="A" />
+      <enumeration value="B" />
+    </restriction>
+  </simpleType>
+  
   <simpleType name="SynchMasterType">
     <annotation>
       <documentation xml:lang="en">
         Used to define how we resolve conflicts for 2 way synch
         None - server does it's best
-        local - A overrides B
-        remote - B overrides A
+        A - A overrides B
+        B - B overrides A
       </documentation>
     </annotation>
     <restriction base="string">
@@ -78,6 +92,7 @@
     <sequence >
       <element name="name" type="string" />
       <element name="secure" type="boolean" />
+      <element name="type" type="string" />
       <element name="description" type="string" />
       <element name="required" type="boolean" />
     </sequence>
@@ -221,6 +236,8 @@
                  Set of properties for the A end
            endBConnector
                  Set of properties for the B end
+           info
+                 Set of properties for the entire subscription
       </documentation>
     </annotation>
     <complexContent mixed="false">
@@ -232,6 +249,7 @@
           <element name="master" type="tns:SynchMasterType" />
           <element name="endAConnector" type="tns:ConnectorInfoType" />
           <element name="endBConnector" type="tns:ConnectorInfoType" />
+          <element name="info" type="tns:ArrayOfSynchProperties"/>
         </sequence>
       </extension>
     </complexContent>
@@ -261,13 +279,22 @@
   <complexType name="UnsubscribeRequestType">
     <annotation>
       <documentation xml:lang="en">
-           Message unsubscribing.
+           Message unsubscribing. This needs to provide all the information for
+           a given end of the subscription which would usually be the end that
+           made the subscription in the first place.
+           
+           It's up to the connector to determine if enough information has been
+           supplied to allow the unsubscribe. 
       </documentation>
     </annotation>
     <complexContent mixed="false">
       <extension base="tns:BaseSynchRequestType">
         <sequence >
+          <element name="token" type="string" />
+          <element name="principalHref" type="string" />
           <element name="subscription-id" type="string" />
+          <element name="end" type="tns:SynchEndType" />
+          <element name="connectorInfo" type="tns:ConnectorInfoType" />
         </sequence>
       </extension>
     </complexContent>
@@ -287,7 +314,64 @@
     </complexContent>
   </complexType>
 
-  <element name="unsubscribe-response" type="tns:UnsubscribeResponseType" />
+  <element name="unsubscribeResponse" type="tns:UnsubscribeResponseType" />
+  
+  <!-- ====================== subscriptionStatus ========================== -->  
+  
+  <complexType name="SubscriptionStatusRequestType">
+    <annotation>
+      <documentation xml:lang="en">
+           Message requests the status of a subscription. This needs to provide 
+           all the information for a given end of the subscription which would 
+           usually be the end that made the subscription in the first place.
+           
+           It's up to the connector to determine if enough information has been
+           supplied to allow the requests to proceed. 
+           
+           The response is most of the current information about the subscriptiuon
+           held by the server. 
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseSynchRequestType">
+        <sequence >
+          <element name="token" type="string" />
+          <element name="principalHref" type="string" />
+          <element name="subscription-id" type="string" />
+          <element name="end" type="tns:SynchEndType" />
+          <element name="connectorInfo" type="tns:ConnectorInfoType" />
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="subscriptionStatus" type="tns:SubscriptionStatusRequestType" />
+  
+  <complexType name="SubscriptionStatusResponseType">
+    <annotation>
+      <documentation xml:lang="en">
+           Response to message requesting unsubscription.
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="cws:BaseResponseType">
+        <sequence >
+          <element name="subscriptionId" type="string" />
+          <element name="principalHref" type="string" />
+          <element name="direction" type="tns:SynchDirectionType" />
+          <element name="master" type="tns:SynchMasterType" />
+          <element name="endAConnector" type="tns:ConnectorInfoType" />
+          <element name="endBConnector" type="tns:ConnectorInfoType" />
+          <element name="lastRefresh" type="string" />
+          <element name="errorCt" type="integer" />
+          <element name="missingTarget" type="boolean" />
+          <element name="info" type="tns:ArrayOfSynchProperties"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+  <element name="subscriptionStatusResponse" type="tns:SubscriptionStatusResponseType" />
   
   <!-- *********************************************************************
        Syncher to Remote system 
