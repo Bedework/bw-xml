@@ -282,7 +282,7 @@
     </annotation>
     <sequence>
       <element name="href" type="string" />
-      <element name="etoken" type="string" />
+      <element name="changeToken" type="string" />
       <element ref="tns:propstat" minOccurs="0" maxOccurs="unbounded"/>
     </sequence>
   </complexType>
@@ -417,7 +417,7 @@
       <extension base="tns:BaseResponseType">
         <sequence>
           <element name="href" type="string" minOccurs="0" />
-          <element name="etoken" type="string" minOccurs="0" />
+          <element name="changeToken" type="string" minOccurs="0" />
         </sequence>
       </extension>
     </complexContent>
@@ -450,7 +450,7 @@
     <complexContent mixed="false">
       <extension base="tns:BaseResponseType">
         <sequence>
-          <element name="etoken" type="string" minOccurs="0" />
+          <element name="changeToken" type="string" minOccurs="0" />
           <element name="href" type="string" />
           <element ref="xcal:icalendar" minOccurs="0" />
         </sequence>
@@ -659,13 +659,13 @@
       <documentation xml:lang="en">
            Message to update a calendar item.
            
-           The supplied etoken MUST match the etoken held by the service.
+           The supplied changeToken MUST match the etoken held by the service.
       </documentation>
     </annotation>
     <complexContent mixed="false">
       <extension base="tns:BaseRequestType">
         <sequence>
-          <element name="etoken" type="string" />
+          <element name="changeToken" type="string" />
           <element name="select" type="tns:ComponentSelectionType" 
                    maxOccurs="unbounded" />
         </sequence>
@@ -680,14 +680,14 @@
       <documentation xml:lang="en">
            Response to message to update an item.
            
-           The server will return an etoken value which should replace the
+           The server will return a changeToken value which should replace the
            value currently held by the client. 
       </documentation>
     </annotation>
     <complexContent mixed="false">
       <extension base="tns:BaseResponseType">
         <sequence>
-          <element name="etoken" type="string" />
+          <element name="changeToken" type="string" />
         </sequence>
       </extension>
     </complexContent>

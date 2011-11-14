@@ -288,7 +288,7 @@
         An operation was attempted which required a change token but none was
         supplied.
         
-        Note that it appears that the marshelling/demarshelling should handle 
+        Note that it appears that the marshalling or demarshalling should handle 
         this as the token is required. It doesn't. 
       </documentation>
     </annotation>
@@ -351,7 +351,7 @@
       <documentation xml:lang="en">
         An attempt was made to store an entity which would result in more than 
         one entity having equal uids. The entity uid must be unique within a 
-        collection. Recurring event or taks overrides have the same uid and are 
+        collection. Recurring event or tasks overrides have the same uid and are 
         considered part of a single entity.
       </documentation>
     </annotation>
