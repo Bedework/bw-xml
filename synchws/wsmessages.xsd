@@ -65,6 +65,32 @@
     </restriction>
   </simpleType>
   
+  <simpleType name="CalProcessingType">
+    <annotation>
+      <documentation xml:lang="en">
+        Used to define how we process calendar properties such as transparency
+        or services such as scheduling. The options (case significant) are
+           
+        ALLOW -   Pass through on add but ignore thereafter. This allows 
+                  initialization from the outside source but maintenance by the
+                  user.
+        SYNCH -   Pass through on add and keep in synch thereafter. Depending on
+                  master settings changes by the user will be overridden on next 
+                  synch
+        REMOVE -  Property is removed on addition and ignored during synch.
+        SPECIAL - There is some special handling of the named property. For 
+                  example it might be set on categories if we are doing some 
+                  special filtering.
+      </documentation>
+    </annotation>
+    <restriction base="string">
+      <enumeration value="ALLOW" />
+      <enumeration value="SYNCH" />
+      <enumeration value="REMOVE" />
+      <enumeration value="SPECIAL" />
+    </restriction>
+  </simpleType>
+  
   <complexType name="SynchIdTokenType">
     <annotation>
       <documentation xml:lang="en">
@@ -87,6 +113,13 @@
            to request that information from the user. The description is
            not generically useful being single language. Applications should 
            key off the name which is also not multi-language.
+           
+           Properties are transferred as key-value pairs with the value being a 
+           (java) String representation of the value.
+           
+           The value field is not supplied if no value is set - otherwise it
+           represents the default value for new subscriptions or the current value
+           for modifications.
       </documentation>
     </annotation>
     <sequence >
@@ -95,6 +128,7 @@
       <element name="type" type="string" />
       <element name="description" type="string" />
       <element name="required" type="boolean" />
+      <element name="value" type="string" minOccurs="0" />
     </sequence>
   </complexType>
   
