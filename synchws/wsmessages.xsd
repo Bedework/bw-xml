@@ -165,6 +165,10 @@
                minOccurs="0" maxOccurs="unbounded" />
     </sequence>
   </complexType>  
+
+  <!-- ===================================================================== 
+                                Base for all requests 
+       ===================================================================== -->
   
   <complexType name="BaseSynchRequestType">
     <annotation>
@@ -172,6 +176,34 @@
            Requests have this as the base type.
       </documentation>
     </annotation>
+  </complexType>
+
+  <!-- ===================================================================== 
+                   Base for requests involving active subscriptions 
+       ===================================================================== -->
+  
+  <complexType name="ActiveSubscriptionRequestType">
+    <annotation>
+      <documentation xml:lang="en">
+           Messages involving active subscriptions. These need to provide 
+           all the information for a given end of the subscription which would 
+           usually be the end that made the subscription in the first place.
+           
+           It's up to the connector to determine if enough information has been
+           supplied to allow the requests to proceed. 
+      </documentation>
+    </annotation>
+    <complexContent mixed="false">
+      <extension base="tns:BaseSynchRequestType">
+        <sequence >
+          <element name="token" type="string" />
+          <element name="principalHref" type="string" />
+          <element name="subscription-id" type="string" />
+          <element name="end" type="tns:SynchEndType" />
+          <element name="connectorInfo" type="tns:ConnectorInfoType" />
+        </sequence>
+      </extension>
+    </complexContent>
   </complexType>
   
   <!-- *********************************************************************
@@ -322,14 +354,7 @@
       </documentation>
     </annotation>
     <complexContent mixed="false">
-      <extension base="tns:BaseSynchRequestType">
-        <sequence >
-          <element name="token" type="string" />
-          <element name="principalHref" type="string" />
-          <element name="subscription-id" type="string" />
-          <element name="end" type="tns:SynchEndType" />
-          <element name="connectorInfo" type="tns:ConnectorInfoType" />
-        </sequence>
+      <extension base="tns:ActiveSubscriptionRequestType">
       </extension>
     </complexContent>
   </complexType>
@@ -367,14 +392,7 @@
       </documentation>
     </annotation>
     <complexContent mixed="false">
-      <extension base="tns:BaseSynchRequestType">
-        <sequence >
-          <element name="token" type="string" />
-          <element name="principalHref" type="string" />
-          <element name="subscription-id" type="string" />
-          <element name="end" type="tns:SynchEndType" />
-          <element name="connectorInfo" type="tns:ConnectorInfoType" />
-        </sequence>
+      <extension base="tns:ActiveSubscriptionRequestType">
       </extension>
     </complexContent>
   </complexType>
