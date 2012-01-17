@@ -11,8 +11,6 @@
   <property environment="env"/>
   <dirname property="project.home" file="${ant.file}"/>
   
-  <property file="${project.home}/build.properties" />
-
   <property name="bedework.home"
             location="${project.home}/../bedework" />
 
@@ -22,12 +20,11 @@
 
   <deftasks/>
 
-  <projectDefs name="${org.bedework.package.name}"
+  <projectDefs name="Bedework xml schema"
                version="${org.bedework.xmlschema.version}" 
                deployment-name="xmlschema"
   />
 
-  <import file="${build.dir}/loadDeployConfig.xml"/>
   <import file="${build.dir}/buildTools/wsimport.xml"/>
   <import file="${build.dir}/buildTools/xjc.xml"/>
 
@@ -37,11 +34,6 @@
 
   <target name="init">
     <projectInit/>
-    
-    <property name="org.bedework.project.bedework"
-              location="${project.home}/../bedework" />
-
-    <loadDeployConfig/>
 
   	<property name="org.bedework.options.file"
   	          value="${org.bedework.config.options}" />
@@ -86,40 +78,40 @@
               location="${project.home}/vcard" />
 
     <property name="applesvschema.jar"
-              location="${dist.home}/${org.bedework.module.applesvschema.jar}-${project.version}.jar" />
+              location="${dist.home}/bw-applesvschema-${project.version}.jar" />
 
     <property name="exchangews.jar"
-              location="${dist.home}/${org.bedework.module.exchangewsschema.jar}-${project.version}.jar" />
+              location="${dist.home}/bw-exchangewsschema-${project.version}.jar" />
 
     <property name="synchws.jar"
-              location="${dist.home}/${org.bedework.module.synchwsschema.jar}-${project.version}.jar" />
+              location="${dist.home}/bw-synchwsschema-${project.version}.jar" />
 
     <property name="tzsvc.jar"
-              location="${dist.home}/${org.bedework.module.tzschema.jar}-${project.version}.jar" />
+              location="${dist.home}/bw-tzschema-${project.version}.jar" />
 
     <property name="calws-soap.jar"
-              location="${dist.home}/${org.bedework.module.calws-soapschema.jar}-${project.version}.jar" />
+              location="${dist.home}/bw-calws-soapschema-${project.version}.jar" />
 
     <property name="calws-soap-strict.jar"
-              location="${dist.home}/${org.bedework.module.calws-soapschema-strict.jar}-${project.version}.jar" />
+              location="${dist.home}/bw-calws-soapschema-strict-${project.version}.jar" />
 
     <property name="icalendar.jar"
-              location="${dist.home}/${org.bedework.module.icalschema.jar}-${project.version}.jar" />
+              location="${dist.home}/bw-icalschema-${project.version}.jar" />
 
     <property name="icalendar-strict.jar"
-              location="${dist.home}/${org.bedework.module.icalschema-strict.jar}-${project.version}.jar" />
+              location="${dist.home}/bw-icalschema-strict-${project.version}.jar" />
 
     <property name="vcard.jar"
-              location="${dist.home}/${org.bedework.module.vcardschema.jar}-${project.version}.jar" />
+              location="${dist.home}/bw-vcardschema-${project.version}.jar" />
 
     <property name="category.jar"
-              location="${dist.home}/${org.bedework.module.catschema.jar}-${project.version}.jar" />
+              location="${dist.home}/bw-catschema-${project.version}.jar" />
 
     <property name="caldavschema.jar"
-              location="${dist.home}/${org.bedework.module.caldavschema.jar}-${project.version}.jar" />
+              location="${dist.home}/bw-caldavschema-${project.version}.jar" />
 
     <property name="catdavschema.jar"
-              location="${dist.home}/${org.bedework.module.catdavschema.jar}-${project.version}.jar" />
+              location="${dist.home}/bw-catdavschema-${project.version}.jar" />
     
     <property name="calws-soap.wsdllocation"
               value="${bedework-options.org.bedework.app.Usercaldav.calSoapWsWSDLURI}" />
@@ -133,9 +125,6 @@
     <!-- Filesets used for dependencies -->
     <fileset id="org.bedework.schemas.files"
              dir="${org.bedework.schemas.base}" />
-  </target>
-  
-  <target name="deploy-init" depends="init">
   </target>
 
   <!-- ===================== build-source Target ===============================
