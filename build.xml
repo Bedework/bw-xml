@@ -44,6 +44,9 @@
     <property name="org.bedework.appleServer.base"
               location="${project.home}/appleServer" />
 
+    <property name="org.bedework.bwlicense.base"
+              location="${project.home}/bwlicense" />
+
     <property name="org.bedework.calws-soap.base"
               location="${project.home}/calws-soap" />
 
@@ -79,6 +82,9 @@
 
     <property name="applesvschema.jar"
               location="${dist.home}/bw-applesvschema-${project.version}.jar" />
+
+    <property name="bwlicense-schema.jar"
+              location="${dist.home}/bw-licenseschema-${project.version}.jar" />
 
     <property name="exchangews.jar"
               location="${dist.home}/bw-exchangewsschema-${project.version}.jar" />
@@ -155,6 +161,13 @@
          jar-file="${applesvschema.jar}"
          bindingsdir="${project.home}/xjcbindings"
          dependencies="org.bedework.schemas.files"
+    />
+
+    <!-- bwlicenses -->
+    <xjc schema="${org.bedework.schemas.base}/bwlicense/bwlicense.xsd"
+         module-base="${org.bedework.bwlicense.base}/gensrc"
+         jar-file="${bwlicense-schema.jar}"
+         bindingsdir="${project.home}/xjcbindings"
     />
 
     <!-- calws-soap - web service -->
