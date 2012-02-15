@@ -5,7 +5,7 @@
 	<classpathentry kind="src" path="catdav/gensrc/src"/>
 	<classpathentry excluding="ietf/params/xml/ns/icalendar_2/|org/oasis_open/docs/ns/xri/" kind="src" path="calws-soap/gensrc/src"/>
 	<classpathentry kind="src" path="exchangews/gensrc/src"/>
-	<classpathentry excluding="org/oasis_open/docs/ns/wscal/calws_soap/" kind="src" path="synchws/gensrc/src"/>
+	<classpathentry excluding="org/oasis_open/docs/ns/wscal/calws_soap/|org/oasis_open/docs/ws_calendar/ns/soap/" kind="src" path="synchws/gensrc/src"/>
 	<classpathentry excluding="ietf/params/xml/ns/icalendar_2/" kind="src" path="timezones/gensrc/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="dist/temp/wsclasses/bwxml"/>

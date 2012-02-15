@@ -4,11 +4,11 @@
         xmlns:tns="http://www.bedework.org/synch/wsmessages" 
         xmlns:xcal="urn:ietf:params:xml:ns:icalendar-2.0"
         xmlns:xrd="http://docs.oasis-open.org/ns/xri/xrd-1.0"
-        xmlns:cws="http://docs.oasis-open.org/ns/wscal/calws-soap"
+        xmlns:cws="http://docs.oasis-open.org/ws-calendar/ns/soap"
         targetNamespace="http://www.bedework.org/synch/wsmessages" 
         elementFormDefault="qualified">
   <import schemaLocation="../calws-soap/wsmessages.xsd" 
-          namespace="http://docs.oasis-open.org/ns/wscal/calws-soap" />
+          namespace="http://docs.oasis-open.org/ws-calendar/ns/soap" />
         
   <import schemaLocation="../schemas/icalendar/iCalendar.xsd" 
           namespace="urn:ietf:params:xml:ns:icalendar-2.0" />

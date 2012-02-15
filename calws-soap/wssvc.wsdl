@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:tns="http://docs.oasis-open.org/ns/wscal/calws-soap" 
+<wsdl:definitions xmlns:tns="http://docs.oasis-open.org/ws-calendar/ns/soap" 
                   xmlns:s="http://www.w3.org/2001/XMLSchema" 
                   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-                  targetNamespace="http://docs.oasis-open.org/ns/wscal/calws-soap" 
+                  targetNamespace="http://docs.oasis-open.org/ws-calendar/ns/soap" 
                   xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema>
       <s:import schemaLocation="wsmessages.xsd" 
-                namespace="http://docs.oasis-open.org/ns/wscal/calws-soap" />
+                namespace="http://docs.oasis-open.org/ws-calendar/ns/soap" />
     </s:schema>
   </wsdl:types> 
 
@@ -146,7 +146,7 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     
     <wsdl:operation name="GetProperties">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/getProperties" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ws-calendar/ns/soap/getProperties" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -156,7 +156,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="FreebusyReport">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/FreebusyReport" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ws-calendar/ns/soap/FreebusyReport" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -166,7 +166,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="CalendarQuery">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/CalendarQuery" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ws-calendar/ns/soap/CalendarQuery" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -176,7 +176,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="CalendarMultiget">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/CalendarMultiget" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ws-calendar/ns/soap/CalendarMultiget" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -186,7 +186,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="AddItem">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/addItem" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ws-calendar/ns/soap/addItem" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -196,7 +196,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="FetchItem">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/fetchItem" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ws-calendar/ns/soap/fetchItem" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -206,7 +206,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="DeleteItem">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/deleteItem" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ws-calendar/ns/soap/deleteItem" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
@@ -216,7 +216,7 @@
     </wsdl:operation>
     
     <wsdl:operation name="UpdateItem">
-      <soap:operation soapAction="http://docs.oasis-open.org/ns/wscal/calws-soap/updateItem" />
+      <soap:operation soapAction="http://docs.oasis-open.org/ws-calendar/ns/soap/updateItem" />
       <wsdl:input>
         <soap:body use="literal" parts="request" />
       </wsdl:input>
