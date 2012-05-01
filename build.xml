@@ -5,7 +5,8 @@
      Authors: Mike Douglass   douglm  rpi.edu
 -->
 
-<project name="xmlschema" default="deploy">
+<project name="xmlschema" default="deploy"
+         xmlns:artifact="antlib:org.apache.maven.artifact.ant">
   <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 
   <property environment="env"/>
@@ -136,7 +137,6 @@
   <!-- ===================== build-source Target ===============================
      This target builds jar files ready for the deploy target.
      =================================================================== -->
-
   <target name="build-source" >    
     <!-- Exchange - web service -->
     <wsimport wsdl="${org.bedework.exchangews.base}/Services.wsdl"
@@ -239,6 +239,44 @@
          jar-file="${vcard.jar}"
          bindingsdir="${project.home}/xjcbindings"
     />
+    
+    <artifact:pom id="the-pom" file="pom.xml" />
+
+    <!--
+    <artifact:install file="${exchangews.jar}">
+      <pom refid="the-pom"/>
+    </artifact:install>
+    -->
+    <installJar dir="${org.bedework.appleServer.base}" name="${applesvschema.jar}"/>
+
+    <installJar dir="${org.bedework.bwlicense.base}" name="${bwlicense-schema.jar}"/>
+
+    <installJar dir="${org.bedework.calws-soap.base}" name="${calws-soap.jar}"/>
+
+    <installJar dir="${org.bedework.calws-soap-strict.base}"
+                name="${calws-soap-strict.jar}"/>
+
+    <installJar dir="${org.bedework.exchangews.base}" name="${exchangews.jar}"/>
+
+    <installJar dir="${org.bedework.synchws.base}" name="${synchws.jar}"/>
+
+    <installJar dir="${org.bedework.icalendar.base}" name="${icalendar.jar}"/>
+
+    <installJar dir="${org.bedework.icalendar-strict.base}" name="${icalendar-strict.jar}"/>
+
+    <!--
+    <installJar dir="${org.bedework.category.base}" name="${category.jar}"/>
+    -->
+
+    <installJar dir="${org.bedework.caldav.base}" name="${caldavschema.jar}"/>
+
+    <!--
+    <installJar dir="${org.bedework.catdav.base}" name="${catdavschema.jar}"/>
+    -->
+
+    <installJar dir="${org.bedework.tzsvc.base}" name="${tzsvc.jar}"/>
+
+    <installJar dir="${org.bedework.vcard.base}" name="${vcard.jar}"/>
     
     <build-jar-stats />
   </target>

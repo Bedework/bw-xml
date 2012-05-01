@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Licensed to Jasig under one or more contributor license
+    agreements. See the NOTICE file distributed with this work
+    for additional information regarding copyright ownership.
+    Jasig licenses this file to you under the Apache License,
+    Version 2.0 (the "License"); you may not use this file
+    except in compliance with the License. You may obtain a
+    copy of the License at:
+        
+    http://www.apache.org/licenses/LICENSE-2.0
+        
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on
+    an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+<!-- 
+  <parent>
+    <groupId>org.bedework</groupId>
+    <artifactId>bwxml</artifactId>
+    <version>${org.bedework.bwxml.version}</version>
+  </parent> -->
+
+  <groupId>org.bedework</groupId>
+  <artifactId>bwxml</artifactId>
+  <version>${org.bedework.bwxml.version}</version>
+  <packaging>pom</packaging>
+
+  <name>Bedework xml schema</name>
+  <description>Bedework xml schema</description>
+  <url>http://bedework.org/</url>
+
+  <mailingLists>
+    <mailingList>
+      <name>Bedework User List</name>
+      <subscribe>join-bedework-user@lists.wisc.edu</subscribe>
+      <unsubscribe>leave-bedework-user@lists.wisc.edu</unsubscribe>
+      <post>bedework-user@lists.ja-sig.org</post>
+      <archive>https://lists.wisc.edu/read/?forum=bedework-user</archive>
+    </mailingList>
+    <mailingList>
+      <name>Bedework Developer List</name>
+      <subscribe>join-bedework-dev@lists.wisc.edu</subscribe>
+      <unsubscribe>leave-bedework-dev@lists.wisc.edu</unsubscribe>
+      <post>bedework-dev@lists.ja-sig.org</post>
+      <archive>https://lists.wisc.edu/read/?forum=bedework-dev</archive>
+    </mailingList>
+  </mailingLists>
+
+  <scm>
+    <connection>scm:svn:https://www.bedework.org/svn/bwxml</connection>
+    <developerConnection>scm:svn:https://www.bedework.org/svn/bwxml</developerConnection>
+    <url>https://www.bedework.org/svn/bwxml</url>
+  </scm>
+
+  <issueManagement>
+    <system>jira</system>
+    <url>https://issues.jasig.org/browse/BWK</url>
+  </issueManagement>
+
+  <modules>
+    <module>appleServer</module>
+    <module>bwlicense</module>
+    <module>caldav</module>
+    <module>calws-soap</module>
+    <module>calws-soap-strict</module>
+    <module>exchangews</module>
+    <module>icalendar</module>
+    <module>synchws</module>
+    <module>timezones</module>
+  </modules>
+</project>
