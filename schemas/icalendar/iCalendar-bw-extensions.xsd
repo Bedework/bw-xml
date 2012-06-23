@@ -71,4 +71,59 @@
       <xs:extension base="xcal:TextPropertyType"/>
     </xs:complexContent>
   </xs:complexType>
+
+  <!-- =====================================================================
+       Properties for event registration
+       ===================================================================== -->  
+
+  <xs:element name="x-bedework-instance-only" 
+              type="xcal:XBedeworkInstanceOnlyPropType"
+              substitutionGroup="xcal:baseProperty" />
+
+  <xs:element name="x-bedework-registration-end" 
+              type="xcal:XBedeworkRegistrationEndPropType"
+              substitutionGroup="xcal:baseProperty" />
+
+  <xs:element name="x-bedework-registration-start" 
+              type="xcal:XBedeworkRegistrationStartPropType"
+              substitutionGroup="xcal:baseProperty" />
+
+  <xs:element name="x-bedework-max-tickets" 
+              type="xcal:XBedeworkMaxTicketsPropType"
+              substitutionGroup="xcal:baseProperty" />
+
+  <xs:element name="x-bedework-max-tickets-per-user" 
+              type="xcal:XBedeworkMaxTicketsPerUserPropType"
+              substitutionGroup="xcal:baseProperty" />
+  
+  <xs:complexType name="XBedeworkInstanceOnlyPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="XBedeworkRegistrationEndPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="XBedeworkRegistrationStartPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="XBedeworkMaxTicketsPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:IntegerPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+  
+  <xs:complexType name="XBedeworkMaxTicketsPerUserPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:IntegerPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+       
 </xs:schema>
