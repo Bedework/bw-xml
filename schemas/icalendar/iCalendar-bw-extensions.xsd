@@ -104,13 +104,13 @@
   
   <xs:complexType name="XBedeworkRegistrationEndPropType">
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:TextPropertyType"/>
+      <xs:extension base="xcal:DateDatetimePropertyType"/>
     </xs:complexContent>
   </xs:complexType>
   
   <xs:complexType name="XBedeworkRegistrationStartPropType">
     <xs:complexContent mixed="false">
-      <xs:extension base="xcal:TextPropertyType"/>
+      <xs:extension base="xcal:DateDatetimePropertyType"/>
     </xs:complexContent>
   </xs:complexType>
   
