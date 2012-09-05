@@ -34,7 +34,7 @@
 
   <groupId>org.bedework</groupId>
   <artifactId>bwxml</artifactId>
-  <version>${org.bedework.bwxml.version}</version>
+  <version>3.9</version>
   <packaging>pom</packaging>
 
   <name>Bedework xml schema</name>
