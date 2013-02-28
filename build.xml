@@ -332,5 +332,17 @@
                 value="${org.bedework.calws-soap.service}"/>
       </filterset>
     </copy>
+
+    <!-- Pub CalWs wsdl -->
+    <debugMsg message="Copy the wsdl to ${org.bedework.pubcalws.wsdl.deploy.dir}"/>
+
+    <copy todir="${org.bedework.pubcalws.wsdl.deploy.dir}" overwrite="yes">
+      <fileset dir="${org.bedework.calws-soap.base}"
+               includes="*.xsd,*.wsdl" />
+      <filterset>
+        <filter token="SERVICE-URL" 
+                value="${org.bedework.pubcalws-soap.service}"/>
+      </filterset>
+    </copy>
   </target>
 </project>
