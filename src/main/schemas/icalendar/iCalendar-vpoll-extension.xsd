@@ -104,6 +104,12 @@
     </xs:complexContent>
   </xs:complexType>
     
+  <xs:complexType name="VoterPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:CalAddressPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+    
   <!-- accept-response is used in the VPOLL component -->
   <xs:element name="accept-response" type="xcal:AcceptResponsePropType" 
               substitutionGroup="xcal:baseProperty" />
@@ -118,5 +124,9 @@
     
   <!-- poll-properties is used in the VPOLL sub-components -->
   <xs:element name="poll-properties" type="xcal:PollPropertiesPropType" 
+              substitutionGroup="xcal:baseProperty" />
+              
+  <!-- voter is used in the VPOLL component -->
+  <xs:element name="voter" type="xcal:VoterPropType"
               substitutionGroup="xcal:baseProperty" />
 </xs:schema>
