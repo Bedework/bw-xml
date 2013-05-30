@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--OASIS WS-Calendar extensions to icalendar -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+           xmlns:xcal="urn:ietf:params:xml:ns:icalendar-2.0" 
+           targetNamespace="urn:ietf:params:xml:ns:icalendar-2.0" 
+           elementFormDefault="qualified">
+
+  <xs:include schemaLocation="iCalendar-valtypes.xsd" />
+            
+  <!-- ===================== Properties =================================  -->
+  <xs:include schemaLocation="iCalendar-props.xsd" />
+            
+  <!-- ===================== Components =================================  -->
+  <xs:include schemaLocation="iCalendar.xsd" />
+          
+  <!-- =====================================================================
+       3.2 Property parameter definitions
+       ===================================================================== -->
+  
+  <!-- Parameters that take a simple integer value -->
+  <xs:complexType name="IntegerParameterType" >
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:BaseParameterType">
+        <xs:sequence> 
+          <xs:element ref="xcal:integer" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ResponseParameterType" mixed="false" >
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:IntegerParameterType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PublicCommentParameterType" mixed="false" >
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextParameterType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="StayInformedParameterType" mixed="false" >
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:BooleanParameterType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- public-comment is used in the VOTER property -->
+  <xs:element name="public-comment" type="xcal:PublicCommentParameterType" 
+              substitutionGroup="xcal:baseParameter" />
+
+  <!-- response is used in the VOTER property -->
+  <xs:element name="response" type="xcal:ResponseParameterType" 
+              substitutionGroup="xcal:baseParameter" />
+
+  <!-- response is used in the VOTER property -->
+  <xs:element name="stay-informed" type="xcal:StayInformedParameterType" 
+              substitutionGroup="xcal:baseParameter" />
+    
+  <!-- =====================================================================
+       3.4 Calendar Components
+       ===================================================================== -->  
+ 
+  <xs:complexType name="VpollType" mixed="false">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">
+         A vpoll allows voting on the sub-components.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:BaseComponentType"/>
+    </xs:complexContent>
+  </xs:complexType>
+              
+  <xs:element name="vpoll" type="xcal:VpollType"
+              substitutionGroup="xcal:baseComponent"/>
+
+  <!-- =====================================================================
+       3.7 Calendar Properties
+       ===================================================================== -->  
+
+  <xs:complexType name="AcceptResponsePropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PollItemIdPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:IntegerPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PollModePropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="PollPropertiesPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+    
+  <!-- accept-response is used in the VPOLL component -->
+  <xs:element name="accept-response" type="xcal:AcceptResponsePropType" 
+              substitutionGroup="xcal:baseProperty" />
+    
+  <!-- poll-item-id is used in the VPOLL sub-components -->
+  <xs:element name="poll-item-id" type="xcal:PollItemIdPropType" 
+              substitutionGroup="xcal:baseProperty" />
+    
+  <!-- poll-mode is used in the VPOLL component -->
+  <xs:element name="poll-mode" type="xcal:PollModePropType" 
+              substitutionGroup="xcal:baseProperty" />
+    
+  <!-- poll-properties is used in the VPOLL sub-components -->
+  <xs:element name="poll-properties" type="xcal:PollPropertiesPropType" 
+              substitutionGroup="xcal:baseProperty" />
+</xs:schema>

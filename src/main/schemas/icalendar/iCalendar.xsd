@@ -16,12 +16,13 @@
             
             
   <!-- ===================== Standard Extensions =======================  -->
+  <xs:include schemaLocation="iCalendar-availability-extension.xsd" />
   <xs:include schemaLocation="iCalendar-link-extension.xsd" />
+  <xs:include schemaLocation="iCalendar-vpoll-extension.xsd" />
             
   <!-- ===================== Proprietary Extensions =======================  -->
   <xs:include schemaLocation="iCalendar-bw-extensions.xsd" />
   <xs:include schemaLocation="iCalendar-ms-extensions.xsd" />
-  <xs:include schemaLocation="iCalendar-availability-extension.xsd" />
   <xs:include schemaLocation="iCalendar-wscal-extensions.xsd" />
            
   <!-- =====================================================================
