@@ -31,9 +31,9 @@
 	</issueManagement>
 
 	<properties>
-		<bedework.releases.repo.url>sftp://dev.bedework.org/repository</bedework.releases.repo.url>
-		<bedework.snapshots.repo.url>sftp://dev.bedework.org/repository</bedework.snapshots.repo.url>
-		
+		<bedework.releases.repo.url>scp://dev.bedework.org/repository</bedework.releases.repo.url>
+		<bedework.snapshots.repo.url>scp://dev.bedework.org/repository</bedework.snapshots.repo.url>
+
 		<!-- Maven Plugin Versions -->
 		<maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
 		<maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
@@ -77,6 +77,13 @@
 	</distributionManagement>
 
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>2.4</version>
+			</extension>
+		</extensions>
 		<pluginManagement>
 			<plugins>
 				<!--This plugin's configuration is used to store Eclipse m2e settings 
