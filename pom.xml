@@ -31,6 +31,9 @@
 	</issueManagement>
 
 	<properties>
+		<bedework.releases.repo.url>sftp://dev.bedework.org/repository</bedework.releases.repo.url>
+		<bedework.snapshots.repo.url>sftp://dev.bedework.org/repository</bedework.snapshots.repo.url>
+		
 		<!-- Maven Plugin Versions -->
 		<maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
 		<maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
@@ -59,6 +62,19 @@
 		<module>bw-ws-synchws</module>
 		<module>bw-ws-exchangews</module>
 	</modules>
+
+	<distributionManagement>
+		<repository>
+			<id>bedework-releases-repository</id>
+			<name>Bedework Releases Repository</name>
+			<url>${bedework.releases.repo.url}</url>
+		</repository>
+		<snapshotRepository>
+			<id>bedework-snapshots-repository</id>
+			<name>Bedework Snapshots Repository</name>
+			<url>${bedework.snapshots.repo.url}</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<build>
 		<pluginManagement>
