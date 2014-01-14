@@ -8,6 +8,7 @@
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-icalendar-strict/target/antrun" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-icalendar-strict/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-icalendar-strict/target/maven-archiver" />
+      <excludeFolder url="file://$MODULE_DIR$/bw-ws-icalendar-strict/target/surefire" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
