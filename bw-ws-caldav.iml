@@ -8,7 +8,6 @@
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-caldav/target/antrun" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-caldav/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-caldav/target/maven-archiver" />
-      <excludeFolder url="file://$MODULE_DIR$/bw-ws-caldav/target/surefire" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

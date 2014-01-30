@@ -9,7 +9,6 @@
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-calws-soap/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-calws-soap/target/jaxws" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-calws-soap/target/maven-archiver" />
-      <excludeFolder url="file://$MODULE_DIR$/bw-ws-calws-soap/target/surefire" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
