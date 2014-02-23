@@ -4,7 +4,7 @@
     <output url="file://$MODULE_DIR$/bw-ws-appleServer/target/classes" />
     <output-test url="file://$MODULE_DIR$/bw-ws-appleServer/target/test-classes" />
     <content url="file://$MODULE_DIR$/bw-ws-appleServer">
-      <sourceFolder url="file://$MODULE_DIR$/bw-ws-appleServer/target/generated-sources/xjc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/bw-ws-appleServer/target/generated-sources/xjc" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-appleServer/target/antrun" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-appleServer/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-appleServer/target/maven-archiver" />

@@ -4,7 +4,7 @@
     <output url="file://$MODULE_DIR$/bw-ws-exchangews/target/classes" />
     <output-test url="file://$MODULE_DIR$/bw-ws-exchangews/target/test-classes" />
     <content url="file://$MODULE_DIR$/bw-ws-exchangews">
-      <sourceFolder url="file://$MODULE_DIR$/bw-ws-exchangews/target/generated-sources/wsimport" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/bw-ws-exchangews/target/generated-sources/wsimport" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-exchangews/target/antrun" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-exchangews/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-exchangews/target/jaxws" />

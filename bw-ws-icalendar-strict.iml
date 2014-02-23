@@ -4,7 +4,7 @@
     <output url="file://$MODULE_DIR$/bw-ws-icalendar-strict/target/classes" />
     <output-test url="file://$MODULE_DIR$/bw-ws-icalendar-strict/target/test-classes" />
     <content url="file://$MODULE_DIR$/bw-ws-icalendar-strict">
-      <sourceFolder url="file://$MODULE_DIR$/bw-ws-icalendar-strict/target/generated-sources/xjc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/bw-ws-icalendar-strict/target/generated-sources/xjc" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-icalendar-strict/target/antrun" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-icalendar-strict/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-icalendar-strict/target/maven-archiver" />

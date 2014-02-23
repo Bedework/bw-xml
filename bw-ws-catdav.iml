@@ -4,7 +4,7 @@
     <output url="file://$MODULE_DIR$/bw-ws-catdav/target/classes" />
     <output-test url="file://$MODULE_DIR$/bw-ws-catdav/target/test-classes" />
     <content url="file://$MODULE_DIR$/bw-ws-catdav">
-      <sourceFolder url="file://$MODULE_DIR$/bw-ws-catdav/target/generated-sources/xjc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/bw-ws-catdav/target/generated-sources/xjc" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-catdav/target/antrun" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-catdav/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-catdav/target/maven-archiver" />

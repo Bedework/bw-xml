@@ -4,7 +4,7 @@
     <output url="file://$MODULE_DIR$/bw-ws-calws-soap/target/classes" />
     <output-test url="file://$MODULE_DIR$/bw-ws-calws-soap/target/test-classes" />
     <content url="file://$MODULE_DIR$/bw-ws-calws-soap">
-      <sourceFolder url="file://$MODULE_DIR$/bw-ws-calws-soap/target/generated-sources/wsimport" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/bw-ws-calws-soap/target/generated-sources/wsimport" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-calws-soap/target/antrun" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-calws-soap/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-calws-soap/target/jaxws" />

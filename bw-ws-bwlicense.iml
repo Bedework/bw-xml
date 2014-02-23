@@ -4,7 +4,7 @@
     <output url="file://$MODULE_DIR$/bw-ws-bwlicense/target/classes" />
     <output-test url="file://$MODULE_DIR$/bw-ws-bwlicense/target/test-classes" />
     <content url="file://$MODULE_DIR$/bw-ws-bwlicense">
-      <sourceFolder url="file://$MODULE_DIR$/bw-ws-bwlicense/target/generated-sources/xjc" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/bw-ws-bwlicense/target/generated-sources/xjc" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-bwlicense/target/antrun" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-bwlicense/target/classes" />
       <excludeFolder url="file://$MODULE_DIR$/bw-ws-bwlicense/target/maven-archiver" />
