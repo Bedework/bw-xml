@@ -20,8 +20,8 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:git://github.com/Bedework/bw-ws.git</connection>
-		<developerConnection>scm:git:git://github.com/Bedework/bw-ws.git</developerConnection>
+		<connection>scm:git:git@github.com:Bedework/bw-ws.git</connection>
+		<developerConnection>scm:git:git@github.com:Bedework/bw-ws.git</developerConnection>
 		<url>https://github.com/Bedework/bw-ws</url>
 	</scm>
 
