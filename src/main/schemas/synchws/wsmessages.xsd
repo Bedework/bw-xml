@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE schema>
-<schema xmlns="http://www.w3.org/2001/XMLSchema" 
-        xmlns:tns="http://www.bedework.org/synch/wsmessages" 
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://www.bedework.org/synch/wsmessages"
         xmlns:xcal="urn:ietf:params:xml:ns:icalendar-2.0"
         xmlns:xrd="http://docs.oasis-open.org/ns/xri/xrd-1.0"
         xmlns:cws="http://docs.oasis-open.org/ws-calendar/ns/soap"
-        targetNamespace="http://www.bedework.org/synch/wsmessages" 
+        targetNamespace="http://www.bedework.org/synch/wsmessages"
         elementFormDefault="qualified">
-  <import schemaLocation="../calws-soap/wsmessages.xsd" 
+  <import schemaLocation="../calws-soap/wsmessages.xsd"
           namespace="http://docs.oasis-open.org/ws-calendar/ns/soap" />
-        
-  <import schemaLocation="../icalendar/iCalendar.xsd" 
+
+  <import schemaLocation="../icalendar/iCalendar.xsd"
           namespace="urn:ietf:params:xml:ns:icalendar-2.0" />
-        
-  <import schemaLocation="../xrd/xrd-1.0-os.xsd" 
+
+  <import schemaLocation="../xrd/xrd-1.0-os.xsd"
           namespace="http://docs.oasis-open.org/ns/xri/xrd-1.0" />
-          
+
   <include schemaLocation="wserrors.xsd" />
 
   <!-- Schema for synch processor. -->
-  
+
   <simpleType name="SynchDirectionType">
     <annotation>
       <documentation xml:lang="en">
@@ -34,7 +34,7 @@
       <enumeration value="bothWays" />
     </restriction>
   </simpleType>
-  
+
   <simpleType name="SynchEndType">
     <annotation>
       <documentation xml:lang="en">
@@ -48,7 +48,7 @@
       <enumeration value="B" />
     </restriction>
   </simpleType>
-  
+
   <simpleType name="SynchMasterType">
     <annotation>
       <documentation xml:lang="en">
@@ -64,22 +64,22 @@
       <enumeration value="B" />
     </restriction>
   </simpleType>
-  
+
   <simpleType name="CalProcessingType">
     <annotation>
       <documentation xml:lang="en">
         Used to define how we process calendar properties such as transparency
         or services such as scheduling. The options (case significant) are
-           
-        ALLOW -   Pass through on add but ignore thereafter. This allows 
+
+        ALLOW -   Pass through on add but ignore thereafter. This allows
                   initialization from the outside source but maintenance by the
                   user.
         SYNCH -   Pass through on add and keep in synch thereafter. Depending on
-                  master settings changes by the user will be overridden on next 
+                  master settings changes by the user will be overridden on next
                   synch
         REMOVE -  Property is removed on addition and ignored during synch.
-        SPECIAL - There is some special handling of the named property. For 
-                  example it might be set on categories if we are doing some 
+        SPECIAL - There is some special handling of the named property. For
+                  example it might be set on categories if we are doing some
                   special filtering.
       </documentation>
     </annotation>
@@ -90,33 +90,37 @@
       <enumeration value="SPECIAL" />
     </restriction>
   </simpleType>
-  
+
   <complexType name="SynchIdTokenType">
     <annotation>
       <documentation xml:lang="en">
-           Id and token for a synch operation.
+        Id, url, token and opaque data for a synch operation.
+
+        The opaque data is provided by the subscriber at subscribe
+        time and passed back to the service.
       </documentation>
     </annotation>
     <sequence>
       <element name="principalHref" type="string" />
       <element name="subscribeUrl" type="string" />
       <element name="synchToken" type="string" />
+      <element name="opaqueData" type="string" minOccurs="0" />
     </sequence>
   </complexType>
 
   <element name="synchIdToken" type="tns:SynchIdTokenType" />
-  
+
   <complexType name="SynchPropertyInfoType">
     <annotation>
       <documentation xml:lang="en">
            Used to provide information about a property to systems, allows them
            to request that information from the user. The description is
-           not generically useful being single language. Applications should 
+           not generically useful being single language. Applications should
            key off the name which is also not multi-language.
-           
-           Properties are transferred as key-value pairs with the value being a 
+
+           Properties are transferred as key-value pairs with the value being a
            (java) String representation of the value.
-           
+
            The value field is not supplied if no value is set - otherwise it
            represents the default value for new subscriptions or the current value
            for modifications.
@@ -131,20 +135,20 @@
       <element name="value" type="string" minOccurs="0" />
     </sequence>
   </complexType>
-  
+
   <complexType name="ArrayOfSynchPropertyInfo">
     <sequence>
-      <element name="property" type="tns:SynchPropertyInfoType" 
+      <element name="property" type="tns:SynchPropertyInfoType"
                minOccurs="0" maxOccurs="unbounded" />
     </sequence>
-  </complexType>  
-  
+  </complexType>
+
   <complexType name="SynchConnectorInfoType">
     <annotation>
       <documentation xml:lang="en">
            Used to provide information about a connector to systems. None of this
-           is intended to be displayable. 
-           
+           is intended to be displayable.
+
            name: should be unique and can be used to key into localizable information.
            manager: this is the special manager connector.
            readOnly: cannot update this end
@@ -158,18 +162,18 @@
       <element name="properties" type="tns:ArrayOfSynchPropertyInfo" />
     </sequence>
   </complexType>
-  
+
   <complexType name="ArrayOfSynchConnectorInfo">
     <sequence>
-      <element name="connector" type="tns:SynchConnectorInfoType" 
+      <element name="connector" type="tns:SynchConnectorInfoType"
                minOccurs="0" maxOccurs="unbounded" />
     </sequence>
-  </complexType>  
+  </complexType>
 
-  <!-- ===================================================================== 
-                                Base for all requests 
+  <!-- =====================================================================
+                                Base for all requests
        ===================================================================== -->
-  
+
   <complexType name="BaseSynchRequestType">
     <annotation>
       <documentation xml:lang="en">
@@ -178,19 +182,19 @@
     </annotation>
   </complexType>
 
-  <!-- ===================================================================== 
-                   Base for requests involving active subscriptions 
+  <!-- =====================================================================
+                   Base for requests involving active subscriptions
        ===================================================================== -->
-  
+
   <complexType name="ActiveSubscriptionRequestType">
     <annotation>
       <documentation xml:lang="en">
-           Messages involving active subscriptions. These need to provide 
-           all the information for a given end of the subscription which would 
+           Messages involving active subscriptions. These need to provide
+           all the information for a given end of the subscription which would
            usually be the end that made the subscription in the first place.
-           
+
            It's up to the connector to determine if enough information has been
-           supplied to allow the requests to proceed. 
+           supplied to allow the requests to proceed.
       </documentation>
     </annotation>
     <complexContent mixed="false">
@@ -205,7 +209,7 @@
       </extension>
     </complexContent>
   </complexType>
-  
+
   <!-- *********************************************************************
        to syncher
        getInfo: get information about end-points etc.
@@ -213,8 +217,8 @@
        unsubscribe: remove a new subscription for a principal to a calendar
        ********************************************************************* -->
 
-  <!-- =========================== getInfo =========================== -->  
-  
+  <!-- =========================== getInfo =========================== -->
+
   <complexType name="SynchInfoType">
     <annotation>
       <documentation xml:lang="en">
@@ -226,7 +230,7 @@
       <element name="connectors" type="tns:ArrayOfSynchConnectorInfo" />
     </sequence>
   </complexType>
-  
+
   <complexType name="GetInfoRequestType">
     <annotation>
       <documentation xml:lang="en">
@@ -240,7 +244,7 @@
   </complexType>
 
   <element name="getInfo" type="tns:GetInfoRequestType" />
-  
+
   <complexType name="GetInfoResponseType">
     <annotation>
       <documentation xml:lang="en">
@@ -257,9 +261,9 @@
   </complexType>
 
   <element name="getInfoResponse" type="tns:GetInfoResponseType" />
-  
-  <!-- =========================== subscribe =========================== -->  
-  
+
+  <!-- =========================== subscribe =========================== -->
+
   <complexType name="SynchPropertyType">
     <annotation>
       <documentation xml:lang="en">
@@ -271,14 +275,14 @@
       <element name="value" type="string" />
     </sequence>
   </complexType>
-  
+
   <complexType name="ArrayOfSynchProperties">
     <sequence>
-      <element name="property" type="tns:SynchPropertyType" 
+      <element name="property" type="tns:SynchPropertyType"
                minOccurs="0" maxOccurs="unbounded" />
     </sequence>
-  </complexType>  
-  
+  </complexType>
+
   <complexType name="ConnectorInfoType">
     <annotation>
       <documentation xml:lang="en">
@@ -290,7 +294,7 @@
       <element name="properties" type="tns:ArrayOfSynchProperties" />
     </sequence>
   </complexType>
-  
+
   <complexType name="SubscribeRequestType">
     <annotation>
       <documentation xml:lang="en">
@@ -316,13 +320,14 @@
           <element name="endAConnector" type="tns:ConnectorInfoType" />
           <element name="endBConnector" type="tns:ConnectorInfoType" />
           <element name="info" type="tns:ArrayOfSynchProperties"/>
+          <element name="opaqueData" type="string" minOccurs="0" />
         </sequence>
       </extension>
     </complexContent>
   </complexType>
 
   <element name="subscribe" type="tns:SubscribeRequestType" />
-  
+
   <complexType name="SubscribeResponseType">
     <annotation>
       <documentation xml:lang="en">
@@ -339,18 +344,18 @@
   </complexType>
 
   <element name="subscribeResponse" type="tns:SubscribeResponseType" />
-  
-  <!-- =========================== unsubscribe =========================== -->  
-  
+
+  <!-- =========================== unsubscribe =========================== -->
+
   <complexType name="UnsubscribeRequestType">
     <annotation>
       <documentation xml:lang="en">
            Message unsubscribing. This needs to provide all the information for
            a given end of the subscription which would usually be the end that
            made the subscription in the first place.
-           
+
            It's up to the connector to determine if enough information has been
-           supplied to allow the unsubscribe. 
+           supplied to allow the unsubscribe.
       </documentation>
     </annotation>
     <complexContent mixed="false">
@@ -360,7 +365,7 @@
   </complexType>
 
   <element name="unsubscribe" type="tns:UnsubscribeRequestType" />
-  
+
   <complexType name="UnsubscribeResponseType">
     <annotation>
       <documentation xml:lang="en">
@@ -374,21 +379,21 @@
   </complexType>
 
   <element name="unsubscribeResponse" type="tns:UnsubscribeResponseType" />
-  
-  <!-- ====================== subscriptionStatus ========================== -->  
-  
+
+  <!-- ====================== subscriptionStatus ========================== -->
+
   <complexType name="SubscriptionStatusRequestType">
     <annotation>
       <documentation xml:lang="en">
-           Message requests the status of a subscription. This needs to provide 
-           all the information for a given end of the subscription which would 
+           Message requests the status of a subscription. This needs to provide
+           all the information for a given end of the subscription which would
            usually be the end that made the subscription in the first place.
-           
+
            It's up to the connector to determine if enough information has been
-           supplied to allow the requests to proceed. 
-           
+           supplied to allow the requests to proceed.
+
            The response is most of the current information about the subscriptiuon
-           held by the server. 
+           held by the server.
       </documentation>
     </annotation>
     <complexContent mixed="false">
@@ -398,7 +403,7 @@
   </complexType>
 
   <element name="subscriptionStatus" type="tns:SubscriptionStatusRequestType" />
-  
+
   <complexType name="SubscriptionStatusResponseType">
     <annotation>
       <documentation xml:lang="en">
@@ -424,9 +429,9 @@
   </complexType>
 
   <element name="subscriptionStatusResponse" type="tns:SubscriptionStatusResponseType" />
-  
+
   <!-- *********************************************************************
-       Syncher to Remote system 
+       Syncher to Remote system
        start-service-notification; sent to initialise the service
        keep-alive-notification; sent to say synch engine is still with us
        get-sycnch-info: return info used to synch
@@ -435,7 +440,7 @@
        update: update a calendar item
        delete: delete a calendar item
        ********************************************************************* -->
-  
+
   <complexType name="StartServiceNotificationType">
     <annotation>
       <documentation xml:lang="en">
@@ -451,10 +456,10 @@
       <element name="pw" type="string" minOccurs="0" />
     </sequence>
   </complexType>
-  
-  <element name="startServiceNotification" 
+
+  <element name="startServiceNotification"
            type="tns:StartServiceNotificationType" />
-  
+
   <complexType name="StartServiceResponseType">
     <annotation>
       <documentation xml:lang="en">
@@ -473,7 +478,7 @@
   </complexType>
 
   <element name="startServiceResponse" type="tns:StartServiceResponseType" />
-  
+
   <complexType name="KeepAliveNotificationType">
     <annotation>
       <documentation xml:lang="en">
@@ -487,10 +492,10 @@
       <element name="token" type="string" />
     </sequence>
   </complexType>
-  
-  <element name="keepAliveNotification" 
+
+  <element name="keepAliveNotification"
            type="tns:KeepAliveNotificationType" />
-  
+
   <complexType name="KeepAliveResponseType">
     <annotation>
       <documentation xml:lang="en">
