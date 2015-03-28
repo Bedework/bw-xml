@@ -86,6 +86,16 @@
               type="xcal:XBwLocationPropType"
               substitutionGroup="xcal:baseProperty" />
 
+  <xs:complexType name="XBwCategoriesPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextListPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="x-bedework-categories"
+              type="xcal:XBwCategoriesPropType"
+              substitutionGroup="xcal:baseProperty" />
+
   <xs:complexType name="XBwContactPropType">
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextPropertyType"/>
