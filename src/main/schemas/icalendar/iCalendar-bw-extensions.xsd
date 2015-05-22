@@ -160,4 +160,37 @@
     </xs:complexContent>
   </xs:complexType>
 
+  <!-- =====================================================================
+       Property to wrap unknown properties
+       This is like the XML icalendar property defined for xcal.
+       We cannot create arbitrary xml elements and get them transported
+       through SOAP so we simply wrap the entire property as a (text) value:
+       <x-bedework-xwrapper>
+         <parameters>
+           <x-bedework-xwrapped-name><text>X-PROPERTY</text></x-bedework-xwrapped-name>
+           ...other params
+         </parameters>
+         <text>a value</text>
+       </x-bedework-xwrapper>
+       ===================================================================== -->
+
+  <xs:element name="x-bedework-wrapped-name"
+              type="xcal:XBedeworkWrappedNameParamType"
+              substitutionGroup="xcal:baseParameter" />
+
+  <xs:complexType name="XBedeworkWrappedNameParamType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextParameterType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:element name="x-bedework-wrapper"
+              type="xcal:XBedeworkWrapperPropType"
+              substitutionGroup="xcal:baseProperty" />
+
+  <xs:complexType name="XBedeworkWrapperPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
 </xs:schema>
