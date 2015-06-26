@@ -30,8 +30,12 @@
 	</issueManagement>
 
 	<properties>
+    <!--
 		<bedework.releases.repo.url>scp://dev.bedework.org/data/repository/maven/maven2</bedework.releases.repo.url>
 		<bedework.snapshots.repo.url>scp://dev.bedework.org/data/repository/maven/maven2</bedework.snapshots.repo.url>
+		-->
+    <bedework.releases.repo.url>file:/Users/mike/bedework/repo</bedework.releases.repo.url>
+    <bedework.snapshots.repo.url>file:/Users/mike/bedework/repo</bedework.snapshots.repo.url>
 
 		<!-- Maven Plugin Versions -->
 		<maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
@@ -85,7 +89,7 @@
 		</extensions>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
+				<!--This plugin's configuration is used to store Eclipse m2e settings
 					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
