@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bedework</groupId>
 	<artifactId>bw-ws</artifactId>
-	<version>4.0.3-SNAPSHOT</version>
+	<version>4.0.3</version>
 	<packaging>pom</packaging>
 	<name>bw-ws</name>
   <description>This project provides a number of XML schemas</description>
@@ -24,7 +24,7 @@
 		<connection>scm:git:git@github.com:Bedework/bw-ws.git</connection>
 		<developerConnection>scm:git:git@github.com:Bedework/bw-ws.git</developerConnection>
 		<url>https://github.com/Bedework/bw-ws</url>
-	  <tag>HEAD</tag>
+	  <tag>bw-ws-4.0.3</tag>
   </scm>
 
 	<issueManagement>
