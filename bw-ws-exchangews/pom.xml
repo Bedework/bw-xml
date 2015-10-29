@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.bedework</groupId>
 		<artifactId>bw-ws</artifactId>
-		<version>4.0.1-SNAPSHOT</version>
+		<version>4.0.1</version>
 	</parent>
 	<artifactId>bw-ws-exchangews</artifactId>
 	<name>bw-ws-exchangews</name>
