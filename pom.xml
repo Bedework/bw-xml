@@ -5,6 +5,8 @@
 	<version>4.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>bw-ws</name>
+  <description>This project provides a number of XML schemas</description>
+  <url>https://github.com/Bedework/bw-ws</url>
 
 	<organization>
 		<name>Bedework</name>
@@ -227,6 +229,15 @@
           <releaseProfiles>release</releaseProfiles>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <configuration>
+          <failOnError>false</failOnError>
+        </configuration>
+      </plugin>
 		</plugins>
 	</build>
 
@@ -248,7 +259,6 @@
               </execution>
             </executions>
           </plugin>
-          <!-- No javadoc for this project
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
@@ -261,8 +271,10 @@
                 </goals>
               </execution>
             </executions>
+            <configuration>
+              <failOnError>false</failOnError>
+            </configuration>
           </plugin>
-          -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
