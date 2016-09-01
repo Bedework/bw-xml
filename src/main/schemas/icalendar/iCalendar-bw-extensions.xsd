@@ -130,6 +130,10 @@
               type="xcal:XBedeworkMaxTicketsPerUserPropType"
               substitutionGroup="xcal:baseProperty" />
 
+  <xs:element name="x-bedework-wait-list-limit"
+              type="xcal:XBedeworkWaitListLimitPropType"
+              substitutionGroup="xcal:baseProperty" />
+
   <xs:complexType name="XBedeworkInstanceOnlyPropType">
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:TextPropertyType"/>
@@ -157,6 +161,12 @@
   <xs:complexType name="XBedeworkMaxTicketsPerUserPropType">
     <xs:complexContent mixed="false">
       <xs:extension base="xcal:IntegerPropertyType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="XBedeworkWaitListLimitPropType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextPropertyType"/>
     </xs:complexContent>
   </xs:complexType>
 
