@@ -144,6 +144,17 @@
     <wsdl:part name="response" element="cws:updateItemResponse" />
   </wsdl:message>
 
+  <!-- ============================= deleteItem =============================== -->
+
+  <wsdl:message name="DeleteItemIn">
+    <wsdl:part name="idToken" element="tns:synchIdToken" />
+    <wsdl:part name="request" element="cws:deleteItem" />
+  </wsdl:message>
+
+  <wsdl:message name="DeleteItemOut">
+    <wsdl:part name="response" element="cws:deleteItemResponse" />
+  </wsdl:message>
+
   <!-- ============================== port ================================= -->  
   
   <wsdl:portType name="SynchRemoteServicePortType">
@@ -202,6 +213,11 @@
       <wsdl:output message="tns:FetchItemOut" />
     </wsdl:operation>
     
+    <wsdl:operation name="DeleteItem">
+      <wsdl:input message="tns:DeleteItemIn" />
+      <wsdl:output message="tns:DeleteItemOut" />
+    </wsdl:operation>
+
     <wsdl:operation name="UpdateItem">
       <wsdl:input message="tns:UpdateItemIn" />
       <wsdl:output message="tns:UpdateItemOut" />
@@ -334,6 +350,17 @@
       </wsdl:input>
       <wsdl:output>
         <soap:body use="literal" parts="fetchItemResponse" />
+      </wsdl:output>
+    </wsdl:operation>
+
+    <wsdl:operation name="DeleteItem">
+      <soap:operation soapAction="http://docs.oasis-open.org/ws-calendar/ns/soap/deleteItem" />
+      <wsdl:input>
+        <soap:header message="tns:DeleteItemIn" use="literal" part="idToken" />
+        <soap:body use="literal" parts="request" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" parts="response" />
       </wsdl:output>
     </wsdl:operation>
     
