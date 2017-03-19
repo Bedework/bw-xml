@@ -60,7 +60,9 @@
 		<module>bw-ws-calws-soap-strict</module>
 		<module>bw-ws-synchws</module>
 		<module>bw-ws-exchangews</module>
-	</modules>
+    <module>bw-ws-war</module>
+    <module>bw-ws-ear</module>
+  </modules>
 
   <developers>
     <developer>
