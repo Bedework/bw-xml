@@ -241,7 +241,7 @@
           <failOnError>false</failOnError>
         </configuration>
       </plugin>
-		</plugins>
+    </plugins>
 	</build>
 
   <profiles>
