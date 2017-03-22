@@ -45,7 +45,7 @@
       </plugin>
       <plugin>
         <groupId>org.bedework</groupId>
-        <artifactId>bwdeployment-maven-plugin</artifactId>
+        <artifactId>bw-deploy-maven-plugin</artifactId>
         <version>4.0.13-SNAPSHOT</version>
         <executions>
           <execution>
