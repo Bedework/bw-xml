@@ -38,7 +38,7 @@
             <webModule>
               <groupId>${project.groupId}</groupId>
               <artifactId>bw-ws-war</artifactId>
-              <contextRoot>/tzsvr</contextRoot>
+              <contextRoot>/wsdls</contextRoot>
             </webModule>
           </modules>
         </configuration>
