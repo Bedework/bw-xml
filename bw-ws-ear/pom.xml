@@ -20,7 +20,7 @@
   </dependencies>
 
   <build>
-    <finalName>bw-ws-${project.version}</finalName>
+    <finalName>bw-xml-${project.version}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -46,10 +46,10 @@
       <plugin>
         <groupId>org.bedework</groupId>
         <artifactId>bw-deploy-maven-plugin</artifactId>
-        <version>4.0.13-SNAPSHOT</version>
+        <version>${bw-util.version}</version>
         <executions>
           <execution>
-            <phase>install</phase>
+            <phase>deploy</phase>
             <goals>
               <goal>bw-deploy</goal>
             </goals>
@@ -58,9 +58,9 @@
         <configuration>
           <noversion>true</noversion>
           <delete>true</delete>
-          <earName>bw-ws</earName>
+          <earName>bw-xml</earName>
           <baseDirPath>${project.basedir}/../..</baseDirPath>
-          <propsPath>${project.basedir}/../../bw-classic/config/wildfly.deploy.properties</propsPath>
+          <propsPath>${org.bedework.deployment.properties}</propsPath>
         </configuration>
       </plugin>
     </plugins>

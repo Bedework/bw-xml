@@ -33,6 +33,8 @@
 	</issueManagement>
 
 	<properties>
+    <!-- Needed for deployment -->
+    <bw-util.version>4.0.17-SNAPSHOT</bw-util.version>
 		<!-- Maven Plugin Versions -->
 		<maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
 		<maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
@@ -214,8 +216,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<showDeprecation>false</showDeprecation>
 					<showWarnings>false</showWarnings>
 				</configuration>
