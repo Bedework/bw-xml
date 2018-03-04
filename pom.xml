@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.bedework</groupId>
-	<artifactId>bw-ws</artifactId>
+	<artifactId>bw-xml</artifactId>
 	<version>4.0.5-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>bw-ws</name>
+	<name>bw-xml</name>
   <description>This project provides a number of XML schemas</description>
-  <url>https://github.com/Bedework/bw-ws</url>
+  <url>https://github.com/Bedework/bw-xml</url>
 
 	<organization>
 		<name>Bedework</name>
@@ -21,15 +21,15 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:git@github.com:Bedework/bw-ws.git</connection>
-		<developerConnection>scm:git:git@github.com:Bedework/bw-ws.git</developerConnection>
-		<url>https://github.com/Bedework/bw-ws</url>
+		<connection>scm:git:git@github.com:Bedework/bw-xml.git</connection>
+		<developerConnection>scm:git:git@github.com:Bedework/bw-xml.git</developerConnection>
+		<url>https://github.com/Bedework/bw-xml</url>
 	  <tag>HEAD</tag>
   </scm>
 
 	<issueManagement>
 		<system>github</system>
-		<url>https://github.com/Bedework/bw-ws/issues</url>
+		<url>https://github.com/Bedework/bw-xml/issues</url>
 	</issueManagement>
 
 	<properties>
@@ -46,24 +46,24 @@
 	</properties>
 
 	<modules>
-		<module>bw-ws-icalendar</module>
-		<module>bw-ws-appleServer</module>
-		<module>bw-ws-bwlicense</module>
-		<module>bw-ws-caldav</module>
-		<module>bw-ws-carddav</module>
-		<module>bw-ws-catdav</module>
-		<module>bw-ws-dav</module>
-		<module>bw-ws-category</module>
-		<module>bw-ws-icalendar-strict</module>
-		<module>bw-ws-tzsvr</module>
-		<module>bw-ws-vcard</module>
-		<module>bw-ws-xrd</module>
-		<module>bw-ws-calws-soap</module>
-		<module>bw-ws-calws-soap-strict</module>
-		<module>bw-ws-synchws</module>
-		<module>bw-ws-exchangews</module>
-    <module>bw-ws-war</module>
-    <module>bw-ws-ear</module>
+		<module>bw-xml-icalendar</module>
+		<module>bw-xml-appleServer</module>
+		<module>bw-xml-bwlicense</module>
+		<module>bw-xml-caldav</module>
+		<module>bw-xml-carddav</module>
+		<module>bw-xml-catdav</module>
+		<module>bw-xml-dav</module>
+		<module>bw-xml-category</module>
+		<module>bw-xml-icalendar-strict</module>
+		<module>bw-xml-tzsvr</module>
+		<module>bw-xml-vcard</module>
+		<module>bw-xml-xrd</module>
+		<module>bw-xml-calws-soap</module>
+		<module>bw-xml-calws-soap-strict</module>
+		<module>bw-xml-synchws</module>
+		<module>bw-xml-exchangews</module>
+    <module>bw-xml-war</module>
+    <module>bw-xml-ear</module>
   </modules>
 
   <developers>

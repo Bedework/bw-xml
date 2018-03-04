@@ -1,4 +1,4 @@
-## bw-ws [![Build Status](https://travis-ci.org/Bedework/bw-ws.svg)](https://travis-ci.org/Bedework/bw-ws)
+## bw-xml [![Build Status](https://travis-ci.org/Bedework/bw-xml.svg)](https://travis-ci.org/Bedework/bw-xml)
 
 This project provides the XML schemas used by a number of modules for
 [Bedework](https://www.apereo.org/projects/bedework).
