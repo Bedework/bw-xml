@@ -24,6 +24,16 @@
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:element name="x-bedework-loc-key"
+              type="xcal:XBedeworkLocKeyParamType"
+              substitutionGroup="xcal:baseParameter" />
+
+  <xs:complexType name="XBedeworkLocKeyParamType">
+    <xs:complexContent mixed="false">
+      <xs:extension base="xcal:TextParameterType"/>
+    </xs:complexContent>
+  </xs:complexType>
+
   <!-- =====================================================================
        3.7 Calendar Properties
        ===================================================================== -->
