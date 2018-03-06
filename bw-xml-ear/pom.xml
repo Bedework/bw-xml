@@ -38,7 +38,7 @@
             <webModule>
               <groupId>${project.groupId}</groupId>
               <artifactId>bw-xml-war</artifactId>
-              <contextRoot>/wsdls</contextRoot>
+              <contextRoot>/xmlspecs</contextRoot>
             </webModule>
           </modules>
         </configuration>

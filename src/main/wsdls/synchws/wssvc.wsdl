@@ -378,7 +378,7 @@
 
   <wsdl:service name="SynchRemoteService">
     <wsdl:port name="SynchRSPort" binding="tns:SynchRemoteServiceBinding">
-       <soap:address location="@BEDEWORK-SYNCH-SERVICE-URL@"></soap:address>
+       <soap:address location="${org.bedework.global.synch.service.location}"></soap:address>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>  
