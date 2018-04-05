@@ -57,6 +57,7 @@
         </executions>
         <configuration>
           <noversion>true</noversion>
+          <debug>true</debug>
           <delete>true</delete>
           <earName>bw-xml</earName>
           <baseDirPath>${project.basedir}/../..</baseDirPath>
