@@ -5,7 +5,7 @@ This project provides the XML schemas used by a number of modules for
 
 ### Requirements
 
-1. JDK 7
+1. JDK 8
 2. Maven 3
 
 ### Building Locally
