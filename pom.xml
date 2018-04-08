@@ -34,7 +34,7 @@
 
 	<properties>
     <!-- Needed for deployment -->
-    <bw-util.version>4.0.17-SNAPSHOT</bw-util.version>
+    <bw-util.version>4.0.18</bw-util.version>
 		<!-- Maven Plugin Versions -->
 		<maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
 		<maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
