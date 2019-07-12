@@ -44,6 +44,9 @@
     <maven.eclipse.plugin.version>2.8</maven.eclipse.plugin.version>
     <maven.jaxws.plugin.version>2.4.1</maven.jaxws.plugin.version>
     <cxf.xjc.plugin.version>3.3.0</cxf.xjc.plugin.version>
+    <jaxb-api.version>2.3.0</jaxb-api.version>
+    <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
+    <jakarta.activation.version>1.2.1</jakarta.activation.version>
     <!--
     <maven.jaxb.plugin.version>2.4</maven.jaxb.plugin.version>
     -->
@@ -99,6 +102,28 @@
     </repository>
   </distributionManagement>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>${jaxb-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.glassfish.jaxb</groupId>
+        <artifactId>jaxb-runtime</artifactId>
+        <version>${jaxb-runtime.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.sun.activation</groupId>
+        <artifactId>jakarta.activation</artifactId>
+        <version>${jakarta.activation.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <build>
     <extensions>
       <extension>
@@ -146,12 +171,12 @@
             </vmArgs>
           </configuration>
         </plugin>
-        <!--
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-antrun-plugin</artifactId>
           <version>${maven.antRun.plugin.version}</version>
         </plugin>
+        <!--
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-eclipse-plugin</artifactId>

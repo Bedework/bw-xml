@@ -10,6 +10,7 @@
 	<name>bw-xml-icalendar</name>
 	<build>
 		<plugins>
+      <!--
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxb2-maven-plugin</artifactId>
@@ -25,7 +26,29 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
+			-->
+      <plugin>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-xjc-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>xjc</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>xsdtojava</goal>
+            </goals>
+            <configuration>
+              <xsdOptions>
+                <xsdOption>
+                  <xsd>${project.parent.basedir}/src/main/schemas/icalendar/iCalendar.xsd</xsd>
+                </xsdOption>
+              </xsdOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
