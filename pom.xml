@@ -1,67 +1,72 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.bedework</groupId>
-	<artifactId>bw-xml</artifactId>
-	<version>4.0.9-SNAPSHOT</version>
-	<packaging>pom</packaging>
-	<name>bw-xml</name>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.bedework</groupId>
+  <artifactId>bw-xml</artifactId>
+  <version>4.0.9-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>bw-xml</name>
   <description>This project provides a number of XML schemas</description>
   <url>https://github.com/Bedework/bw-xml</url>
 
-	<organization>
-		<name>Bedework</name>
-		<url>https://github.com/Bedework</url>
-	</organization>
+  <organization>
+    <name>Bedework</name>
+    <url>https://github.com/Bedework</url>
+  </organization>
 
-	<licenses>
-		<license>
-			<name>Apache License Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
-		</license>
-	</licenses>
+  <licenses>
+    <license>
+      <name>Apache License Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+    </license>
+  </licenses>
 
-	<scm>
-		<connection>scm:git:git@github.com:Bedework/bw-xml.git</connection>
-		<developerConnection>scm:git:git@github.com:Bedework/bw-xml.git</developerConnection>
-		<url>https://github.com/Bedework/bw-xml</url>
-	  <tag>HEAD</tag>
+  <scm>
+    <connection>scm:git:git@github.com:Bedework/bw-xml.git</connection>
+    <developerConnection>scm:git:git@github.com:Bedework/bw-xml.git</developerConnection>
+    <url>https://github.com/Bedework/bw-xml</url>
+    <tag>HEAD</tag>
   </scm>
 
-	<issueManagement>
-		<system>github</system>
-		<url>https://github.com/Bedework/bw-xml/issues</url>
-	</issueManagement>
+  <issueManagement>
+    <system>github</system>
+    <url>https://github.com/Bedework/bw-xml/issues</url>
+  </issueManagement>
 
-	<properties>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Needed for deployment -->
     <bw-util-deploy.version>4.0.23</bw-util-deploy.version>
-		<!-- Maven Plugin Versions -->
-		<maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
-		<maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
-		<maven.buildHelper.plugin.version>1.7</maven.buildHelper.plugin.version>
-		<maven.antRun.plugin.version>1.7</maven.antRun.plugin.version>
-		<maven.eclipse.plugin.version>2.8</maven.eclipse.plugin.version>
-		<maven.jaxws.plugin.version>2.4.1</maven.jaxws.plugin.version>
-		<maven.jaxb.plugin.version>2.4</maven.jaxb.plugin.version>
-	</properties>
+    <!-- Maven Plugin Versions -->
+    <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+    <maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
+    <maven.buildHelper.plugin.version>1.7</maven.buildHelper.plugin.version>
+    <maven.antRun.plugin.version>1.7</maven.antRun.plugin.version>
+    <maven.eclipse.plugin.version>2.8</maven.eclipse.plugin.version>
+    <maven.jaxws.plugin.version>2.4.1</maven.jaxws.plugin.version>
+    <cxf.xjc.plugin.version>3.3.0</cxf.xjc.plugin.version>
+    <!--
+    <maven.jaxb.plugin.version>2.4</maven.jaxb.plugin.version>
+    -->
 
-	<modules>
-		<module>bw-xml-icalendar</module>
-		<module>bw-xml-appleServer</module>
-		<module>bw-xml-bwlicense</module>
-		<module>bw-xml-caldav</module>
-		<module>bw-xml-carddav</module>
-		<module>bw-xml-catdav</module>
-		<module>bw-xml-dav</module>
-		<module>bw-xml-category</module>
-		<module>bw-xml-icalendar-strict</module>
-		<module>bw-xml-tzsvr</module>
-		<module>bw-xml-vcard</module>
-		<module>bw-xml-xrd</module>
-		<module>bw-xml-calws-soap</module>
-		<module>bw-xml-calws-soap-strict</module>
-		<module>bw-xml-synchws</module>
-		<module>bw-xml-exchangews</module>
+  </properties>
+
+  <modules>
+    <module>bw-xml-icalendar</module>
+    <module>bw-xml-appleServer</module>
+    <module>bw-xml-bwlicense</module>
+    <module>bw-xml-caldav</module>
+    <module>bw-xml-carddav</module>
+    <module>bw-xml-catdav</module>
+    <module>bw-xml-dav</module>
+    <module>bw-xml-category</module>
+    <module>bw-xml-icalendar-strict</module>
+    <module>bw-xml-tzsvr</module>
+    <module>bw-xml-vcard</module>
+    <module>bw-xml-xrd</module>
+    <module>bw-xml-calws-soap</module>
+    <module>bw-xml-calws-soap-strict</module>
+    <module>bw-xml-synchws</module>
+    <module>bw-xml-exchangews</module>
     <module>bw-xml-war</module>
     <module>bw-xml-ear</module>
   </modules>
@@ -94,69 +99,78 @@
     </repository>
   </distributionManagement>
 
-	<build>
-		<extensions>
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ssh</artifactId>
-				<version>2.9</version>
-			</extension>
-		</extensions>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>${maven.compiler.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>${maven.jar.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>${maven.buildHelper.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>jaxb2-maven-plugin</artifactId>
-					<version>${maven.jaxb.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>jaxws-maven-plugin</artifactId>
-					<version>${maven.jaxws.plugin.version}</version>
+  <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>2.9</version>
+      </extension>
+    </extensions>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven.compiler.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven.jar.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>${maven.buildHelper.plugin.version}</version>
+        </plugin>
+        <!--
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>jaxb2-maven-plugin</artifactId>
+          <version>${maven.jaxb.plugin.version}</version>
+        </plugin>
+        -->
+        <plugin>
+          <groupId>org.apache.cxf</groupId>
+          <artifactId>cxf-xjc-plugin</artifactId>
+          <version>${cxf.xjc.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>jaxws-maven-plugin</artifactId>
+          <version>${maven.jaxws.plugin.version}</version>
           <configuration>
             <vmArgs>
               <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
             </vmArgs>
           </configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-antrun-plugin</artifactId>
-					<version>${maven.antRun.plugin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-eclipse-plugin</artifactId>
-					<version>${maven.eclipse.plugin.version}</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<showDeprecation>false</showDeprecation>
-					<showWarnings>false</showWarnings>
-				</configuration>
-			</plugin>
+        </plugin>
+        <!--
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <version>${maven.antRun.plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-eclipse-plugin</artifactId>
+          <version>${maven.eclipse.plugin.version}</version>
+        </plugin>
+        -->
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <showDeprecation>false</showDeprecation>
+          <showWarnings>false</showWarnings>
+        </configuration>
+      </plugin>
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -179,7 +193,7 @@
         </configuration>
       </plugin>
     </plugins>
-	</build>
+  </build>
 
   <profiles>
     <profile>
