@@ -24,6 +24,10 @@
       <artifactId>jakarta.activation</artifactId>
       <scope>runtime</scope>
     </dependency>
+    <dependency>
+      <groupId>org.eclipse.aether</groupId>
+      <artifactId>aether-api</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
