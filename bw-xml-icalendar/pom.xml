@@ -72,20 +72,24 @@
           <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
+            <version>${jaxb-api.version}</version>
           </dependency>
           <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
+            <version>${jaxb-runtime.version}</version>
             <scope>runtime</scope>
           </dependency>
           <dependency>
             <groupId>com.sun.activation</groupId>
             <artifactId>jakarta.activation</artifactId>
+            <version>${jakarta.activation.version}</version>
             <scope>runtime</scope>
           </dependency>
           <dependency>
             <groupId>org.eclipse.aether</groupId>
             <artifactId>aether-api</artifactId>
+            <version>${aether-api.version}</version>
           </dependency>
         </dependencies>
       </plugin>
