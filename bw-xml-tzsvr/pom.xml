@@ -8,7 +8,26 @@
 	</parent>
 	<artifactId>bw-xml-tzsvr</artifactId>
 	<name>bw-xml-tzsvr</name>
-	<build>
+
+  <dependencies>
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.activation</groupId>
+      <artifactId>jakarta.activation</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>

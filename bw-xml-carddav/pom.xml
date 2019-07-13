@@ -8,7 +8,26 @@
 	</parent>
 	<artifactId>bw-xml-carddav</artifactId>
 	<name>bw-xml-carddav</name>
-	<build>
+
+  <dependencies>
+    <dependency>
+      <groupId>javax.xml.bind</groupId>
+      <artifactId>jaxb-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.activation</groupId>
+      <artifactId>jakarta.activation</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
 		<plugins>
 			<!-- XJC plug-in for Schema to Java -->
 			<plugin>
