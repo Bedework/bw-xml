@@ -35,7 +35,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Needed for deployment -->
-    <bw-util-deploy.version>4.0.25</bw-util-deploy.version>
+    <bw-util-deploy.version>4.0.26</bw-util-deploy.version>
     <!-- Maven Plugin Versions -->
     <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
     <maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
