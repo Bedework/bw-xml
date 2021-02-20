@@ -35,7 +35,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- Needed for deployment -->
-    <bw-util-deploy.version>4.0.26</bw-util-deploy.version>
+    <bw-util-deploy.version>4.0.28-SNAPSHOT</bw-util-deploy.version>
+
     <!-- Maven Plugin Versions -->
     <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
     <maven.jar.plugin.version>2.3.2</maven.jar.plugin.version>
@@ -179,7 +180,22 @@
           <version>${maven.eclipse.plugin.version}</version>
         </plugin>
         -->
+        <plugin>
+          <groupId>org.bedework</groupId>
+          <artifactId>bw-util-maven-deploy-wfmodule</artifactId>
+          <version>${bw-util-deploy.version}</version>
+
+          <executions>
+            <execution>
+              <phase>install</phase>
+              <goals>
+                <goal>bw-deploy-wfmodule</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
+
     </pluginManagement>
     <plugins>
       <plugin>

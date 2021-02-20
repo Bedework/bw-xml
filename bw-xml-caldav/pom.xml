@@ -92,6 +92,30 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.bedework</groupId>
+				<artifactId>bw-util-maven-deploy-wfmodule</artifactId>
+				<version>${bw-util-deploy.version}</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>bw-deploy-wfmodule</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+					<moduleName>org.bedework.xml.caldav</moduleName>
+
+					<moduleDependencies>
+						<moduleDependency>
+							<name>wildflyee.api</name>
+						</moduleDependency>
+					</moduleDependencies>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

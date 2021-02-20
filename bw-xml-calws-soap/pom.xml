@@ -60,6 +60,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
@@ -86,6 +87,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -103,6 +105,30 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.bedework</groupId>
+				<artifactId>bw-util-maven-deploy-wfmodule</artifactId>
+				<version>${bw-util-deploy.version}</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>bw-deploy-wfmodule</goal>
+						</goals>
+					</execution>
+				</executions>
+
+				<configuration>
+					<moduleName>org.bedework.xml.calws.soap</moduleName>
+
+					<moduleDependencies>
+						<moduleDependency>
+							<name>wildflyee.api</name>
+						</moduleDependency>
+					</moduleDependencies>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
