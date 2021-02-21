@@ -49,22 +49,23 @@
   </properties>
 
   <modules>
-    <module>bw-xml-icalendar</module>
     <module>bw-xml-appleServer</module>
     <module>bw-xml-bwlicense</module>
     <module>bw-xml-caldav</module>
+    <module>bw-xml-calws-soap</module>
+    <module>bw-xml-calws-soap-strict</module>
     <module>bw-xml-carddav</module>
     <module>bw-xml-catdav</module>
-    <module>bw-xml-dav</module>
     <module>bw-xml-category</module>
+    <module>bw-xml-dav</module>
+    <module>bw-xml-exchangews</module>
+    <module>bw-xml-icalendar</module>
     <module>bw-xml-icalendar-strict</module>
+    <module>bw-xml-synchws</module>
     <module>bw-xml-tzsvr</module>
     <module>bw-xml-vcard</module>
     <module>bw-xml-xrd</module>
-    <module>bw-xml-calws-soap</module>
-    <module>bw-xml-calws-soap-strict</module>
-    <module>bw-xml-synchws</module>
-    <module>bw-xml-exchangews</module>
+
     <module>bw-xml-war</module>
     <module>bw-xml-ear</module>
   </modules>
@@ -180,23 +181,9 @@
           <version>${maven.eclipse.plugin.version}</version>
         </plugin>
         -->
-        <plugin>
-          <groupId>org.bedework</groupId>
-          <artifactId>bw-util-maven-deploy-wfmodule</artifactId>
-          <version>${bw-util-deploy.version}</version>
-
-          <executions>
-            <execution>
-              <phase>install</phase>
-              <goals>
-                <goal>bw-deploy-wfmodule</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
       </plugins>
-
     </pluginManagement>
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -225,6 +212,82 @@
         <configuration>
           <additionalJOption>-Xdoclint:none</additionalJOption>
           <failOnError>false</failOnError>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.bedework</groupId>
+        <artifactId>bw-util-maven-deploy-wfmodule</artifactId>
+        <version>${bw-util-deploy.version}</version>
+
+        <executions>
+          <execution>
+            <phase>install</phase>
+            <goals>
+              <goal>bw-deploy-wfmodule</goal>
+            </goals>
+          </execution>
+        </executions>
+
+        <configuration>
+          <moduleName>org.bedework.xml</moduleName>
+          <noArtifact>true</noArtifact>
+
+          <jarResources>
+            <jarResource>
+              <groupId>org.bedework</groupId>
+              <artifactId>bw-xml-appleServer</artifactId>
+              <version>${project.version}</version>
+            </jarResource>
+
+            <jarResource>
+              <groupId>org.bedework</groupId>
+              <artifactId>bw-xml-caldav</artifactId>
+              <version>${project.version}</version>
+            </jarResource>
+
+            <jarResource>
+              <groupId>org.bedework</groupId>
+              <artifactId>bw-xml-calws-soap</artifactId>
+              <version>${project.version}</version>
+            </jarResource>
+
+            <jarResource>
+              <groupId>org.bedework</groupId>
+              <artifactId>bw-xml-icalendar</artifactId>
+              <version>${project.version}</version>
+            </jarResource>
+
+            <jarResource>
+              <groupId>org.bedework</groupId>
+              <artifactId>bw-xml-synchws</artifactId>
+              <version>${project.version}</version>
+            </jarResource>
+
+            <jarResource>
+              <groupId>org.bedework</groupId>
+              <artifactId>bw-xml-tzsvr</artifactId>
+              <version>${project.version}</version>
+            </jarResource>
+
+            <!-- <module>bw-xml-bwlicense</module>
+            <module>bw-xml-calws-soap-strict</module>
+            <module>bw-xml-carddav</module>
+            <module>bw-xml-catdav</module>
+            <module>bw-xml-category</module>
+            <module>bw-xml-dav</module>
+            <module>bw-xml-exchangews</module>
+            <module>bw-xml-icalendar-strict</module>
+            <module>bw-xml-vcard</module>
+            <module>bw-xml-xrd</module>
+            -->
+          </jarResources>
+
+          <moduleDependencies>
+            <moduleDependency>
+              <name>wildflyee.api</name>
+            </moduleDependency>
+          </moduleDependencies>
         </configuration>
       </plugin>
     </plugins>
