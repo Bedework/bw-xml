@@ -3,53 +3,40 @@
 	<parent>
 		<groupId>org.bedework</groupId>
 		<artifactId>bw-xml</artifactId>
-		<version>4.0.12-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<version>5.0.0-SNAPSHOT</version>
 	</parent>
+
 	<artifactId>bw-xml-xrd</artifactId>
-	<name>bw-xml-xrd</name>
+	<name>Bedework: XML schemas for xrd</name>
 
-  <dependencies>
-    <dependency>
-      <groupId>javax.xml.bind</groupId>
-      <artifactId>jaxb-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.glassfish.jaxb</groupId>
-      <artifactId>jaxb-runtime</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>com.sun.activation</groupId>
-      <artifactId>jakarta.activation</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-  </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>${version.jaxb2.plugin}</version>
 				<executions>
 					<execution>
 						<id>all</id>
-						<goals>
-							<goal>xjc</goal>
-						</goals>
 						<configuration>
 							<sources><source>${project.parent.basedir}/src/main/schemas/xrd</source></sources>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
-						<phase>generate-resources</phase>
 						<configuration>
 							<target>
 								<copy todir="${project.build.directory}/classes/META-INF/schemas">
@@ -60,12 +47,10 @@
 								</copy>
 							</target>
 						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>

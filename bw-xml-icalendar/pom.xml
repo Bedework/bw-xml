@@ -3,29 +3,18 @@
 	<parent>
 		<groupId>org.bedework</groupId>
 		<artifactId>bw-xml</artifactId>
-		<version>4.0.12-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
+		<version>5.0.0-SNAPSHOT</version>
 	</parent>
+
 	<artifactId>bw-xml-icalendar</artifactId>
-	<name>bw-xml-icalendar</name>
+	<name>Bedework: XML schemas for icalendar</name>
 
-  <dependencies>
-    <dependency>
-      <groupId>javax.xml.bind</groupId>
-      <artifactId>jaxb-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.glassfish.jaxb</groupId>
-      <artifactId>jaxb-runtime</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.activation</groupId>
-      <artifactId>jakarta.activation</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-  </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+		</dependency>
+	</dependencies>
 
   <build>
 		<plugins>
