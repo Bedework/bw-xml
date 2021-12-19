@@ -46,23 +46,11 @@
           </modules>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.bedework</groupId>
         <artifactId>bw-util-maven-deploy</artifactId>
-        <version>${bw-util-deploy.version}</version>
-        <executions>
-          <execution>
-            <phase>install</phase>
-            <goals>
-              <goal>bw-deploy</goal>
-            </goals>
-          </execution>
-        </executions>
         <configuration>
-          <checkonly>${org.bedework.deploy.checkonly}</checkonly>
-          <noversion>true</noversion>
-          <debug>true</debug>
-          <delete>true</delete>
           <earName>bw-xml</earName>
           <baseDirPath>${project.basedir}/../..</baseDirPath>
           <propsPath>${org.bedework.deployment.properties}</propsPath>
