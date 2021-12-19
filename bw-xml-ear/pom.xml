@@ -42,6 +42,7 @@
               <groupId>${project.groupId}</groupId>
               <artifactId>bw-xml-war</artifactId>
               <contextRoot>/xmlspecs</contextRoot>
+              <bundleFileName>bw-xml-${project.version}.war</bundleFileName>
             </webModule>
           </modules>
         </configuration>
