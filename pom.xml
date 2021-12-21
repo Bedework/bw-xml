@@ -15,6 +15,13 @@
   <description>This project provides a number of XML schemas</description>
   <url>https://github.com/Bedework/bw-xml</url>
 
+  <scm>
+    <connection>scm:git:git@github.com:Bedework/bw-xml.git</connection>
+    <developerConnection>scm:git:git@github.com:Bedework/bw-xml.git</developerConnection>
+    <url>https://github.com/Bedework/bw-xml</url>
+    <tag>HEAD</tag>
+  </scm>
+
   <modules>
     <module>bw-xml-appleServer</module>
     <module>bw-xml-bwlicense</module>
