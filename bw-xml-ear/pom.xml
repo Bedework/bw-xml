@@ -23,7 +23,7 @@
   </dependencies>
 
   <build>
-    <finalName>bw-xml-${project.version}</finalName>
+    <finalName>bw-xml-ear-${project.version}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -67,7 +67,7 @@
             <artifactId>bw-util-maven-deploy</artifactId>
 
             <configuration>
-              <earName>bw-xml</earName>
+              <earName>bw-xml-ear</earName>
               <baseDirPath>${project.basedir}/../..</baseDirPath>
               <propsPath>${org.bedework.deployment.properties}</propsPath>
             </configuration>

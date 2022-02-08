@@ -42,6 +42,7 @@
 
     <module>bw-xml-war</module>
     <module>bw-xml-ear</module>
+    <module>bw-wf-xml-feature-pack</module>
   </modules>
 
   <build>

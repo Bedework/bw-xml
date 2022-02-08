@@ -228,7 +228,8 @@
 
   <wsdl:service name="CalWsService">
     <wsdl:port name="CalWsPort" binding="tns:CalWsServiceBinding">
-       <soap:address location="${org.bedework.global.pubcalws.service.location}"></soap:address>
+       <!--<soap:address location="${org.bedework.global.pubcalws.service.location}"></soap:address> -->
+       <soap:address location="http://localhost:8080/pubcaldav/calws-soap/"></soap:address>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>  

@@ -378,7 +378,8 @@
 
   <wsdl:service name="SynchRemoteService">
     <wsdl:port name="SynchRSPort" binding="tns:SynchRemoteServiceBinding">
-       <soap:address location="${org.bedework.global.synch.service.location}"></soap:address>
+       <!--<soap:address location="${org.bedework.global.synch.service.location}"></soap:address> -->
+       <soap:address location="http://localhost:8080/synchws/"></soap:address>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>  
