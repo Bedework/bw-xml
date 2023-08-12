@@ -41,7 +41,6 @@
     <module>bw-xml-xrd</module>
 
     <module>bw-xml-war</module>
-    <module>bw-xml-ear</module>
   </modules>
 
   <build>

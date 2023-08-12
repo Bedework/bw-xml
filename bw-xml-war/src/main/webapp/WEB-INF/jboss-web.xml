@@ -3,4 +3,6 @@
 <jboss-web>
   <!-- Virtual host -->
 
+  <context-root>/xmlspecs</context-root>
+
 </jboss-web>
