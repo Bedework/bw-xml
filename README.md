@@ -34,4 +34,12 @@ For full details, see [Sonatype's documentation for using Maven to publish relea
 
 ### Release Notes
 #### 4.0.10
-    * Update deployer version and javadoc plugin config
+* Update deployer version and javadoc plugin config
+* Load all xml files into one big module - need to figure out how to split them up with dependencies.
+
+#### 5.0.0
+* Use bedework parent
+* Update library versions
+
+#### 5.0.1
+* Update library versions
