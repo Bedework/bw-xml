@@ -36,7 +36,6 @@
     <module>bw-xml-icalendar</module>
     <module>bw-xml-icalendar-strict</module>
     <module>bw-xml-synchws</module>
-    <module>bw-xml-tzsvr</module>
     <module>bw-xml-vcard</module>
     <module>bw-xml-xrd</module>
 
